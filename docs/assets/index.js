@@ -1,0 +1,1 @@
+console.log('This would be your production React app JS');
