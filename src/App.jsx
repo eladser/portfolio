@@ -1,1 +1,50 @@
-import React, { useState, useEffect } from 'react';\nimport { motion, AnimatePresence } from 'framer-motion';\nimport Hero from './components/Hero';\nimport About from './components/About';\nimport Projects from './components/Projects';\nimport Skills from './components/Skills';\nimport Experience from './components/Experience';\nimport Contact from './components/Contact';\nimport Navigation from './components/Navigation';\nimport ParticleBackground from './components/ParticleBackground';\nimport ScrollToTop from './components/ScrollToTop';\n\nconst App = () => {\n  const [darkMode, setDarkMode] = useState(true);\n\n  useEffect(() => {\n    // Check for saved theme preference or default to dark mode\n    const savedTheme = localStorage.getItem('theme');\n    if (savedTheme) {\n      setDarkMode(savedTheme === 'dark');\n    } else {\n      // Default to dark mode and save preference\n      setDarkMode(true);\n      localStorage.setItem('theme', 'dark');\n    }\n  }, []);\n\n  useEffect(() => {\n    // Apply theme to document and save preference\n    if (darkMode) {\n      document.documentElement.classList.add('dark');\n      localStorage.setItem('theme', 'dark');\n    } else {\n      document.documentElement.classList.remove('dark');\n      localStorage.setItem('theme', 'light');\n    }\n  }, [darkMode]);\n\n  return (\n    <div className={`min-h-screen transition-colors duration-300 ${\n      darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'\n    }`}>\n      <ParticleBackground />\n      <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />\n      \n      <AnimatePresence>\n        <main className=\"relative z-10\">\n          <Hero />\n          <About />\n          <Projects />\n          <Skills />\n          <Experience />\n          <Contact />\n        </main>\n      </AnimatePresence>\n      \n      <ScrollToTop />\n      \n      {/* Footer */}\n      <footer className=\"relative z-10 bg-gray-100 dark:bg-gray-800 py-8 border-t border-gray-200 dark:border-gray-700\">\n        <div className=\"container mx-auto px-6\">\n          <div className=\"flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0\">\n            <div className=\"flex items-center space-x-2\">\n              <div className=\"w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center\">\n                <span className=\"text-white font-bold text-sm\">ES</span>\n              </div>\n              <span className=\"text-gray-900 dark:text-white font-semibold\">\n                Elad Ser\n              </span>\n            </div>\n            \n            <div className=\"text-sm text-gray-600 dark:text-gray-400 text-center\">\n              <p>© 2025 Elad Ser. Built with React, Tailwind CSS, and Framer Motion.</p>\n              <p className=\"mt-1\">Designed and developed with ❤️ in Israel</p>\n            </div>\n            \n            <div className=\"flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400\">\n              <span>Made with</span>\n              <div className=\"flex items-center space-x-2\">\n                <span className=\"w-2 h-2 bg-blue-500 rounded-full animate-pulse\"></span>\n                <span>React</span>\n              </div>\n            </div>\n          </div>\n        </div>\n      </footer>\n    </div>\n  );\n};\n\nexport default App;"
+import React from 'react';
+
+const App = () => {
+  return (
+    <div className=\"min-h-screen bg-gray-900 text-white flex items-center justify-center\">
+      <div className=\"text-center space-y-8\">
+        <div className=\"w-24 h-24 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg\">
+          <span className=\"text-white font-bold text-2xl\">ES</span>
+        </div>
+        
+        <div className=\"space-y-4\">
+          <h1 className=\"text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent\">
+            Elad Ser
+          </h1>
+          <p className=\"text-2xl text-gray-400\">
+            Full Stack Developer
+          </p>
+          <p className=\"text-lg text-gray-500 max-w-2xl mx-auto\">
+            Portfolio coming soon! Building modern web applications with React, .NET, and cutting-edge technologies.
+          </p>
+        </div>
+
+        <div className=\"flex justify-center space-x-6\">
+          <a 
+            href=\"https://github.com/eladser\" 
+            target=\"_blank\" 
+            rel=\"noopener noreferrer\"
+            className=\"px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors\"
+          >
+            GitHub
+          </a>
+          <a 
+            href=\"https://eladser.github.io/.net-tools\" 
+            target=\"_blank\" 
+            rel=\"noopener noreferrer\"
+            className=\"px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors\"
+          >
+            .NET Tools
+          </a>
+        </div>
+
+        <div className=\"text-sm text-gray-600\">
+          <p>© 2025 Elad Ser. Built with React and Tailwind CSS.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;"
