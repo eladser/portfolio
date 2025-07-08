@@ -147,33 +147,7 @@ const Projects = () => {
         'Role-based Access Control',
         'Interactive Analytics Dashboard'
       ]
-    },
-    {
-      id: 6,
-      title: 'Portfolio Website',
-      description: 'Modern, responsive portfolio website built with React, Tailwind CSS, and Framer Motion. Features smooth animations, dark mode toggle, mobile optimization, and performance-focused design with excellent Lighthouse scores.',
-      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=500&fit=crop&q=80',
-      technologies: ['React', 'Tailwind CSS', 'Framer Motion', 'Vite', 'GitHub Pages'],
-      category: 'web',
-      featured: false,
-      links: {
-        live: 'https://eladser.github.io/portfolio',
-        github: 'https://github.com/eladser/portfolio',
-      },
-      stats: {
-        performance: '98/100',
-        responsive: 'Mobile First',
-        status: 'Live',
-        animations: 'Smooth'
-      },
-      highlights: [
-        'Modern React Architecture',
-        'Framer Motion Animations',
-        'Dark/Light Theme Toggle',
-        'Mobile-First Design',
-        'Performance Optimized'
-      ]
-    },
+    }
   ];
 
   const categories = [
@@ -182,7 +156,6 @@ const Projects = () => {
     { id: 'tools', label: 'Developer Tools', icon: Wrench },
     { id: 'games', label: 'Games & Tools', icon: GamepadIcon },
     { id: 'fullstack', label: 'Full Stack', icon: Code },
-    { id: 'web', label: 'Web Apps', icon: Activity },
   ];
 
   const filteredProjects = filter === 'all' 
