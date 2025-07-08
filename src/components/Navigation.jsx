@@ -32,12 +32,12 @@ const Navigation = ({ darkMode, setDarkMode }) => {
     },
     { 
       name: 'LinkedIn', 
-      href: 'https://linkedin.com/in/eladser', 
+      href: 'https://linkedin.com/in/elad-sertshuk', 
       icon: Linkedin 
     },
     { 
       name: 'Email', 
-      href: 'mailto:elad@example.com', 
+      href: 'mailto:elad.ser@gmail.com', 
       icon: Mail 
     },
   ];
