@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Calendar, MessageCircle, Coffee } from 'lucide-react';
+import { Mail, MapPin, Send, Github, Linkedin, Calendar, MessageCircle, Coffee } from 'lucide-react';
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -46,16 +46,9 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'elad@example.com',
-      href: 'mailto:elad@example.com',
+      value: 'elad.ser@gmail.com',
+      href: 'mailto:elad.ser@gmail.com',
       color: 'text-red-500'
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+972-XX-XXX-XXXX',
-      href: 'tel:+972XXXXXXXXX',
-      color: 'text-green-500'
     },
     {
       icon: MapPin,
@@ -76,7 +69,7 @@ const Contact = () => {
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/eladser',
+      href: 'https://linkedin.com/in/elad-sertshuk',
       icon: Linkedin,
       color: 'hover:text-blue-600',
       description: 'Connect professionally'
