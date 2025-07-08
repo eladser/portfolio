@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Star, Users, Activity, Calendar, Code, Globe, Wrench } from 'lucide-react';
+import { ExternalLink, Github, Star, Users, Activity, Calendar, Code, Globe, Wrench, Bug, GamepadIcon, Database } from 'lucide-react';
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -14,6 +14,35 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: 'ASP.NET Debug Dashboard',
+      description: 'A lightweight, developer-friendly debugging dashboard for ASP.NET Core applications inspired by Laravel Telescope. Monitor HTTP requests, database queries, exceptions, and performance metrics in real-time with zero configuration setup.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
+      technologies: ['ASP.NET Core', 'C#', 'SignalR', 'Entity Framework', 'JavaScript', 'HTML5', 'CSS3'],
+      category: 'debugging',
+      featured: true,
+      new: true,
+      links: {
+        github: 'https://github.com/eladser/AspNetDebugDashboard',
+        nuget: 'https://github.com/eladser/AspNetDebugDashboard#installation'
+      },
+      stats: {
+        type: 'NuGet Package',
+        monitoring: 'Real-time',
+        status: 'Active Development',
+        inspiration: 'Laravel Telescope'
+      },
+      highlights: [
+        'HTTP Request Monitoring',
+        'Database Query Profiling', 
+        'Exception Tracking',
+        'Performance Metrics',
+        'Real-time Dashboard',
+        'Zero Configuration',
+        'Production Ready'
+      ]
+    },
+    {
+      id: 2,
       title: '.NET Tools',
       description: 'Comprehensive toolkit with 30+ professional development utilities including JSON converters, security tools, text processors, and data converters. A complete solution for .NET developers with beautiful UI and 100% client-side processing.',
       image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80',
@@ -35,17 +64,73 @@ const Projects = () => {
         'Security & Hash Tools', 
         'Code Generators',
         'Data Converters',
-        'Text Processing Tools'
+        'Text Processing Tools',
+        'Client-side Processing',
+        'Mobile Optimized'
       ]
     },
     {
-      id: 2,
+      id: 3,
+      title: 'Another Chess',
+      description: 'A modern, sleek chess game website with AI opponent and multiplayer support. Features smooth drag-and-drop gameplay, multiple difficulty levels, beautiful animations, and responsive design for desktop and mobile devices.',
+      image: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=800&h=500&fit=crop&q=80',
+      technologies: ['JavaScript', 'HTML5', 'CSS3', 'Canvas API', 'Game Logic', 'AI Algorithms'],
+      category: 'games',
+      featured: false,
+      new: true,
+      links: {
+        github: 'https://github.com/eladser/another_chess',
+        demo: 'https://github.com/eladser/another_chess#demo'
+      },
+      stats: {
+        gameplay: 'Interactive',
+        ai: 'Smart Opponent',
+        status: 'Active',
+        platform: 'Cross-platform'
+      },
+      highlights: [
+        'Smooth Drag & Drop',
+        'AI Opponent',
+        'Multiplayer Support',
+        'Beautiful Animations',
+        'Mobile Responsive',
+        'Game Analysis',
+        'Move History'
+      ]
+    },
+    {
+      id: 4,
+      title: 'WoW Tools',
+      description: 'A collection of useful tools for World of Warcraft players including log analysis, M+ tools, and raid utilities. Built to help players optimize their gameplay and track performance across different game modes.',
+      image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop&q=80',
+      technologies: ['JavaScript', 'React', 'Node.js', 'Game APIs', 'Data Analysis'],
+      category: 'games',
+      featured: false,
+      links: {
+        github: 'https://github.com/eladser/wow-tools',
+      },
+      stats: {
+        tools: 'Multiple Tools',
+        analysis: 'Log Analysis',
+        status: 'Complete',
+        community: 'Gaming'
+      },
+      highlights: [
+        'Raid Log Analysis',
+        'M+ Calculator',
+        'Character Utilities',
+        'Performance Tracking',
+        'Guild Management'
+      ]
+    },
+    {
+      id: 5,
       title: 'WEM Dashboard',
       description: 'Enterprise Web Energy Management dashboard built with .NET 8 and React. Features real-time monitoring, WebSocket communication, role-based access control, and comprehensive energy analytics for industrial applications.',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
       technologies: ['.NET 8', 'React', 'TypeScript', 'SignalR', 'Tailwind CSS', 'Entity Framework', 'SQLite'],
       category: 'fullstack',
-      featured: true,
+      featured: false,
       links: {
         github: 'https://github.com/eladser/wem-test',
       },
@@ -64,7 +149,7 @@ const Projects = () => {
       ]
     },
     {
-      id: 3,
+      id: 6,
       title: 'Portfolio Website',
       description: 'Modern, responsive portfolio website built with React, Tailwind CSS, and Framer Motion. Features smooth animations, dark mode toggle, mobile optimization, and performance-focused design with excellent Lighthouse scores.',
       image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=500&fit=crop&q=80',
@@ -89,39 +174,15 @@ const Projects = () => {
         'Performance Optimized'
       ]
     },
-    {
-      id: 4,
-      title: 'Bylith Assignment',
-      description: 'Private development project showcasing advanced problem-solving skills and clean code architecture. Implemented with modern development practices and comprehensive testing strategies.',
-      image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&h=500&fit=crop&q=80',
-      technologies: ['Private Repository', 'Modern Stack', 'Clean Architecture'],
-      category: 'private',
-      featured: false,
-      links: {
-        private: true,
-      },
-      stats: {
-        type: 'Assignment',
-        architecture: 'Clean Code',
-        status: 'Completed',
-        testing: 'Comprehensive'
-      },
-      highlights: [
-        'Clean Architecture Implementation',
-        'Advanced Problem Solving',
-        'Modern Development Practices',
-        'Comprehensive Testing',
-        'Professional Code Quality'
-      ]
-    },
   ];
 
   const categories = [
     { id: 'all', label: 'All Projects', icon: Globe },
+    { id: 'debugging', label: 'Debug Tools', icon: Bug },
     { id: 'tools', label: 'Developer Tools', icon: Wrench },
+    { id: 'games', label: 'Games & Tools', icon: GamepadIcon },
     { id: 'fullstack', label: 'Full Stack', icon: Code },
     { id: 'web', label: 'Web Apps', icon: Activity },
-    { id: 'private', label: 'Private Work', icon: Users },
   ];
 
   const filteredProjects = filter === 'all' 
@@ -165,7 +226,7 @@ const Projects = () => {
               Featured Projects
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              A showcase of my recent work including developer tools, full-stack applications, and enterprise solutions
+              A showcase of my latest work including ASP.NET debugging tools, developer utilities, games, and enterprise solutions
             </p>
           </motion.div>
 
@@ -211,15 +272,20 @@ const Projects = () => {
                     project.featured ? 'md:col-span-2' : ''
                   }`}
                 >
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className="absolute top-4 left-4 z-10">
+                  {/* Badges */}
+                  <div className="absolute top-4 left-4 z-10 flex gap-2">
+                    {project.featured && (
                       <span className="flex items-center px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-sm font-semibold rounded-full">
                         <Star className="w-3 h-3 mr-1" />
                         Featured
                       </span>
-                    </div>
-                  )}
+                    )}
+                    {project.new && (
+                      <span className="flex items-center px-3 py-1 bg-gradient-to-r from-green-400 to-emerald-400 text-white text-sm font-semibold rounded-full">
+                        ✨ New
+                      </span>
+                    )}
+                  </div>
 
                   {/* Project Image */}
                   <div className="relative h-64 overflow-hidden">
@@ -243,6 +309,32 @@ const Projects = () => {
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           Live Demo
+                        </motion.a>
+                      )}
+                      {project.links.demo && (
+                        <motion.a
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          href={project.links.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 transition-colors"
+                        >
+                          <GamepadIcon className="w-4 h-4 mr-2" />
+                          Demo
+                        </motion.a>
+                      )}
+                      {project.links.nuget && (
+                        <motion.a
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          href={project.links.nuget}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors"
+                        >
+                          <Database className="w-4 h-4 mr-2" />
+                          NuGet
                         </motion.a>
                       )}
                       {project.links.github && (
