@@ -9,11 +9,11 @@ const Hero = () => {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   const roles = [
+    'ASP.NET Core Specialist',
+    'Debug Tools Creator', 
     'Full Stack Developer',
-    '.NET Developer', 
-    'React Developer',
-    'Solution Architect',
-    'DevOps Engineer'
+    '.NET Developer',
+    'Software Engineer'
   ];
 
   useEffect(() => {
@@ -56,13 +56,13 @@ const Hero = () => {
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/eladser',
+      href: 'https://linkedin.com/in/elad-sertshuk',
       icon: Linkedin,
       color: 'hover:text-blue-600'
     },
     {
       name: 'Email',
-      href: 'mailto:elad@example.com',
+      href: 'mailto:elad.ser@gmail.com',
       icon: Mail,
       color: 'hover:text-red-500'
     }
@@ -133,9 +133,9 @@ const Hero = () => {
               transition={{ delay: 0.7 }}
               className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed"
             >
-              Passionate developer with expertise in building modern web applications, 
-              developer tools, and enterprise solutions. I create efficient, scalable, 
-              and user-friendly software that makes a difference.
+              Passionate ASP.NET Core developer specializing in debugging tools and developer productivity. 
+              I build efficient, scalable solutions including the ASP.NET Debug Dashboard inspired by Laravel Telescope, 
+              and comprehensive developer toolkits that help thousands of developers worldwide.
             </motion.p>
 
             {/* Stats */}
@@ -154,8 +154,30 @@ const Hero = () => {
                 <div className="text-sm text-gray-600 dark:text-gray-400">Developer Tools</div>
               </div>
               <div className="space-y-1">
-                <div className="text-3xl font-bold text-green-500">100+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Projects Completed</div>
+                <div className="text-3xl font-bold text-green-500">1000+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Users Worldwide</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-3xl font-bold text-red-500">🔥</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Debug Dashboard</div>
+              </div>
+            </motion.div>
+
+            {/* Featured Projects Highlights */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0 }}
+              className="flex flex-wrap justify-center lg:justify-start gap-4"
+            >
+              <div className="px-4 py-2 bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-300 dark:border-red-700 rounded-full">
+                <span className="text-sm font-medium text-red-700 dark:text-red-300">🐛 ASP.NET Debug Dashboard</span>
+              </div>
+              <div className="px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-300 dark:border-blue-700 rounded-full">
+                <span className="text-sm font-medium text-blue-700 dark:text-blue-300">🔧 .NET Tools (30+)</span>
+              </div>
+              <div className="px-4 py-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-300 dark:border-green-700 rounded-full">
+                <span className="text-sm font-medium text-green-700 dark:text-green-300">♟️ Chess Game</span>
               </div>
             </motion.div>
 
@@ -168,7 +190,7 @@ const Hero = () => {
             >
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
-                <span>Israel</span>
+                <span>Israel 🇮🇱</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4" />
@@ -176,7 +198,7 @@ const Hero = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span>Open to opportunities</span>
+                <span>Open to ASP.NET opportunities</span>
               </div>
             </motion.div>
 
@@ -199,13 +221,23 @@ const Hero = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="/resume.pdf"
+                href="https://github.com/eladser/AspNetDebugDashboard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold rounded-xl hover:border-blue-500 hover:text-blue-500 transition-all duration-300"
+                className="flex items-center px-8 py-4 border-2 border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 font-semibold rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300"
               >
-                <Download className="w-5 h-5 mr-2" />
-                Download Resume
+                🐛 Debug Dashboard
+              </motion.a>
+              
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://eladser.github.io/.net-tools"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-8 py-4 border-2 border-blue-300 dark:border-blue-600 text-blue-600 dark:text-blue-400 font-semibold rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300"
+              >
+                🔧 .NET Tools
               </motion.a>
             </motion.div>
 
@@ -267,16 +299,16 @@ const Hero = () => {
                 </div>
               </motion.div>
 
-              {/* Floating Elements */}
+              {/* Floating Elements - Updated with Debug Theme */}
               <motion.div
                 animate={{ 
                   y: [0, -10, 0],
                   rotate: [0, 5, 0]
                 }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -top-6 -right-6 w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center shadow-lg"
+                className="absolute -top-6 -right-6 w-16 h-16 bg-red-400 rounded-2xl flex items-center justify-center shadow-lg"
               >
-                <span className="text-2xl">⚡</span>
+                <span className="text-2xl">🐛</span>
               </motion.div>
               
               <motion.div
@@ -285,9 +317,9 @@ const Hero = () => {
                   x: [0, -5, 0]
                 }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute -bottom-4 -left-4 w-12 h-12 bg-green-400 rounded-xl flex items-center justify-center shadow-lg"
+                className="absolute -bottom-4 -left-4 w-12 h-12 bg-blue-400 rounded-xl flex items-center justify-center shadow-lg"
               >
-                <span className="text-xl">🚀</span>
+                <span className="text-xl">🔧</span>
               </motion.div>
               
               <motion.div
@@ -296,9 +328,21 @@ const Hero = () => {
                   rotate: [0, 180, 360]
                 }}
                 transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-                className="absolute top-1/2 -left-8 w-8 h-8 bg-pink-400 rounded-full flex items-center justify-center shadow-lg"
+                className="absolute top-1/2 -left-8 w-8 h-8 bg-green-400 rounded-full flex items-center justify-center shadow-lg"
               >
-                <span className="text-sm">💡</span>
+                <span className="text-sm">⚡</span>
+              </motion.div>
+
+              {/* New ASP.NET themed floating element */}
+              <motion.div
+                animate={{ 
+                  y: [0, -8, 0],
+                  rotate: [0, -5, 0]
+                }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                className="absolute top-1/4 -right-2 w-10 h-10 bg-purple-400 rounded-lg flex items-center justify-center shadow-lg"
+              >
+                <span className="text-lg">🚀</span>
               </motion.div>
             </div>
           </motion.div>
