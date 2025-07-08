@@ -268,7 +268,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Profile Image */}
+          {/* Right Content - Animated Programmer GIF */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -289,13 +289,17 @@ const Hero = () => {
                 className="absolute -inset-8 rounded-full border-2 border-dotted border-purple-300 dark:border-purple-700 opacity-20"
               />
 
-              {/* Profile Image Container */}
+              {/* Animated Programmer GIF Container */}
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 className="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl bg-gradient-to-br from-blue-400 to-purple-500 p-1"
               >
-                <div className="w-full h-full rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-6xl font-bold text-gray-600 dark:text-gray-300">
-                  ES
+                <div className="w-full h-full rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif"
+                    alt="Animated Programmer"
+                    className="w-full h-full object-cover rounded-full"
+                  />
                 </div>
               </motion.div>
 
