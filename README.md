@@ -12,41 +12,6 @@
 
 ---
 
-## 🚀 **Featured Projects**
-
-- **🐛 [ASP.NET Debug Dashboard](https://github.com/eladser/AspNetDebugDashboard)** - Laravel Telescope for .NET Core
-- **🔧 [.NET Tools](https://eladser.github.io/.net-tools)** - 30+ professional developer utilities
-- **♟️ [Another Chess](https://github.com/eladser/another_chess)** - Modern chess game with AI
-- **🎮 [WoW Tools](https://github.com/eladser/wow-tools)** - World of Warcraft utilities
-
----
-
-## 🛠️ **Tech Stack**
-
-- **Frontend**: React 18, Tailwind CSS, Framer Motion, Vite
-- **Deployment**: GitHub Pages with automated CI/CD
-- **Performance**: 95+ Lighthouse Score, Mobile-first design
-
----
-
-## 🏁 **Quick Start**
-
-```bash
-# Clone and install
-git clone https://github.com/eladser/portfolio.git
-cd portfolio
-npm install
-
-# Development
-npm run dev
-
-# Build & Deploy
-npm run build
-npm run deploy
-```
-
----
-
 ## 📧 **Contact**
 
 **Elad Ser** - ASP.NET Core Specialist & Debug Tools Creator
@@ -59,10 +24,6 @@ npm run deploy
 ---
 
 <div align="center">
-
-**⭐ If you find this portfolio inspiring, please consider giving it a star!**
-
-**Built with ❤️ using React, Tailwind CSS, and Framer Motion**
 
 *© 2025 Elad Ser - ASP.NET Core Specialist*
 
