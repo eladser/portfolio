@@ -1,1 +1,60 @@
-import React from 'react';\n\nconst App = () => {\n  return (\n    <div className='min-h-screen bg-gray-900 text-white flex items-center justify-center'>\n      <div className='text-center space-y-8'>\n        <div className='w-24 h-24 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg'>\n          <span className='text-white font-bold text-2xl'>ES</span>\n        </div>\n        \n        <div className='space-y-4'>\n          <h1 className='text-6xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent'>\n            Elad Ser\n          </h1>\n          <p className='text-2xl text-gray-400'>\n            Full Stack Developer\n          </p>\n          <p className='text-lg text-gray-500 max-w-2xl mx-auto'>\n            Building modern web applications with React, .NET, and cutting-edge technologies.\n          </p>\n        </div>\n\n        <div className='flex justify-center space-x-6'>\n          <a \n            href='https://github.com/eladser' \n            target='_blank' \n            rel='noopener noreferrer'\n            className='px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors'\n          >\n            GitHub\n          </a>\n          <a \n            href='https://eladser.github.io/.net-tools' \n            target='_blank' \n            rel='noopener noreferrer'\n            className='px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors'\n          >\n            .NET Tools\n          </a>\n        </div>\n\n        <div className='text-sm text-gray-600'>\n          <p>Built with React and Tailwind CSS</p>\n        </div>\n      </div>\n    </div>\n  );\n};\n\nexport default App;"
+import React, { useState, useEffect } from 'react';
+import Hero from './components/Hero';
+import About from './components/About';
+import Projects from './components/Projects';
+import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Contact from './components/Contact';
+import Navigation from './components/Navigation';
+import ParticleBackground from './components/ParticleBackground';
+import LoadingScreen from './components/LoadingScreen';
+import ScrollToTop from './components/ScrollToTop';
+
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    // Apply dark mode class to document
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${
+      darkMode ? 'dark bg-gray-900 text-white' : 'bg-white text-gray-900'
+    }`}>
+      <ParticleBackground />
+      <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
+      
+      <main className="relative z-10">
+        <Hero />
+        <About />
+        <Projects />
+        <Skills />
+        <Experience />
+        <Contact />
+      </main>
+      
+      <ScrollToTop />
+    </div>
+  );
+};
+
+export default App;
