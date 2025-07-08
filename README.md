@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![GitHub Pages](https://img.shields.io/badge/Deployed_on-GitHub_Pages-success?style=for-the-badge&logo=github)](https://eladser.github.io/portfolio)
 
-**A modern, responsive portfolio website showcasing my work as a Full Stack Developer.**
+**A modern, responsive portfolio website showcasing my work as a Full Stack Developer specializing in ASP.NET Core and developer tools.**
 
 ---
 
@@ -73,24 +73,41 @@ Explore my projects, skills, and professional experience in an interactive, beau
 
 ## 🚀 **Featured Projects**
 
-### 1. **.NET Tools** - *Developer Toolkit*
+### 🔥 **1. ASP.NET Debug Dashboard** - *Laravel Telescope for .NET*
+- **Developer Debugging Tool** inspired by Laravel Telescope
+- **Real-time Monitoring** of HTTP requests, database queries, and exceptions
+- **Performance Profiling** with detailed timing and memory metrics
+- **Production Ready** with configurable data retention and filtering
+- **GitHub**: [ASP.NET Debug Dashboard](https://github.com/eladser/AspNetDebugDashboard)
+
+### 🔧 **2. .NET Tools** - *Professional Developer Toolkit*
 - **30+ Professional Tools** for .NET development
-- **100% Client-Side** processing for privacy
-- **Global Usage** by developers worldwide
-- **95+ Lighthouse Score** for performance
+- **100% Client-Side** processing for privacy and security
+- **Global Usage** by thousands of developers worldwide
+- **95+ Lighthouse Score** for optimal performance
 - **Live Demo**: [.NET Tools](https://eladser.github.io/.net-tools)
+- **GitHub**: [.NET Tools Repository](https://github.com/eladser/.net-tools)
 
-### 2. **WEM Dashboard** - *Enterprise Application*
-- **Full Stack Solution** with .NET 8 and React
-- **Real-time Monitoring** with SignalR WebSockets
-- **Role-based Access Control** for security
-- **Energy Management** for industrial applications
+### ♟️ **3. Another Chess** - *Modern Chess Game*
+- **Interactive Chess Game** with smooth drag-and-drop gameplay
+- **AI Opponent** with multiple difficulty levels
+- **Multiplayer Support** for playing with friends online
+- **Responsive Design** optimized for desktop and mobile
+- **Modern UI** with beautiful animations and effects
+- **GitHub**: [Another Chess](https://github.com/eladser/another_chess)
 
-### 3. **Portfolio Website** - *This Site*
+### 🎮 **4. WoW Tools** - *World of Warcraft Utilities*
+- **Log Analysis Tools** for raid and dungeon performance
+- **M+ Calculator** for Mythic+ dungeon scoring
+- **Character Utilities** for gear optimization and planning
+- **GitHub**: [WoW Tools](https://github.com/eladser/wow-tools)
+
+### 🌐 **5. Portfolio Website** - *This Site*
 - **Modern React Architecture** with performance focus
-- **Framer Motion Animations** for engaging UX
+- **Framer Motion Animations** for engaging user experience
 - **Dark/Light Mode** with preference persistence
-- **Mobile-First Design** for all devices
+- **Mobile-First Design** responsive across all devices
+- **GitHub**: [Portfolio Repository](https://github.com/eladser/portfolio)
 
 ---
 
@@ -184,11 +201,11 @@ Update your personal information in:
 - **Experience**: `src/components/Experience.jsx`
 - **Contact**: `src/components/Contact.jsx`
 
-### **Adding New Sections**
-1. Create new component in `src/components/`
-2. Import and add to `src/App.jsx`
-3. Update navigation in `Navigation.jsx`
-4. Style with Tailwind CSS classes
+### **Adding New Projects**
+1. Create project data object in `Projects.jsx`
+2. Add project images to `public/images/`
+3. Update project filtering categories if needed
+4. Test responsive design on all devices
 
 ---
 
@@ -226,10 +243,32 @@ npm run deploy
 
 ---
 
+## 💼 **Professional Focus Areas**
+
+### **ASP.NET Core Expertise**
+- Advanced debugging and profiling tools
+- Real-time monitoring solutions
+- Performance optimization techniques
+- Production-ready application development
+
+### **Developer Tools Creation**
+- Building tools that solve real developer pain points
+- Client-side processing for privacy and security
+- Cross-platform compatibility and accessibility
+- Open-source community contributions
+
+### **Full-Stack Development**
+- Modern React applications with TypeScript
+- Responsive design and mobile-first approach
+- Progressive Web App (PWA) development
+- API design and integration
+
+---
+
 ## 🧪 **Browser Support**
 
 | Browser | Version |
-|---------|--------|
+|---------|---------|
 | Chrome | 80+ |
 | Firefox | 75+ |
 | Safari | 13+ |
@@ -274,12 +313,13 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📧 **Contact**
 
-**Elad Ser** - Full Stack Developer
+**Elad Ser** - Full Stack Developer & ASP.NET Core Specialist
 
 - 🌐 **Portfolio**: [eladser.github.io/portfolio](https://eladser.github.io/portfolio)
-- 💼 **LinkedIn**: [linkedin.com/in/eladser](https://linkedin.com/in/eladser)
-- 📧 **Email**: elad@example.com
+- 💼 **LinkedIn**: [linkedin.com/in/elad-sertshuk](https://linkedin.com/in/elad-sertshuk)
+- 📧 **Email**: elad.ser@gmail.com
 - 🐙 **GitHub**: [github.com/eladser](https://github.com/eladser)
+- 🔧 **Latest Project**: [ASP.NET Debug Dashboard](https://github.com/eladser/AspNetDebugDashboard)
 
 ---
 
@@ -290,6 +330,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **Framer Motion** - For powerful animation capabilities
 - **Lucide** - For beautiful icons
 - **GitHub** - For free hosting and excellent developer tools
+- **ASP.NET Core Team** - For the incredible framework that powers my debugging tools
+- **Laravel Team** - For Telescope inspiration for the Debug Dashboard
 - **Open Source Community** - For inspiration and resources
 
 ---
@@ -302,6 +344,25 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - 🔒 **Secure**: No data collection or tracking
 - 🚀 **Fast**: Optimized loading and interactions
 - 🎨 **Modern**: Latest web technologies
+- 🔧 **Developer Tools**: 30+ tools serving thousands of users
+- 🐛 **Debug Dashboard**: Advanced ASP.NET Core monitoring
+
+---
+
+## 🎯 **Recent Updates**
+
+### **July 2025**
+- ✨ **NEW**: Added ASP.NET Debug Dashboard project
+- 🎮 **NEW**: Added Another Chess game project  
+- 🔧 **UPDATED**: Enhanced .NET Tools section
+- 📱 **IMPROVED**: Mobile responsiveness and performance
+- 🎨 **REFRESHED**: Updated color scheme and animations
+
+### **Focus Areas for 2025**
+- 🔍 Expanding ASP.NET Debug Dashboard with advanced profiling
+- 📦 Publishing NuGet packages for developer tools
+- 🎮 Adding multiplayer features to Chess game
+- 🌐 Contributing more to open-source community
 
 ---
 
@@ -321,6 +382,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **Built with ❤️ using React, Tailwind CSS, and Framer Motion**
 
-*© 2025 Elad Ser - Full Stack Developer*
+*© 2025 Elad Ser - Full Stack Developer & ASP.NET Core Specialist*
 
 </div>
