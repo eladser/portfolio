@@ -69,7 +69,7 @@ const Contact = () => {
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/elad-sertshuk',
+      href: 'https://linkedin.com/in/eladser',
       icon: Linkedin,
       color: 'hover:text-blue-600',
       description: 'Connect professionally'
