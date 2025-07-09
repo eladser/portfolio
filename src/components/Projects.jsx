@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Star, Users, Activity, Calendar, Code, Globe, Wrench, Bug, GamepadIcon, Database } from 'lucide-react';
+import { ExternalLink, Github, Star, Users, Activity, Calendar, Code, Globe, Wrench, Bug, GamepadIcon, Database, FileText } from 'lucide-react';
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -71,6 +71,35 @@ const Projects = () => {
     },
     {
       id: 3,
+      title: 'SimpleConfigDiff',
+      description: 'Fast, browser-based configuration file comparison tool with intelligent semantic analysis. Compare JSON, YAML, XML, INI, TOML, and other config formats with side-by-side, tree, and unified diff views. Features dark mode, real-time processing, and export capabilities.',
+      image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=500&fit=crop&q=80',
+      technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'JavaScript', 'HTML5', 'CSS3'],
+      category: 'tools',
+      featured: false,
+      new: true,
+      links: {
+        live: 'https://eladser.github.io/SimpleConfigDiff/',
+        github: 'https://github.com/eladser/SimpleConfigDiff',
+      },
+      stats: {
+        formats: '12+ Formats',
+        processing: 'Client-side',
+        status: 'Production Ready',
+        views: '3 Diff Views'
+      },
+      highlights: [
+        'Multi-format Support',
+        'Semantic Analysis',
+        'Side-by-side Comparison',
+        'Real-time Processing',
+        'Dark Mode Support',
+        'Export Options',
+        'Zero Data Transfer'
+      ]
+    },
+    {
+      id: 4,
       title: 'Another Chess',
       description: 'A modern, sleek chess game website with AI opponent and multiplayer support. Features smooth drag-and-drop gameplay, multiple difficulty levels, beautiful animations, and responsive design for desktop and mobile devices.',
       image: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=800&h=500&fit=crop&q=80',
@@ -99,7 +128,7 @@ const Projects = () => {
       ]
     },
     {
-      id: 4,
+      id: 5,
       title: 'WoW Tools',
       description: 'A collection of useful tools for World of Warcraft players including log analysis, M+ tools, and raid utilities. Built to help players optimize their gameplay and track performance across different game modes.',
       image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop&q=80',
@@ -124,7 +153,7 @@ const Projects = () => {
       ]
     },
     {
-      id: 5,
+      id: 6,
       title: 'WEM Dashboard',
       description: 'Enterprise Web Energy Management dashboard built with .NET 8 and React. Features real-time monitoring, WebSocket communication, role-based access control, and comprehensive energy analytics for industrial applications.',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop&q=80',
@@ -199,7 +228,7 @@ const Projects = () => {
               Featured Projects
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              A showcase of my latest work including ASP.NET debugging tools, developer utilities, games, and enterprise solutions
+              A showcase of my latest work including ASP.NET debugging tools, configuration diff utilities, developer tools, games, and enterprise solutions
             </p>
           </motion.div>
 
