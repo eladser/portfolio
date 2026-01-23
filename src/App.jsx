@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import ErrorBoundary from './components/ErrorBoundary';
+import LoadingExperience from './components/LoadingExperience';
 
 const Portfolio = lazy(() => import('./components/Portfolio'));
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -14,18 +15,24 @@ const PageLoader = () => (
 );
 
 const App = () => {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <ErrorBoundary>
       <LazyMotion features={domAnimation} strict>
-        <BrowserRouter basename="/portfolio">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Portfolio />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          {import.meta.env.DEV && <PerformanceMonitor />}
-        </BrowserRouter>
+        {!loaded && <LoadingExperience onComplete={() => setLoaded(true)} />}
+
+        {loaded && (
+          <BrowserRouter basename="/portfolio">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Portfolio />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            {import.meta.env.DEV && <PerformanceMonitor />}
+          </BrowserRouter>
+        )}
       </LazyMotion>
     </ErrorBoundary>
   );

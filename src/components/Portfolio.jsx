@@ -3,6 +3,13 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github } from 'lucide-react';
 import TechTimeline from './TechTimeline';
 import GitHubActivity from './GitHubActivity';
+import CodeShowcase from './CodeShowcase';
+import TerminalComponent from './Terminal';
+import TechStackViz from './TechStackViz';
+import GitHubHeatmap from './GitHubHeatmap';
+import SoundToggle from './SoundToggle';
+import useEasterEggs from '../hooks/useEasterEggs';
+import useSoundEffects from '../hooks/useSoundEffects';
 
 const skills = [
   { name: 'C#', color: 'purple' },
@@ -327,6 +334,10 @@ const Portfolio = () => {
 
   const isDark = true;
 
+  // Easter eggs and sound effects
+  const { konamiActivated } = useEasterEggs();
+  const { playSound } = useSoundEffects();
+
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -472,7 +483,7 @@ const Portfolio = () => {
                 ref={consoleCloseButtonRef}
                 onClick={() => setShowConsole(false)}
                 aria-label="Close debug console"
-                className="hover:opacity-70"
+                className="text-zinc-400 hover:text-zinc-300 transition-colors"
               >
                 <X size={14} aria-hidden="true" />
               </button>
@@ -491,14 +502,14 @@ const Portfolio = () => {
                   transition={{ delay: i * 0.1 }}
                   className="flex gap-2"
                 >
-                  <span className="opacity-40">{log.time}</span>
+                  <span className="text-zinc-400">{log.time}</span>
                   <span className={
                     log.type === 'success' ? 'text-green-400' :
                     log.type === 'warn' ? 'text-yellow-400' :
                     log.type === 'error' ? 'text-red-400' :
                     'text-blue-400'
                   }>[{log.type.toUpperCase()}]</span>
-                  <span className="opacity-80">{log.msg}</span>
+                  <span className="text-zinc-300">{log.msg}</span>
                 </m.div>
               ))}
             </div>
@@ -518,7 +529,11 @@ const Portfolio = () => {
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setView(item.id)}
+              onClick={() => {
+                playSound('click');
+                setView(item.id);
+              }}
+              onMouseEnter={() => playSound('hover')}
               aria-current={view === item.id ? 'page' : undefined}
               className={`relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === item.id
@@ -553,7 +568,7 @@ const Portfolio = () => {
               className="relative h-full w-full"
             >
               <header role="banner" className="absolute top-0 left-0 right-0 p-8 flex items-center justify-between z-10">
-                <div className="relative">
+                <div className="relative flex items-center gap-3">
                   <button
                     onClick={() => setShowShortcuts(!showShortcuts)}
                     aria-label="Show keyboard shortcuts"
@@ -563,6 +578,7 @@ const Portfolio = () => {
                   >
                     ?
                   </button>
+                  <SoundToggle isDark={isDark} />
                 <AnimatePresence>
                   {showShortcuts && (
                     <m.div
@@ -590,7 +606,7 @@ const Portfolio = () => {
               </div>
               <span className="font-mono text-xs tracking-wider text-zinc-400">
                 {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
-                <span className="ml-1.5 opacity-50">IL</span>
+                <span className="ml-1.5 text-zinc-500">IL</span>
               </span>
             </header>
 
@@ -628,11 +644,15 @@ const Portfolio = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <h1 className={`text-5xl font-bold tracking-tight mb-3 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                    <h1 className={`text-5xl font-bold tracking-tight mb-3`}>
                       <button
                         onClick={handleNameClick}
                         onKeyDown={handleNameKeyDown}
-                        className="cursor-default select-none hover:opacity-80 transition-opacity"
+                        className={`cursor-default select-none transition-colors ${
+                          isDark
+                            ? 'text-white hover:text-zinc-200'
+                            : 'text-zinc-900 hover:text-zinc-700'
+                        }`}
                         aria-label="Click 5 times to open debug console"
                       >
                         Elad Sertshuk
@@ -755,8 +775,8 @@ const Portfolio = () => {
                 <span>Available for work</span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="font-mono opacity-50">react + vite + tailwind</span>
-                <span className="font-mono">Israel</span>
+                <span className="font-mono text-zinc-500">react + vite + tailwind</span>
+                <span className="font-mono text-zinc-400">Israel</span>
               </div>
             </footer>
           </m.div>
@@ -884,6 +904,61 @@ const Portfolio = () => {
                   className="mb-8"
                 >
                   <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                    How to use it
+                  </h3>
+                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
+                    Quick setup in your ASP.NET Core app
+                  </p>
+
+                  <CodeShowcase
+                    isDark={isDark}
+                    title="Debug Dashboard Setup"
+                    description="Add real-time HTTP monitoring to your .NET app"
+                    files={[
+                      {
+                        name: 'Program.cs',
+                        language: 'csharp',
+                        code: `var builder = WebApplication.CreateBuilder(args);
+
+// Add SignalR for real-time updates
+builder.Services.AddSignalR();
+
+var app = builder.Build();
+
+// Add Debug Dashboard middleware
+app.UseMiddleware<DebugDashboardMiddleware>();
+
+// Map the SignalR hub
+app.MapHub<DebugHub>("/debug-hub");
+
+app.Run();`
+                      },
+                      {
+                        name: 'appsettings.json',
+                        language: 'json',
+                        code: `{
+  "DebugDashboard": {
+    "Enabled": true,
+    "Port": 5000,
+    "EnableHttpLogging": true,
+    "EnableDatabaseLogging": true,
+    "EnableCacheLogging": true
+  }
+}`
+                      }
+                    ]}
+                    highlightLines={[7, 10]}
+                    demoUrl="https://github.com/eladser/debug-dashboard"
+                  />
+                </m.div>
+
+                <m.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="mb-8"
+                >
+                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     What it looks like
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -896,7 +971,7 @@ const Portfolio = () => {
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
+                  transition={{ delay: 0.45 }}
                   className="mb-8"
                 >
                   <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
@@ -910,9 +985,25 @@ const Portfolio = () => {
                 </m.div>
 
                 <m.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="mb-8"
+                >
+                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                    Try the Terminal
+                  </h3>
+                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
+                    Interactive terminal with commands about me
+                  </p>
+
+                  <TerminalComponent isDark={isDark} />
+                </m.div>
+
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.55 }}
                   className={`text-center pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -1017,11 +1108,19 @@ const Portfolio = () => {
                   </m.div>
                 </div>
 
-                <div className="space-y-4 mt-10">
+                <div className="space-y-6 mt-10">
                   <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
+                  >
+                    <TechStackViz isDark={isDark} />
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 }}
                   >
                     <TechTimeline isDark={isDark} />
                   </m.div>
@@ -1029,7 +1128,15 @@ const Portfolio = () => {
                   <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <GitHubHeatmap isDark={isDark} username="eladser" />
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45 }}
                   >
                     <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
                   </m.div>
@@ -1059,6 +1166,27 @@ const Portfolio = () => {
         )}
         </AnimatePresence>
       </main>
+
+      {/* Konami Code Easter Egg Notification */}
+      <AnimatePresence>
+        {konamiActivated && (
+          <m.div
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 50 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl backdrop-blur-xl bg-purple-500/20 border-2 border-purple-500/50 shadow-2xl"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-3xl">🎮</span>
+              <div>
+                <div className="text-white font-bold text-lg">Konami Code Activated!</div>
+                <div className="text-purple-200 text-sm">Secret developer mode unlocked</div>
+              </div>
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
