@@ -68,9 +68,9 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch real GitHub data (optional)
+  // Fetch real GitHub data on mount if useRealData is true
   useEffect(() => {
-    if (!isExpanded || !useRealData) return;
+    if (!useRealData) return;
 
     const fetchGitHubData = async () => {
       setLoading(true);
@@ -113,7 +113,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
     };
 
     fetchGitHubData();
-  }, [isExpanded, username, useRealData]);
+  }, [username, useRealData]);
 
   // Helper to get relative time
   const getRelativeTime = (date) => {

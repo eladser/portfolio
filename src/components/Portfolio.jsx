@@ -3,7 +3,6 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github } from 'lucide-react';
 import TechTimeline from './TechTimeline';
 import GitHubActivity from './GitHubActivity';
-import AnalyticsDashboard from './AnalyticsDashboard';
 
 const skills = [
   { name: 'C#', color: 'purple' },
@@ -1033,14 +1032,6 @@ const Portfolio = () => {
                     transition={{ delay: 0.35 }}
                   >
                     <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <AnalyticsDashboard isDark={isDark} />
                   </m.div>
                 </div>
 
