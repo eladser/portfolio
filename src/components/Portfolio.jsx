@@ -520,7 +520,6 @@ const Portfolio = () => {
             <button
               key={item.id}
               onClick={() => setView(item.id)}
-              aria-label={`Navigate to ${item.label}`}
               aria-current={view === item.id ? 'page' : undefined}
               className={`relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === item.id
@@ -630,16 +629,15 @@ const Portfolio = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <h1
-                      role="button"
-                      tabIndex="0"
-                      onClick={handleNameClick}
-                      onKeyDown={handleNameKeyDown}
-                      className={`text-5xl font-bold tracking-tight mb-3 cursor-default select-none ${
-                        isDark ? 'text-white' : 'text-zinc-900'
-                      }`}
-                    >
-                      Elad Sertshuk
+                    <h1 className={`text-5xl font-bold tracking-tight mb-3 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                      <button
+                        onClick={handleNameClick}
+                        onKeyDown={handleNameKeyDown}
+                        className="cursor-default select-none hover:opacity-80 transition-opacity"
+                        aria-label="Click 5 times to open debug console"
+                      >
+                        Elad Sertshuk
+                      </button>
                     </h1>
                     <p className={`text-lg ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
                       Full-stack developer, mostly .NET
