@@ -1032,7 +1032,7 @@ const Portfolio = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 }}
                   >
-                    <GitHubActivity isDark={isDark} username="eladser" useRealData={false} />
+                    <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
                   </m.div>
 
                   <m.div
