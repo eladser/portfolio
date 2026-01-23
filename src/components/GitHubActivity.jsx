@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp, Github, GitCommit, GitFork, Star, AlertCircle } from 'lucide-react';
 
 /**
@@ -165,7 +165,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
       {/* Content */}
       <AnimatePresence>
         {isExpanded && (
-          <motion.div
+          <m.div
             id="github-content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -204,7 +204,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                 <>
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-4 mb-6">
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
@@ -218,9 +218,9 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
                         Contributions
                       </div>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
@@ -234,9 +234,9 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
                         Public Repos
                       </div>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
@@ -250,7 +250,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
                         Total Stars
                       </div>
-                    </motion.div>
+                    </m.div>
                   </div>
 
                   {/* Recent Repos */}
@@ -260,7 +260,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                     </h4>
                     <div className="space-y-3">
                       {data.repos.map((repo, index) => (
-                        <motion.div
+                        <m.div
                           key={repo.name}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -311,7 +311,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                               <span>{repo.forks}</span>
                             </div>
                           </div>
-                        </motion.div>
+                        </m.div>
                       ))}
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                     </h4>
                     <div className="space-y-2">
                       {data.recentCommits.map((commit, index) => (
-                        <motion.div
+                        <m.div
                           key={index}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -343,14 +343,14 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                               {commit.repo} • {commit.time}
                             </p>
                           </div>
-                        </motion.div>
+                        </m.div>
                       ))}
                     </div>
                   </div>
                 </>
               )}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

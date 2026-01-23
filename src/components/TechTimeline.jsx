@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 /**
@@ -136,7 +136,7 @@ const TechTimeline = ({ isDark = true }) => {
       {/* Timeline Content */}
       <AnimatePresence>
         {isExpanded && (
-          <motion.div
+          <m.div
             id="timeline-content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -159,7 +159,7 @@ const TechTimeline = ({ isDark = true }) => {
                   {timelineData.map((item, index) => {
                     const isFirst = index === 0;
                     return (
-                      <motion.div
+                      <m.div
                         key={item.year}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -231,7 +231,7 @@ const TechTimeline = ({ isDark = true }) => {
                             })}
                           </div>
                         </div>
-                      </motion.div>
+                      </m.div>
                     );
                   })}
                 </div>
@@ -256,7 +256,7 @@ const TechTimeline = ({ isDark = true }) => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

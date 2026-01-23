@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp, Eye, MapPin, Clock, TrendingUp } from 'lucide-react';
 
 /**
@@ -123,7 +123,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
       {/* Content */}
       <AnimatePresence>
         {isExpanded && (
-          <motion.div
+          <m.div
             id="analytics-content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -134,7 +134,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
             <div className={`px-6 py-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}>
               {/* Your Personal Stats */}
               {userVisit && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className={`mb-6 p-4 rounded-lg border-l-2 ${
@@ -169,12 +169,12 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               )}
 
               {/* Overview Stats */}
               <div className="grid grid-cols-4 gap-4 mb-6">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
@@ -189,9 +189,9 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                   <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     {analytics.totalVisits}
                   </div>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
@@ -206,9 +206,9 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                   <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     {analytics.uniqueVisitors}
                   </div>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
@@ -223,9 +223,9 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                   <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     {analytics.avgSessionTime}
                   </div>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
@@ -238,11 +238,11 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                     <span className="text-xs">Growth</span>
                   </div>
                   <div className="text-2xl font-bold text-emerald-400">+23%</div>
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Weekly Chart */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
@@ -256,7 +256,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                     const maxVisits = Math.max(...analytics.visitsByDay.map((d) => d.visits));
                     const height = (day.visits / maxVisits) * 100;
                     return (
-                      <motion.div
+                      <m.div
                         key={day.day}
                         initial={{ height: 0 }}
                         animate={{ height: `${height}%` }}
@@ -279,14 +279,14 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                         <span className={`text-xs mt-2 ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
                           {day.day}
                         </span>
-                      </motion.div>
+                      </m.div>
                     );
                   })}
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Top Locations */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
@@ -297,7 +297,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                 </h4>
                 <div className="space-y-2">
                   {analytics.topLocations.map((location, index) => (
-                    <motion.div
+                    <m.div
                       key={location.country}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -321,7 +321,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                             isDark ? 'bg-white/5' : 'bg-black/5'
                           } overflow-hidden`}
                         >
-                          <motion.div
+                          <m.div
                             initial={{ width: 0 }}
                             animate={{ width: `${(location.visits / analytics.totalVisits) * 100}%` }}
                             transition={{ delay: 0.6 + index * 0.05, duration: 0.5 }}
@@ -329,13 +329,13 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                           />
                         </div>
                       </div>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Top Pages */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -345,7 +345,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                 </h4>
                 <div className="space-y-2">
                   {analytics.topPages.map((page, index) => (
-                    <motion.div
+                    <m.div
                       key={page.name}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -365,10 +365,10 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                           {page.percentage}%
                         </span>
                       </div>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
 
               {/* Privacy Note */}
               <div className={`mt-6 pt-4 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}>
@@ -377,7 +377,7 @@ const AnalyticsDashboard = ({ isDark = true }) => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>
