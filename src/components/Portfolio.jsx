@@ -360,8 +360,14 @@ const Portfolio = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#0a0a0a] text-white">
-      {/* Grid pattern */}
+      {/* Skip to main content - accessibility */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50">
+        Skip to main content
+      </a>
+
+      {/* Grid pattern - decorative */}
       <div
+        aria-hidden="true"
         className="fixed inset-0 pointer-events-none"
         style={{
           backgroundImage: `
@@ -372,8 +378,9 @@ const Portfolio = () => {
         }}
       />
 
-      {/* Fade edges - makes grid fade out towards edges */}
+      {/* Fade edges - decorative */}
       <div
+        aria-hidden="true"
         className="fixed inset-0 pointer-events-none"
         style={{
           background: 'radial-gradient(ellipse at center, transparent 20%, #0a0a0a 70%)'
@@ -384,6 +391,9 @@ const Portfolio = () => {
       <AnimatePresence>
         {showConsole && (
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="console-title"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -395,14 +405,23 @@ const Portfolio = () => {
               isDark ? 'border-white/10 bg-white/5' : 'border-black/10 bg-black/5'
             }`}>
               <div className="flex items-center gap-2">
-                <Terminal size={14} />
-                <span className="text-xs font-mono">debug.console</span>
+                <Terminal size={14} aria-hidden="true" />
+                <span id="console-title" className="text-xs font-mono">debug.console</span>
               </div>
-              <button onClick={() => setShowConsole(false)} className="hover:opacity-70">
-                <X size={14} />
+              <button
+                onClick={() => setShowConsole(false)}
+                aria-label="Close debug console"
+                className="hover:opacity-70"
+              >
+                <X size={14} aria-hidden="true" />
               </button>
             </div>
-            <div className="p-3 font-mono text-xs space-y-1 max-h-48 overflow-y-auto">
+            <div
+              role="log"
+              aria-live="polite"
+              aria-atomic="false"
+              className="p-3 font-mono text-xs space-y-1 max-h-48 overflow-y-auto"
+            >
               {debugMessages.map((log, i) => (
                 <motion.div
                   key={i}
@@ -427,7 +446,7 @@ const Portfolio = () => {
       </AnimatePresence>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+      <nav role="navigation" aria-label="Main navigation" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -440,6 +459,8 @@ const Portfolio = () => {
             <button
               key={item.id}
               onClick={() => setView(item.id)}
+              aria-label={`Navigate to ${item.label}`}
+              aria-current={view === item.id ? 'page' : undefined}
               className={`relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === item.id
                   ? isDark ? 'text-white' : 'text-black'
@@ -461,25 +482,28 @@ const Portfolio = () => {
         </motion.div>
       </nav>
 
-      <AnimatePresence mode="wait">
-        {view === 'home' && (
-          <motion.div
-            key="home"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="relative h-full w-full"
-          >
-            {/* Header */}
-            <header className="absolute top-0 left-0 right-0 p-8 flex items-center justify-between z-10">
-              <div className="relative">
-                <button
-                  onClick={() => setShowShortcuts(!showShortcuts)}
-                  className="w-6 h-6 rounded-full border border-zinc-700 text-zinc-600 hover:text-zinc-400 hover:border-zinc-500 text-xs font-mono transition-colors"
-                >
-                  ?
-                </button>
+      <main id="main-content">
+        <AnimatePresence mode="wait">
+          {view === 'home' && (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="relative h-full w-full"
+            >
+              {/* Header */}
+              <header role="banner" className="absolute top-0 left-0 right-0 p-8 flex items-center justify-between z-10">
+                <div className="relative">
+                  <button
+                    onClick={() => setShowShortcuts(!showShortcuts)}
+                    aria-label="Show keyboard shortcuts"
+                    aria-expanded={showShortcuts}
+                    className="w-6 h-6 rounded-full border border-zinc-700 text-zinc-600 hover:text-zinc-400 hover:border-zinc-500 text-xs font-mono transition-colors"
+                  >
+                    ?
+                  </button>
                 <AnimatePresence>
                   {showShortcuts && (
                     <motion.div
@@ -522,7 +546,10 @@ const Portfolio = () => {
                 >
                   <img
                     src={`${import.meta.env.BASE_URL}profile.jpg`}
-                    alt="Elad Ser"
+                    alt="Elad Sertshuk, Full-Stack Developer specializing in .NET"
+                    width="160"
+                    height="160"
+                    loading="eager"
                     className={`w-40 h-40 rounded-2xl object-cover ${
                       isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
                     }`}
@@ -597,13 +624,14 @@ const Portfolio = () => {
                       href="https://github.com/eladser"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="GitHub profile (opens in new tab)"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
                           ? 'text-zinc-500 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                       </svg>
                       <span className="text-sm font-mono relative">
@@ -615,13 +643,14 @@ const Portfolio = () => {
                       href="https://linkedin.com/in/eladser"
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="LinkedIn profile (opens in new tab)"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
                           ? 'text-zinc-500 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                         <rect x="2" y="9" width="4" height="12" />
                         <circle cx="4" cy="4" r="2" />
@@ -633,13 +662,14 @@ const Portfolio = () => {
                     </a>
                     <a
                       href="mailto:elad.ser@gmail.com"
+                      aria-label="Email me at elad.ser@gmail.com"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
                           ? 'text-zinc-500 hover:text-white hover:bg-white/5'
                           : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                         <polyline points="22,6 12,13 2,6" />
                       </svg>
@@ -654,7 +684,7 @@ const Portfolio = () => {
             </div>
 
             {/* Footer */}
-            <footer className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-zinc-600">
+            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-zinc-600">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                 <span>Available for work</span>
@@ -951,7 +981,8 @@ const Portfolio = () => {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </main>
     </div>
   );
 };

@@ -1,0 +1,16 @@
+{
+  "name": "Elad Sertshuk Portfolio",
+  "short_name": "Elad Sertshuk",
+  "description": "Full-stack .NET developer portfolio",
+  "start_url": "/portfolio/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/portfolio/profile.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

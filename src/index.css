@@ -43,3 +43,82 @@
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
+
+/* Accessibility Utilities */
+@layer utilities {
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus not sr-only - for skip links */
+  .focus\:not-sr-only:focus {
+    position: absolute;
+    width: auto;
+    height: auto;
+    padding: 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: rgb(168, 85, 247);
+    color: white;
+    z-index: 9999;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Global Focus Indicators - WCAG 2.4.7 */
+@layer base {
+  /* Ensure all focusable elements have visible focus */
+  *:focus-visible {
+    outline: 2px solid rgb(168, 85, 247);
+    outline-offset: 2px;
+  }
+
+  /* Enhanced focus for interactive elements */
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid rgb(168, 85, 247);
+    outline-offset: 2px;
+  }
+
+  /* Input focus with clear indicator */
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid rgb(168, 85, 247);
+    outline-offset: 0;
+    border-color: rgb(168, 85, 247) !important;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
