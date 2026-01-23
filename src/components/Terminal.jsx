@@ -217,7 +217,7 @@ Status: ☕ Ready for coffee and code!
       {/* Terminal Header */}
       <div
         className={`flex items-center gap-3 px-4 py-3 border-b ${
-          isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+          isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
         }`}
       >
         <div className="flex gap-2">
@@ -225,7 +225,7 @@ Status: ☕ Ready for coffee and code!
           <div className="w-3 h-3 rounded-full bg-yellow-500" />
           <div className="w-3 h-3 rounded-full bg-green-500" />
         </div>
-        <div className={`flex items-center gap-2 text-sm ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+        <div className={`flex items-center gap-2 text-sm ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
           <TerminalIcon size={16} aria-hidden="true" />
           <span>terminal</span>
         </div>

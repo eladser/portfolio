@@ -38,7 +38,11 @@ const useEasterEggs = () => {
         setSecretMode(true);
         // Show notification
         console.log('🎮 Konami Code Activated!');
-        // You could also trigger confetti, change theme, etc.
+        console.log('Secret message: You found the easter egg! Keep exploring...');
+        // Auto-dismiss notification after 3 seconds
+        setTimeout(() => {
+          setKonamiActivated(false);
+        }, 3000);
         break;
       case 'matrix':
         // Trigger matrix rain effect

@@ -41,10 +41,16 @@ const useSoundEffects = () => {
   }, [soundEnabled]);
 
   // Generate sound using Web Audio API
-  const generateSound = useCallback((type) => {
+  const generateSound = useCallback(async (type) => {
     if (!audioContextRef.current || !soundEnabled) return;
 
     const ctx = audioContextRef.current;
+
+    // Resume AudioContext if it's suspended (required for user interaction)
+    if (ctx.state === 'suspended') {
+      await ctx.resume();
+    }
+
     const oscillator = ctx.createOscillator();
     const gainNode = ctx.createGain();
 

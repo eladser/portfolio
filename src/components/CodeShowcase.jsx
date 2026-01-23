@@ -71,7 +71,7 @@ const CodeShowcase = ({
   return (
     <div
       className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
       }`}
     >
       {/* Header */}
@@ -82,7 +82,7 @@ const CodeShowcase = ({
               {title}
             </h3>
             {description && (
-              <p className={`text-sm ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+              <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
                 {description}
               </p>
             )}
@@ -117,11 +117,11 @@ const CodeShowcase = ({
               className={`px-4 py-2 text-sm font-mono rounded-t-lg transition-colors ${
                 activeTab === index
                   ? isDark
-                    ? 'bg-white/[0.05] text-white border-t border-x border-white/10'
+                    ? 'bg-zinc-800 text-white border-t border-x border-white/10'
                     : 'bg-black/[0.05] text-zinc-900 border-t border-x border-black/10'
                   : isDark
-                  ? 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'
-                  : 'text-zinc-500 hover:text-zinc-700 hover:bg-black/[0.02]'
+                  ? 'text-gray-400 hover:text-zinc-300 hover:bg-zinc-900'
+                  : 'text-gray-400 hover:text-zinc-700 hover:bg-black/[0.02]'
               }`}
             >
               {file.name}
@@ -141,7 +141,7 @@ const CodeShowcase = ({
                 ? 'bg-green-500/20 text-green-400'
                 : 'bg-green-100 text-green-700'
               : isDark
-              ? 'bg-white/[0.05] text-zinc-400 hover:bg-white/[0.1] hover:text-white'
+              ? 'bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white'
               : 'bg-black/[0.05] text-zinc-600 hover:bg-black/[0.1] hover:text-zinc-900'
           }`}
           aria-label={copied ? 'Copied!' : 'Copy code'}
@@ -184,10 +184,10 @@ const CodeShowcase = ({
       {/* Live Demo Component */}
       {demoComponent && (
         <div className={`p-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}>
-          <div className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+          <div className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
             Live Demo
           </div>
-          <div className={`rounded-lg p-4 ${isDark ? 'bg-white/[0.02]' : 'bg-black/[0.02]'}`}>
+          <div className={`rounded-lg p-4 ${isDark ? 'bg-zinc-900' : 'bg-black/[0.02]'}`}>
             {demoComponent}
           </div>
         </div>

@@ -89,7 +89,7 @@ const LoadingExperience = ({ onComplete }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2 }}
                     className={`flex items-center gap-2 ${
-                      message.startsWith('✓') ? 'text-green-400 font-bold' : 'text-zinc-400'
+                      message.startsWith('✓') ? 'text-green-400 font-bold' : 'text-gray-300'
                     }`}
                   >
                     <span className="inline-block w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
@@ -101,11 +101,11 @@ const LoadingExperience = ({ onComplete }) => {
 
             {/* Progress Bar */}
             <div className="w-full">
-              <div className="flex items-center justify-between text-xs font-mono text-zinc-500 mb-2">
+              <div className="flex items-center justify-between text-xs font-mono text-gray-400 mb-2">
                 <span>Loading...</span>
                 <span>{Math.round(progress)}%</span>
               </div>
-              <div className="w-full h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+              <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                 <m.div
                   className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
                   initial={{ width: 0 }}

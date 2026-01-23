@@ -68,40 +68,40 @@ const TechStackViz = ({ isDark = true }) => {
 
   const categoryColors = {
     backend: {
-      bg: 'bg-purple-500/10',
+      bg: 'bg-purple-950',
       text: 'text-purple-400',
       bar: 'bg-purple-500',
-      border: 'border-purple-500/20',
+      border: 'border-purple-800',
     },
     frontend: {
-      bg: 'bg-blue-500/10',
+      bg: 'bg-blue-950',
       text: 'text-blue-400',
       bar: 'bg-blue-500',
-      border: 'border-blue-500/20',
+      border: 'border-blue-800',
     },
     database: {
-      bg: 'bg-green-500/10',
+      bg: 'bg-green-950',
       text: 'text-green-400',
       bar: 'bg-green-500',
-      border: 'border-green-500/20',
+      border: 'border-green-800',
     },
     cloud: {
-      bg: 'bg-cyan-500/10',
+      bg: 'bg-cyan-950',
       text: 'text-cyan-400',
       bar: 'bg-cyan-500',
-      border: 'border-cyan-500/20',
+      border: 'border-cyan-800',
     },
     devops: {
-      bg: 'bg-orange-500/10',
+      bg: 'bg-orange-950',
       text: 'text-orange-400',
       bar: 'bg-orange-500',
-      border: 'border-orange-500/20',
+      border: 'border-orange-800',
     },
     tools: {
-      bg: 'bg-pink-500/10',
+      bg: 'bg-pink-950',
       text: 'text-pink-400',
       bar: 'bg-pink-500',
-      border: 'border-pink-500/20',
+      border: 'border-pink-800',
     },
   };
 
@@ -115,7 +115,7 @@ const TechStackViz = ({ isDark = true }) => {
   return (
     <div
       className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
       }`}
     >
       {/* Header */}
@@ -125,7 +125,7 @@ const TechStackViz = ({ isDark = true }) => {
             <h3 className={`text-lg font-semibold mb-1 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
               Technology Stack
             </h3>
-            <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               {filteredStack.length} technologies {selectedCategory !== 'all' && `in ${selectedCategory}`}
             </p>
           </div>
@@ -164,8 +164,8 @@ const TechStackViz = ({ isDark = true }) => {
                         ? 'bg-purple-500 text-white'
                         : 'bg-purple-600 text-white'
                       : isDark
-                      ? 'bg-white/[0.05] text-zinc-400 hover:bg-white/[0.1] hover:text-white'
-                      : 'bg-black/[0.05] text-zinc-600 hover:bg-black/[0.1] hover:text-zinc-900'
+                      ? 'bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white'
+                      : 'bg-black/[0.05] text-gray-400 hover:bg-black/[0.1] hover:text-zinc-900'
                   }`}
                 >
                   {category.label} ({category.count})
@@ -191,7 +191,7 @@ const TechStackViz = ({ isDark = true }) => {
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.2, delay: index * 0.02 }}
                   className={`p-4 rounded-lg border ${
-                    isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+                    isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
                   } hover:scale-[1.02] transition-transform cursor-default group`}
                 >
                   {/* Header */}
@@ -204,7 +204,7 @@ const TechStackViz = ({ isDark = true }) => {
                         <div className={`font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                           {tech.name}
                         </div>
-                        <div className={`text-xs ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                        <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                           {tech.years} {tech.years === 1 ? 'year' : 'years'}
                         </div>
                       </div>
@@ -217,11 +217,11 @@ const TechStackViz = ({ isDark = true }) => {
                   {/* Progress Bar */}
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className={isDark ? 'text-zinc-600' : 'text-zinc-500'}>Proficiency</span>
+                      <span className={isDark ? 'text-gray-400' : 'text-gray-400'}>Proficiency</span>
                       <span className={`font-medium ${colors.text}`}>{tech.level}%</span>
                     </div>
                     <div className={`h-1.5 rounded-full overflow-hidden ${
-                      isDark ? 'bg-white/[0.05]' : 'bg-black/[0.05]'
+                      isDark ? 'bg-zinc-800' : 'bg-black/[0.05]'
                     }`}>
                       <m.div
                         initial={{ width: 0 }}
@@ -238,7 +238,7 @@ const TechStackViz = ({ isDark = true }) => {
         </div>
 
         {filteredStack.length === 0 && (
-          <div className={`text-center py-12 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+          <div className={`text-center py-12 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
             No technologies found in this category
           </div>
         )}

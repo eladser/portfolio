@@ -125,7 +125,7 @@ const TechTimeline = ({ isDark = true }) => {
   return (
     <div
       className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
       }`}
       role="region"
       aria-label="Technology timeline"
@@ -143,14 +143,14 @@ const TechTimeline = ({ isDark = true }) => {
           <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
             Skills Timeline
           </h3>
-          <p className={`text-sm mt-0.5 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
             Evolution over the years
           </p>
         </div>
         {isExpanded ? (
-          <ChevronUp className="text-zinc-500" size={20} aria-hidden="true" />
+          <ChevronUp className="text-gray-400" size={20} aria-hidden="true" />
         ) : (
-          <ChevronDown className="text-zinc-500" size={20} aria-hidden="true" />
+          <ChevronDown className="text-gray-400" size={20} aria-hidden="true" />
         )}
       </button>
 
@@ -262,14 +262,14 @@ const TechTimeline = ({ isDark = true }) => {
               <div
                 className={`mt-8 pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
               >
-                <p className={`text-xs mb-3 ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                <p className={`text-xs mb-3 ${isDark ? 'text-zinc-600' : 'text-gray-400'}`}>
                   Categories
                 </p>
                 <div className="flex flex-wrap gap-3 text-xs">
                   {Object.entries(categoryStyles).map(([key, style]) => (
                     <div key={key} className="flex items-center gap-2" role="listitem">
                       <div className={`w-2 h-2 rounded-full ${style.dot}`} aria-hidden="true" />
-                      <span className={isDark ? 'text-zinc-500' : 'text-zinc-600'}>
+                      <span className={isDark ? 'text-gray-400' : 'text-zinc-600'}>
                         {key.charAt(0).toUpperCase() + key.slice(1)}
                       </span>
                     </div>

@@ -92,11 +92,11 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
   const getLevelColor = (level) => {
     if (isDark) {
       const colors = [
-        'bg-white/[0.05]',
-        'bg-purple-500/20',
-        'bg-purple-500/40',
-        'bg-purple-500/60',
-        'bg-purple-500/80',
+        'bg-zinc-800',
+        'bg-purple-900',
+        'bg-purple-700',
+        'bg-purple-600',
+        'bg-purple-500',
       ];
       return colors[level];
     } else {
@@ -124,13 +124,13 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
     return (
       <div
         className={`rounded-xl border p-6 ${
-          isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+          isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
         }`}
       >
         <div className="flex items-center justify-center py-12">
           <div className="flex items-center gap-3">
             <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-            <span className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+            <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               Loading contributions...
             </span>
           </div>
@@ -142,7 +142,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
   return (
     <div
       className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
       }`}
     >
       {/* Header */}
@@ -150,12 +150,12 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <GitCommit className={isDark ? 'text-zinc-400' : 'text-zinc-600'} size={20} aria-hidden="true" />
+              <GitCommit className={isDark ? 'text-gray-300' : 'text-gray-400'} size={20} aria-hidden="true" />
               <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                 Contribution Activity
               </h3>
             </div>
-            <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               {stats.total} contributions in the last year
             </p>
           </div>
@@ -168,7 +168,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
           <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
             {stats.total}
           </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
             Total
           </div>
         </div>
@@ -176,7 +176,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
           <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
             {stats.max}
           </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
             Best Day
           </div>
         </div>
@@ -184,7 +184,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
           <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
             {stats.average}
           </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
             Daily Avg
           </div>
         </div>
@@ -200,7 +200,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
               i % 2 === 1 && (
                 <div
                   key={day}
-                  className={`text-xs h-3 flex items-center ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}
+                  className={`text-xs h-3 flex items-center ${isDark ? 'text-gray-400' : 'text-gray-400'}`}
                 >
                   {day}
                 </div>
@@ -219,7 +219,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
                 return (
                   <div key={weekIndex} className="w-3">
                     {showMonth && (
-                      <div className={`text-xs ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                      <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                         {months[date.getMonth()]}
                       </div>
                     )}
@@ -259,7 +259,7 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
         </div>
 
         {/* Legend */}
-        <div className={`flex items-center gap-2 mt-4 text-xs ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}>
+        <div className={`flex items-center gap-2 mt-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
           <span>Less</span>
           <div className="flex gap-1">
             {[0, 1, 2, 3, 4].map((level) => (

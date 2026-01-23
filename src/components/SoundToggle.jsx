@@ -30,11 +30,11 @@ const SoundToggle = ({ isDark = true }) => {
       className={`p-2 rounded-lg transition-colors ${
         soundEnabled
           ? isDark
-            ? 'bg-purple-500/20 text-purple-400 hover:bg-purple-500/30'
+            ? 'bg-purple-950 text-purple-400 hover:bg-purple-900'
             : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
           : isDark
-          ? 'bg-white/[0.05] text-zinc-500 hover:bg-white/[0.1]'
-          : 'bg-black/[0.05] text-zinc-500 hover:bg-black/[0.1]'
+          ? 'bg-zinc-800 text-gray-400 hover:bg-zinc-700'
+          : 'bg-black/[0.05] text-gray-400 hover:bg-black/[0.1]'
       }`}
       aria-label={soundEnabled ? 'Disable sound effects' : 'Enable sound effects'}
       title={soundEnabled ? 'Sound effects enabled' : 'Sound effects disabled'}

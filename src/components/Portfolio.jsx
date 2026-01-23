@@ -30,12 +30,12 @@ const skills = [
 ];
 
 const skillColors = {
-  purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
-  blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' },
-  green: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' },
-  cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/20' },
-  yellow: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20' },
-  orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20' },
+  purple: { bg: 'bg-purple-950', text: 'text-purple-400', border: 'border-purple-800' },
+  blue: { bg: 'bg-blue-950', text: 'text-blue-400', border: 'border-blue-800' },
+  green: { bg: 'bg-emerald-950', text: 'text-emerald-400', border: 'border-emerald-800' },
+  cyan: { bg: 'bg-cyan-950', text: 'text-cyan-400', border: 'border-cyan-800' },
+  yellow: { bg: 'bg-amber-950', text: 'text-amber-400', border: 'border-amber-800' },
+  orange: { bg: 'bg-orange-950', text: 'text-orange-400', border: 'border-orange-800' },
 };
 
 const asciiArt = `+----------------------------------+
@@ -102,8 +102,8 @@ const TypingGame = ({ isDark }) => {
   };
 
   const getCharClass = (index) => {
-    if (index >= userInput.length) return 'text-zinc-400';
-    return userInput[index] === currentText[index] ? 'text-emerald-400' : 'text-red-400 bg-red-500/20';
+    if (index >= userInput.length) return 'text-gray-300';
+    return userInput[index] === currentText[index] ? 'text-emerald-400' : 'text-red-400 bg-red-950';
   };
 
   return (
@@ -132,7 +132,7 @@ const TypingGame = ({ isDark }) => {
             <p className="text-zinc-300 text-sm mb-3">Test your .NET typing speed</p>
             <button
               onClick={startGame}
-              className="px-4 py-2 rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 text-sm font-medium transition-colors"
+              className="px-4 py-2 rounded-lg bg-purple-950 text-purple-400 hover:bg-purple-900 text-sm font-medium transition-colors"
             >
               Start
             </button>
@@ -171,7 +171,7 @@ const TypingGame = ({ isDark }) => {
             <div className="text-zinc-300 text-sm mb-4">{accuracy}% accuracy</div>
             <button
               onClick={startGame}
-              className="px-4 py-2 rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 text-sm font-medium transition-colors"
+              className="px-4 py-2 rounded-lg bg-purple-950 text-purple-400 hover:bg-purple-900 text-sm font-medium transition-colors"
             >
               Try Again
             </button>
@@ -235,7 +235,7 @@ const TerminalDemo = ({ isDark }) => {
       PUT: 'text-amber-400',
       DELETE: 'text-red-400',
     };
-    return colors[method] || 'text-zinc-400';
+    return colors[method] || 'text-gray-300';
   };
 
   return (
@@ -253,7 +253,7 @@ const TerminalDemo = ({ isDark }) => {
           className={`text-xs px-3 py-1 rounded font-medium transition-colors ${
             isRunning
               ? 'bg-white/5 text-zinc-300 cursor-not-allowed'
-              : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30'
+              : 'bg-emerald-950 text-emerald-400 hover:bg-emerald-900'
           }`}
         >
           {isRunning ? 'Running...' : 'Run Demo'}
@@ -264,7 +264,7 @@ const TerminalDemo = ({ isDark }) => {
           {statusMessage}
         </div>
         {logs.length === 0 && !isRunning && (
-          <span className="text-zinc-400">Click "Run Demo" to see live traffic</span>
+          <span className="text-gray-300">Click "Run Demo" to see live traffic</span>
         )}
         {logs.map((log, i) => (
           <m.div
@@ -273,19 +273,19 @@ const TerminalDemo = ({ isDark }) => {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-3 py-0.5"
           >
-            <span className="text-zinc-400 w-16">{log.timestamp}</span>
+            <span className="text-gray-300 w-16">{log.timestamp}</span>
             {log.type === 'http' && (
               <>
                 <span className={`w-12 ${getMethodColor(log.method)}`}>{log.method}</span>
                 <span className={`w-8 ${getStatusColor(log.status)}`}>{log.status}</span>
-                <span className="text-zinc-400 flex-1 truncate">{log.path}</span>
+                <span className="text-gray-300 flex-1 truncate">{log.path}</span>
               </>
             )}
             {log.type === 'db' && (
               <>
                 <span className="text-purple-400 w-12">SQL</span>
                 <span className="text-zinc-300 w-8">{log.rows}r</span>
-                <span className="text-zinc-400 flex-1 truncate">{log.query}</span>
+                <span className="text-gray-300 flex-1 truncate">{log.query}</span>
               </>
             )}
             {log.type === 'cache' && (
@@ -294,10 +294,10 @@ const TerminalDemo = ({ isDark }) => {
                   {log.action}
                 </span>
                 <span className="text-zinc-300 w-8">cache</span>
-                <span className="text-zinc-400 flex-1 truncate">{log.key}</span>
+                <span className="text-gray-300 flex-1 truncate">{log.key}</span>
               </>
             )}
-            <span className="text-zinc-400">{log.time}ms</span>
+            <span className="text-gray-300">{log.time}ms</span>
           </m.div>
         ))}
       </div>
@@ -483,7 +483,7 @@ const Portfolio = () => {
                 ref={consoleCloseButtonRef}
                 onClick={() => setShowConsole(false)}
                 aria-label="Close debug console"
-                className="text-zinc-400 hover:text-zinc-300 transition-colors"
+                className="text-gray-300 hover:text-zinc-300 transition-colors"
               >
                 <X size={14} aria-hidden="true" />
               </button>
@@ -502,7 +502,7 @@ const Portfolio = () => {
                   transition={{ delay: i * 0.1 }}
                   className="flex gap-2"
                 >
-                  <span className="text-zinc-400">{log.time}</span>
+                  <span className="text-gray-300">{log.time}</span>
                   <span className={
                     log.type === 'success' ? 'text-green-400' :
                     log.type === 'warn' ? 'text-yellow-400' :
@@ -538,7 +538,7 @@ const Portfolio = () => {
               className={`relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === item.id
                   ? isDark ? 'text-white' : 'text-black'
-                  : isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-400 hover:text-black'
+                  : isDark ? 'text-gray-300 hover:text-white' : 'text-gray-300 hover:text-black'
               }`}
             >
               {view === item.id && (
@@ -574,7 +574,7 @@ const Portfolio = () => {
                     aria-label="Show keyboard shortcuts"
                     aria-expanded={showShortcuts}
                     aria-controls="shortcuts-menu"
-                    className="w-6 h-6 rounded-full border border-zinc-700 text-zinc-400 hover:text-zinc-400 hover:border-zinc-500 text-xs font-mono transition-colors"
+                    className="w-6 h-6 rounded-full border border-zinc-700 text-gray-300 hover:text-gray-300 hover:border-zinc-500 text-xs font-mono transition-colors"
                   >
                     ?
                   </button>
@@ -590,23 +590,23 @@ const Portfolio = () => {
                     >
                       <div className="flex justify-between text-zinc-300">
                         <span>Navigate</span>
-                        <span className="text-zinc-400">1 2 3</span>
+                        <span className="text-gray-300">1 2 3</span>
                       </div>
                       <div className="flex justify-between text-zinc-300">
                         <span>Debug console</span>
-                        <span className="text-zinc-400">Ctrl+Shift+D</span>
+                        <span className="text-gray-300">Ctrl+Shift+D</span>
                       </div>
                       <div className="flex justify-between text-zinc-300">
                         <span>Close</span>
-                        <span className="text-zinc-400">Esc</span>
+                        <span className="text-gray-300">Esc</span>
                       </div>
                     </m.div>
                   )}
                 </AnimatePresence>
               </div>
-              <span className="font-mono text-xs tracking-wider text-zinc-400">
+              <span className="font-mono text-xs tracking-wider text-gray-300">
                 {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
-                <span className="ml-1.5 text-zinc-500">IL</span>
+                <span className="ml-1.5 text-gray-400">IL</span>
               </span>
             </header>
 
@@ -658,7 +658,7 @@ const Portfolio = () => {
                         Elad Sertshuk
                       </button>
                     </h1>
-                    <p className={`text-lg ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
+                    <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                       Full-stack developer, mostly .NET
                     </p>
                   </m.div>
@@ -667,7 +667,7 @@ const Portfolio = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className={`text-base leading-relaxed max-w-lg ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}
+                    className={`text-base leading-relaxed max-w-lg ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
                   >
                     I build backend systems, debug other people's code, and occasionally make things look nice on the frontend.
                     Currently obsessing over developer tooling and real-time applications.
@@ -687,7 +687,7 @@ const Portfolio = () => {
                             className={`px-3 py-1.5 rounded-lg text-sm border ${
                               isDark
                                 ? `${colors.bg} ${colors.text} ${colors.border}`
-                                : 'bg-black/5 text-zinc-400 border-transparent'
+                                : 'bg-black/5 text-gray-300 border-transparent'
                             }`}
                           >
                             {skill.name}
@@ -769,14 +769,14 @@ const Portfolio = () => {
               </div>
             </div>
 
-            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-zinc-400">
+            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-gray-300">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                 <span>Available for work</span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="font-mono text-zinc-500">react + vite + tailwind</span>
-                <span className="font-mono text-zinc-400">Israel</span>
+                <span className="font-mono text-gray-400">react + vite + tailwind</span>
+                <span className="font-mono text-gray-300">Israel</span>
               </div>
             </footer>
           </m.div>
@@ -813,8 +813,8 @@ const Portfolio = () => {
                     transition={{ delay: 0.1 }}
                     className={`p-6 rounded-xl border-l-2 border ${
                       isDark
-                        ? 'bg-white/[0.02] border-white/10 border-l-purple-500/50'
-                        : 'bg-black/[0.02] border-black/10 border-l-purple-500/50'
+                        ? 'bg-zinc-900 border-white/10 border-l-purple-800'
+                        : 'bg-black/[0.02] border-black/10 border-l-purple-800'
                     }`}
                   >
                     <div className="flex items-start justify-between mb-3">
@@ -827,7 +827,7 @@ const Portfolio = () => {
                         rel="noopener noreferrer"
                         className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
                           isDark
-                            ? 'text-zinc-400 hover:text-white hover:bg-white/10'
+                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
                             : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                         }`}
                       >
@@ -836,7 +836,7 @@ const Portfolio = () => {
                         <span className="sr-only">(opens in new tab)</span>
                       </a>
                     </div>
-                    <p className={`mb-4 ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
+                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                       Got tired of adding Console.WriteLine everywhere to figure out what's happening.
                       Built a middleware that shows me all HTTP traffic in real-time through a web dashboard.
                       Uses SignalR to push updates as they happen. Now I actually know why things break.
@@ -844,7 +844,7 @@ const Portfolio = () => {
                     <div className="flex flex-wrap gap-2">
                       {['C#', '.NET Core', 'SignalR'].map((tag) => (
                         <span key={tag} className={`text-xs px-2 py-1 rounded ${
-                          isDark ? 'bg-purple-500/10 text-purple-400' : 'bg-purple-500/10 text-purple-600'
+                          isDark ? 'bg-purple-950 text-purple-400' : 'bg-purple-950 text-purple-600'
                         }`}>
                           {tag}
                         </span>
@@ -858,7 +858,7 @@ const Portfolio = () => {
                     transition={{ delay: 0.2 }}
                     className={`p-6 rounded-xl border ${
                       isDark
-                        ? 'bg-white/[0.02] border-white/10'
+                        ? 'bg-zinc-900 border-white/10'
                         : 'bg-black/[0.02] border-black/10'
                     }`}
                   >
@@ -869,12 +869,12 @@ const Portfolio = () => {
                             .NET Tools
                           </h3>
                           <span className={`text-xs px-2 py-0.5 rounded ${
-                            isDark ? 'bg-emerald-500/10 text-emerald-400' : 'bg-emerald-500/10 text-emerald-600'
+                            isDark ? 'bg-emerald-950 text-emerald-400' : 'bg-emerald-950 text-emerald-600'
                           }`}>
                             NuGet
                           </span>
                         </div>
-                        <p className={`text-sm ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
+                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                           Utility functions I kept copying between projects — JSON formatting, string helpers.
                           Packaged it properly, now on NuGet.
                         </p>
@@ -885,7 +885,7 @@ const Portfolio = () => {
                         rel="noopener noreferrer"
                         className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
                           isDark
-                            ? 'text-zinc-400 hover:text-white hover:bg-white/10'
+                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
                             : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                         }`}
                       >
@@ -1055,7 +1055,7 @@ app.Run();`
                     work faster — middleware, debugging tools, utilities. The boring stuff that
                     nobody notices until it's missing.
                   </p>
-                  <p className={`leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
+                  <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                     I've worked on enterprise backends, real-time systems with SignalR, and enough
                     frontend to get by. Currently interested in developer experience tooling —
                     the kind of thing that saves you 30 seconds a hundred times a day.
@@ -1078,12 +1078,12 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="p-6 rounded-xl border bg-white/[0.02] border-white/10"
+                    className="p-6 rounded-xl border bg-zinc-900 border-white/10"
                   >
                     <h3 className="text-sm font-medium mb-4 text-zinc-300">
                       Currently
                     </h3>
-                    <p className="leading-relaxed text-zinc-400 text-sm">
+                    <p className="leading-relaxed text-gray-300 text-sm">
                       Working on SignalR-based tooling. Maintaining debug middleware.
                       Open to new opportunities.
                     </p>
@@ -1093,7 +1093,7 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
-                    className="p-6 rounded-xl border bg-white/[0.02] border-white/10"
+                    className="p-6 rounded-xl border bg-zinc-900 border-white/10"
                   >
                     <h3 className="text-sm font-medium mb-4 text-zinc-300">
                       Tools
@@ -1175,7 +1175,7 @@ app.Run();`
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl backdrop-blur-xl bg-purple-500/20 border-2 border-purple-500/50 shadow-2xl"
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl backdrop-blur-xl bg-purple-950 border-2 border-purple-500/50 shadow-2xl"
           >
             <div className="flex items-center gap-3">
               <span className="text-3xl">🎮</span>

@@ -130,7 +130,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
   return (
     <div
       className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
       }`}
       role="region"
       aria-label="GitHub activity"
@@ -145,20 +145,20 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         aria-controls="github-content"
       >
         <div className="flex items-center gap-3">
-          <Github className={isDark ? 'text-zinc-400' : 'text-zinc-600'} size={20} aria-hidden="true" />
+          <Github className={isDark ? 'text-gray-300' : 'text-zinc-600'} size={20} aria-hidden="true" />
           <div className="text-left">
             <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
               GitHub Activity
             </h3>
-            <p className={`text-sm mt-0.5 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+            <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
               Recent contributions and repos
             </p>
           </div>
         </div>
         {isExpanded ? (
-          <ChevronUp className="text-zinc-500" size={20} aria-hidden="true" />
+          <ChevronUp className="text-gray-400" size={20} aria-hidden="true" />
         ) : (
-          <ChevronDown className="text-zinc-500" size={20} aria-hidden="true" />
+          <ChevronDown className="text-gray-400" size={20} aria-hidden="true" />
         )}
       </button>
 
@@ -178,7 +178,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                 <div className="flex items-center justify-center py-8">
                   <div className="flex items-center gap-3">
                     <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-                    <span className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                    <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                       Fetching activity...
                     </span>
                   </div>
@@ -209,13 +209,13 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                       className={`p-4 rounded-lg border ${
-                        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+                        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                         {data.contributions}
                       </div>
-                      <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                      <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                         Contributions
                       </div>
                     </m.div>
@@ -225,13 +225,13 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
                       className={`p-4 rounded-lg border ${
-                        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+                        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                         {data.repos.length}
                       </div>
-                      <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                      <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                         Public Repos
                       </div>
                     </m.div>
@@ -241,13 +241,13 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                       className={`p-4 rounded-lg border ${
-                        isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+                        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                         {data.repos.reduce((sum, repo) => sum + repo.stars, 0)}
                       </div>
-                      <div className={`text-xs mt-1 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                      <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                         Total Stars
                       </div>
                     </m.div>
@@ -255,7 +255,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
 
                   {/* Recent Repos */}
                   <div className="mb-6">
-                    <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
                       Recent Repositories
                     </h4>
                     <div className="space-y-3">
@@ -266,7 +266,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.25 + index * 0.05 }}
                           className={`p-4 rounded-lg border ${
-                            isDark ? 'bg-white/[0.02] border-white/10' : 'bg-black/[0.02] border-black/10'
+                            isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
                           }`}
                         >
                           <div className="flex items-start justify-between mb-2">
@@ -280,11 +280,11 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                             >
                               {repo.name}
                             </a>
-                            <span className={`text-xs ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                            <span className={`text-xs ${isDark ? 'text-zinc-600' : 'text-gray-400'}`}>
                               {repo.updated}
                             </span>
                           </div>
-                          <p className={`text-xs mb-3 ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}>
+                          <p className={`text-xs mb-3 ${isDark ? 'text-gray-400' : 'text-zinc-600'}`}>
                             {repo.description}
                           </p>
                           <div className="flex items-center gap-4 text-xs">
@@ -294,18 +294,18 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                                 style={{ backgroundColor: languageColors[repo.language] || '#858585' }}
                                 aria-hidden="true"
                               />
-                              <span className={isDark ? 'text-zinc-500' : 'text-zinc-600'}>
+                              <span className={isDark ? 'text-gray-400' : 'text-zinc-600'}>
                                 {repo.language}
                               </span>
                             </div>
                             <div
-                              className={`flex items-center gap-1 ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}
+                              className={`flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-zinc-600'}`}
                             >
                               <Star size={12} aria-hidden="true" />
                               <span>{repo.stars}</span>
                             </div>
                             <div
-                              className={`flex items-center gap-1 ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}
+                              className={`flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-zinc-600'}`}
                             >
                               <GitFork size={12} aria-hidden="true" />
                               <span>{repo.forks}</span>
@@ -318,7 +318,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
 
                   {/* Recent Commits */}
                   <div>
-                    <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
                       Recent Commits
                     </h4>
                     <div className="space-y-2">
@@ -331,7 +331,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                           className="flex items-start gap-3"
                         >
                           <GitCommit
-                            className={isDark ? 'text-zinc-600' : 'text-zinc-400'}
+                            className={isDark ? 'text-zinc-600' : 'text-gray-300'}
                             size={14}
                             aria-hidden="true"
                           />
@@ -339,7 +339,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                             <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                               {commit.message}
                             </p>
-                            <p className={`text-xs mt-0.5 ${isDark ? 'text-zinc-600' : 'text-zinc-500'}`}>
+                            <p className={`text-xs mt-0.5 ${isDark ? 'text-zinc-600' : 'text-gray-400'}`}>
                               {commit.repo} • {commit.time}
                             </p>
                           </div>
