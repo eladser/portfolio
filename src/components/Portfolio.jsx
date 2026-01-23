@@ -482,7 +482,7 @@ const Portfolio = () => {
         </motion.div>
       </nav>
 
-      <main id="main-content">
+      <main id="main-content" className="h-full w-full">
         <AnimatePresence mode="wait">
           {view === 'home' && (
             <motion.div
