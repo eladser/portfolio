@@ -29,16 +29,16 @@ jobs:
         run: npm run build
 
       - name: Serve built files
-        run: npx serve -s dist -l 5000 &
+        run: npm run preview -- --port 5000 --host &
 
       - name: Wait for server
-        run: npx wait-on http://localhost:5000
+        run: npx wait-on http://localhost:5000/portfolio/
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            http://localhost:5000
+            http://localhost:5000/portfolio/
           configPath: './.lighthouserc.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
