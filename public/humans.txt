@@ -1,0 +1,29 @@
+/* TEAM */
+Developer: Elad Sertshuk
+Contact: elad.ser@gmail.com
+GitHub: github.com/eladser
+LinkedIn: linkedin.com/in/eladser
+Location: Israel
+
+/* SITE */
+Last update: 2026/01/23
+Standards: HTML5, CSS3, ECMAScript 2020
+Components: React, Vite, Tailwind CSS
+Fonts: Inter, JetBrains Mono, Clash Display
+Doctype: HTML5
+IDE: Rider, VS Code
+
+/* STACK */
+Backend: C#, .NET Core, ASP.NET, SignalR
+Frontend: React, TypeScript, JavaScript
+Styling: Tailwind CSS, Framer Motion
+Database: SQL Server
+Tools: Docker, Git, DataGrip
+Cloud: Azure, AWS
+
+/* PROJECTS */
+Debug Dashboard - Real-time HTTP monitoring for .NET
+.NET Tools - Utility package on NuGet
+
+/* THANKS */
+To everyone who builds open source tools that make development better.

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const NotFound = () => {
@@ -67,7 +67,7 @@ const NotFound = () => {
       <div className="h-full flex items-center justify-center px-8">
         <div className="max-w-2xl w-full">
           {/* ASCII 404 */}
-          <motion.pre
+          <m.pre
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="font-mono text-red-500/80 text-xs sm:text-sm mb-8 select-none"
@@ -80,10 +80,10 @@ const NotFound = () => {
          ██║╚██████╔╝     ██║
          ╚═╝ ╚═════╝      ╚═╝
 `}
-          </motion.pre>
+          </m.pre>
 
           {/* Terminal Window */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -123,19 +123,19 @@ const NotFound = () => {
 
               {/* Output */}
               {showOutput && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400"
                 >
                   bash: {typedCommand}: command not found
-                </motion.div>
+                </m.div>
               )}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Hints */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -153,7 +153,7 @@ const NotFound = () => {
                 click here
               </button>
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </div>

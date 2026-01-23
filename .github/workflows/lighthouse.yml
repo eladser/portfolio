@@ -1,0 +1,105 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run weekly on Monday at 9:00 AM UTC
+    - cron: '0 9 * * 1'
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Serve built files
+        run: npx serve -s dist -l 5000 &
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:5000
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:5000
+          configPath: './.lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-results
+          path: '.lighthouseci'
+          retention-days: 30
+
+      - name: Comment PR with results
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const fs = require('fs');
+            const manifestPath = '.lighthouseci/manifest.json';
+
+            if (!fs.existsSync(manifestPath)) {
+              console.log('No Lighthouse results found');
+              return;
+            }
+
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            const results = manifest[0];
+
+            const scores = {
+              performance: results.summary.performance * 100,
+              accessibility: results.summary.accessibility * 100,
+              'best-practices': results.summary['best-practices'] * 100,
+              seo: results.summary.seo * 100
+            };
+
+            const getEmoji = (score) => {
+              if (score >= 90) return '🟢';
+              if (score >= 50) return '🟠';
+              return '🔴';
+            };
+
+            const comment = `## 🔦 Lighthouse CI Results
+
+            | Category | Score |
+            |----------|-------|
+            | ${getEmoji(scores.performance)} Performance | ${scores.performance.toFixed(0)} |
+            | ${getEmoji(scores.accessibility)} Accessibility | ${scores.accessibility.toFixed(0)} |
+            | ${getEmoji(scores['best-practices'])} Best Practices | ${scores['best-practices'].toFixed(0)} |
+            | ${getEmoji(scores.seo)} SEO | ${scores.seo.toFixed(0)} |
+
+            [View detailed report](${results.url})`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Check performance budget
+        run: |
+          echo "Checking if performance scores meet minimum thresholds..."
+          # This will fail the job if scores are below thresholds defined in .lighthouserc.json

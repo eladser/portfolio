@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Elad Sertshuk - Developer Updates</title>
+    <link>https://eladser.github.io/portfolio/</link>
+    <description>Updates, articles, and project announcements from Elad Sertshuk - Full-Stack .NET Developer</description>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Jan 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://eladser.github.io/portfolio/rss.xml" rel="self" type="application/rss+xml" />
+    <generator>Custom RSS Feed</generator>
+    <image>
+      <url>https://eladser.github.io/portfolio/profile.jpg</url>
+      <title>Elad Sertshuk</title>
+      <link>https://eladser.github.io/portfolio/</link>
+    </image>
+
+    <!-- Example Blog Post Item (Template for future posts) -->
+    <item>
+      <title>Portfolio Launch - New Developer Website</title>
+      <link>https://eladser.github.io/portfolio/</link>
+      <guid isPermaLink="true">https://eladser.github.io/portfolio/#portfolio-launch-2026</guid>
+      <pubDate>Fri, 24 Jan 2026 00:00:00 GMT</pubDate>
+      <description>
+        <![CDATA[
+          Launching my new portfolio website showcasing .NET development projects, debugging tools, and developer utilities. Built with React, Tailwind CSS, and modern web technologies.
+        ]]>
+      </description>
+      <content:encoded>
+        <![CDATA[
+          <p>I'm excited to announce the launch of my new portfolio website!</p>
+
+          <h2>What's New</h2>
+          <ul>
+            <li>Modern, responsive design with dark theme</li>
+            <li>Showcase of my latest .NET projects</li>
+            <li>Interactive terminal-style UI</li>
+            <li>Performance-optimized with Lighthouse CI</li>
+          </ul>
+
+          <h2>Tech Stack</h2>
+          <p>Built with React, Tailwind CSS, Framer Motion, and deployed on GitHub Pages with automated CI/CD.</p>
+
+          <p>Check it out at <a href="https://eladser.github.io/portfolio/">eladser.github.io/portfolio</a></p>
+        ]]>
+      </content:encoded>
+      <category>Announcement</category>
+      <category>Web Development</category>
+    </item>
+
+    <!--
+    ==========================================================================
+    HOW TO ADD NEW BLOG POSTS:
+    ==========================================================================
+
+    Copy the <item> structure above and add new entries here. Format:
+
+    <item>
+      <title>Your Post Title Here</title>
+      <link>https://eladser.github.io/portfolio/#your-post-slug</link>
+      <guid isPermaLink="true">https://eladser.github.io/portfolio/#your-post-slug</guid>
+      <pubDate>Day, DD Mon YYYY HH:MM:SS GMT</pubDate>
+      <description>
+        <![CDATA[
+          Short summary of your post (plain text or HTML)
+        ]]>
+      </description>
+      <content:encoded>
+        <![CDATA[
+          <p>Full HTML content of your blog post goes here</p>
+          <h2>Subheading</h2>
+          <p>More content...</p>
+        ]]>
+      </content:encoded>
+      <category>Category Name</category>
+    </item>
+
+    Tips:
+    - Add newest posts at the top (after the first example item)
+    - Use RFC 822 date format for pubDate (e.g., "Mon, 24 Jan 2026 12:00:00 GMT")
+    - Wrap HTML content in <![CDATA[...]]> tags
+    - Update <lastBuildDate> at top when adding new posts
+    - Keep descriptions under 200 characters for best compatibility
+    - Use meaningful slugs in URLs (e.g., #building-signalr-debugger)
+
+    Categories suggestions:
+    - .NET Development
+    - Project Release
+    - Tutorial
+    - DevOps
+    - Web Development
+    - Debugging Tools
+    - Open Source
+
+    ==========================================================================
+    -->
+
+  </channel>
+</rss>

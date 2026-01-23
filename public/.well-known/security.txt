@@ -1,0 +1,12 @@
+Contact: mailto:elad.ser@gmail.com
+Expires: 2027-01-23T23:59:59.000Z
+Preferred-Languages: en, he
+Canonical: https://eladser.github.io/portfolio/.well-known/security.txt
+
+# Security Policy
+# If you discover any security issues in this portfolio site or related projects,
+# please report them via email. I'll respond as soon as possible.
+#
+# For GitHub repository security issues:
+# - Debug Dashboard: https://github.com/eladser/debug-dashboard/security
+# - .NET Tools: https://github.com/eladser/dotnet-tools/security

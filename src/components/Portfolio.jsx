@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github } from 'lucide-react';
+import TechTimeline from './TechTimeline';
+import GitHubActivity from './GitHubActivity';
+import AnalyticsDashboard from './AnalyticsDashboard';
 
-// Skills with category colors
 const skills = [
   { name: 'C#', color: 'purple' },
   { name: '.NET Core', color: 'purple' },
@@ -30,8 +32,6 @@ const skillColors = {
   orange: { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20' },
 };
 
-
-// ASCII Art for About page
 const asciiArt = `+----------------------------------+
 |  public class Developer          |
 |  {                               |
@@ -43,14 +43,14 @@ const asciiArt = `+----------------------------------+
 |  }                               |
 +----------------------------------+`;
 
-// Typing Speed Game Component
 const TypingGame = ({ isDark }) => {
-  const [gameState, setGameState] = useState('idle'); // 'idle' | 'playing' | 'finished'
+  const [gameState, setGameState] = useState('idle');
   const [currentText, setCurrentText] = useState('');
   const [userInput, setUserInput] = useState('');
   const [startTime, setStartTime] = useState(null);
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
+  const [statusMessage, setStatusMessage] = useState('');
   const inputRef = useRef(null);
 
   const codeSnippets = [
@@ -70,6 +70,7 @@ const TypingGame = ({ isDark }) => {
     setStartTime(Date.now());
     setWpm(0);
     setAccuracy(100);
+    setStatusMessage('Game started. Type the code snippet shown above.');
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
@@ -77,24 +78,25 @@ const TypingGame = ({ isDark }) => {
     const value = e.target.value;
     setUserInput(value);
 
-    // Calculate accuracy
     let correct = 0;
     for (let i = 0; i < value.length; i++) {
       if (value[i] === currentText[i]) correct++;
     }
-    setAccuracy(value.length > 0 ? Math.round((correct / value.length) * 100) : 100);
+    const newAccuracy = value.length > 0 ? Math.round((correct / value.length) * 100) : 100;
+    setAccuracy(newAccuracy);
 
-    // Check if finished
     if (value === currentText) {
-      const timeElapsed = (Date.now() - startTime) / 1000 / 60; // minutes
-      const words = currentText.length / 5; // standard word = 5 chars
-      setWpm(Math.round(words / timeElapsed));
+      const timeElapsed = (Date.now() - startTime) / 1000 / 60;
+      const words = currentText.length / 5;
+      const finalWpm = Math.round(words / timeElapsed);
+      setWpm(finalWpm);
       setGameState('finished');
+      setStatusMessage(`Game completed! You scored ${finalWpm} words per minute with ${newAccuracy}% accuracy.`);
     }
   };
 
   const getCharClass = (index) => {
-    if (index >= userInput.length) return 'text-zinc-600';
+    if (index >= userInput.length) return 'text-zinc-400';
     return userInput[index] === currentText[index] ? 'text-emerald-400' : 'text-red-400 bg-red-500/20';
   };
 
@@ -103,7 +105,7 @@ const TypingGame = ({ isDark }) => {
       isDark ? 'bg-[#0d0d0d] border-white/10' : 'bg-zinc-900 border-black/10'
     }`}>
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/5">
-        <span className="text-xs font-mono text-zinc-500">typing-test.exe</span>
+        <span className="text-xs font-mono text-zinc-300">typing-test.exe</span>
         {gameState === 'playing' && (
           <span className={`text-xs font-mono ${accuracy >= 90 ? 'text-emerald-400' : accuracy >= 70 ? 'text-amber-400' : 'text-red-400'}`}>
             {accuracy}% accuracy
@@ -115,9 +117,13 @@ const TypingGame = ({ isDark }) => {
       </div>
 
       <div className="p-4">
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {statusMessage}
+        </div>
+
         {gameState === 'idle' && (
           <div className="text-center py-4">
-            <p className="text-zinc-500 text-sm mb-3">Test your .NET typing speed</p>
+            <p className="text-zinc-300 text-sm mb-3">Test your .NET typing speed</p>
             <button
               onClick={startGame}
               className="px-4 py-2 rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 text-sm font-medium transition-colors"
@@ -136,7 +142,11 @@ const TypingGame = ({ isDark }) => {
                 </span>
               ))}
             </div>
+            <label htmlFor="typing-input" className="sr-only">
+              Type the code snippet
+            </label>
             <input
+              id="typing-input"
               ref={inputRef}
               type="text"
               value={userInput}
@@ -152,7 +162,7 @@ const TypingGame = ({ isDark }) => {
         {gameState === 'finished' && (
           <div className="text-center py-4">
             <div className="text-3xl font-bold text-white mb-1">{wpm} WPM</div>
-            <div className="text-zinc-500 text-sm mb-4">{accuracy}% accuracy</div>
+            <div className="text-zinc-300 text-sm mb-4">{accuracy}% accuracy</div>
             <button
               onClick={startGame}
               className="px-4 py-2 rounded-lg bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 text-sm font-medium transition-colors"
@@ -166,10 +176,10 @@ const TypingGame = ({ isDark }) => {
   );
 };
 
-// Live Terminal Demo - simulates debug middleware output
 const TerminalDemo = ({ isDark }) => {
   const [logs, setLogs] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const sampleLogs = [
     { type: 'http', method: 'GET', path: '/api/users', status: 200, time: 12 },
@@ -188,12 +198,14 @@ const TerminalDemo = ({ isDark }) => {
   const startDemo = () => {
     setLogs([]);
     setIsRunning(true);
+    setStatusMessage('Demo started. Displaying live HTTP traffic simulation.');
     let i = 0;
 
     const interval = setInterval(() => {
       if (i >= sampleLogs.length) {
         clearInterval(interval);
         setIsRunning(false);
+        setStatusMessage('Demo completed. All traffic logs displayed.');
         return;
       }
 
@@ -226,15 +238,15 @@ const TerminalDemo = ({ isDark }) => {
     }`}>
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/5">
         <div className="flex items-center gap-2">
-          <Terminal size={14} className="text-zinc-500" />
-          <span className="text-xs font-mono text-zinc-500">debug-dashboard — localhost:5000</span>
+          <Terminal size={14} className="text-zinc-300" />
+          <span className="text-xs font-mono text-zinc-300">debug-dashboard — localhost:5000</span>
         </div>
         <button
           onClick={startDemo}
           disabled={isRunning}
           className={`text-xs px-3 py-1 rounded font-medium transition-colors ${
             isRunning
-              ? 'bg-white/5 text-zinc-500 cursor-not-allowed'
+              ? 'bg-white/5 text-zinc-300 cursor-not-allowed'
               : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30'
           }`}
         >
@@ -242,17 +254,20 @@ const TerminalDemo = ({ isDark }) => {
         </button>
       </div>
       <div className="p-4 font-mono text-xs h-52 overflow-y-auto">
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {statusMessage}
+        </div>
         {logs.length === 0 && !isRunning && (
-          <span className="text-zinc-600">Click "Run Demo" to see live traffic</span>
+          <span className="text-zinc-400">Click "Run Demo" to see live traffic</span>
         )}
         {logs.map((log, i) => (
-          <motion.div
+          <m.div
             key={i}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-3 py-0.5"
           >
-            <span className="text-zinc-600 w-16">{log.timestamp}</span>
+            <span className="text-zinc-400 w-16">{log.timestamp}</span>
             {log.type === 'http' && (
               <>
                 <span className={`w-12 ${getMethodColor(log.method)}`}>{log.method}</span>
@@ -263,7 +278,7 @@ const TerminalDemo = ({ isDark }) => {
             {log.type === 'db' && (
               <>
                 <span className="text-purple-400 w-12">SQL</span>
-                <span className="text-zinc-500 w-8">{log.rows}r</span>
+                <span className="text-zinc-300 w-8">{log.rows}r</span>
                 <span className="text-zinc-400 flex-1 truncate">{log.query}</span>
               </>
             )}
@@ -272,19 +287,18 @@ const TerminalDemo = ({ isDark }) => {
                 <span className={`w-12 ${log.action === 'HIT' ? 'text-emerald-400' : 'text-amber-400'}`}>
                   {log.action}
                 </span>
-                <span className="text-zinc-500 w-8">cache</span>
+                <span className="text-zinc-300 w-8">cache</span>
                 <span className="text-zinc-400 flex-1 truncate">{log.key}</span>
               </>
             )}
-            <span className="text-zinc-600">{log.time}ms</span>
-          </motion.div>
+            <span className="text-zinc-400">{log.time}ms</span>
+          </m.div>
         ))}
       </div>
     </div>
   );
 };
 
-// Debug console messages
 const debugMessages = [
   { time: '09:42:01', type: 'info', msg: 'GET /api/portfolio 200 OK (3ms)' },
   { time: '09:42:01', type: 'info', msg: 'Resolving dependencies...' },
@@ -296,7 +310,6 @@ const debugMessages = [
   { time: '09:42:05', type: 'warn', msg: 'TODO: fix that one bug from 2019' },
 ];
 
-// Navigation items
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'projects', label: 'Showcase' },
@@ -304,13 +317,15 @@ const navItems = [
 ];
 
 const Portfolio = () => {
-  const [view, setView] = useState('home'); // 'home' | 'projects' | 'about'
+  const [view, setView] = useState('home');
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [nameClicks, setNameClicks] = useState(0);
+  const consoleRef = useRef(null);
+  const consoleCloseButtonRef = useRef(null);
+  const consoleTriggerRef = useRef(null);
 
-  // Always dark theme
   const isDark = true;
 
   useEffect(() => {
@@ -318,23 +333,60 @@ const Portfolio = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Keyboard navigation
+  useEffect(() => {
+    if (!showConsole) return;
+
+    const focusableElements = consoleRef.current?.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusableElements || focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    const handleTabKey = (e) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTabKey);
+    return () => document.removeEventListener('keydown', handleTabKey);
+  }, [showConsole]);
+
+  useEffect(() => {
+    if (showConsole) {
+      consoleTriggerRef.current = document.activeElement;
+      setTimeout(() => consoleCloseButtonRef.current?.focus(), 100);
+    } else if (consoleTriggerRef.current) {
+      consoleTriggerRef.current.focus();
+      consoleTriggerRef.current = null;
+    }
+  }, [showConsole]);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Ctrl+Shift+D to toggle debug console
       if (e.ctrlKey && e.shiftKey && e.key === 'D') {
         e.preventDefault();
         setShowConsole(prev => !prev);
         return;
       }
 
-      // Escape to close debug console
       if (e.key === 'Escape' && showConsole) {
         setShowConsole(false);
         return;
       }
 
-      // 1/2/3 to switch tabs (only if not typing in an input)
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
         return;
       }
@@ -348,7 +400,6 @@ const Portfolio = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showConsole]);
 
-  // Easter egg: click name 5 times to show debug console
   const handleNameClick = () => {
     const newCount = nameClicks + 1;
     setNameClicks(newCount);
@@ -358,14 +409,25 @@ const Portfolio = () => {
     }
   };
 
+  const handleNameKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleNameClick();
+    }
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#0a0a0a] text-white">
-      {/* Skip to main content - accessibility */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
         Skip to main content
       </a>
+      <a href="#main-nav" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+        Skip to navigation
+      </a>
+      <a href="#contact-section" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+        Skip to contact
+      </a>
 
-      {/* Grid pattern - decorative */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none"
@@ -378,7 +440,6 @@ const Portfolio = () => {
         }}
       />
 
-      {/* Fade edges - decorative */}
       <div
         aria-hidden="true"
         className="fixed inset-0 pointer-events-none"
@@ -387,10 +448,10 @@ const Portfolio = () => {
         }}
       />
 
-      {/* Debug Console Easter Egg */}
       <AnimatePresence>
         {showConsole && (
-          <motion.div
+          <m.div
+            ref={consoleRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="console-title"
@@ -409,6 +470,7 @@ const Portfolio = () => {
                 <span id="console-title" className="text-xs font-mono">debug.console</span>
               </div>
               <button
+                ref={consoleCloseButtonRef}
                 onClick={() => setShowConsole(false)}
                 aria-label="Close debug console"
                 className="hover:opacity-70"
@@ -423,7 +485,7 @@ const Portfolio = () => {
               className="p-3 font-mono text-xs space-y-1 max-h-48 overflow-y-auto"
             >
               {debugMessages.map((log, i) => (
-                <motion.div
+                <m.div
                   key={i}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -438,16 +500,15 @@ const Portfolio = () => {
                     'text-blue-400'
                   }>[{log.type.toUpperCase()}]</span>
                   <span className="opacity-80">{log.msg}</span>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
-      {/* Bottom Navigation */}
-      <nav role="navigation" aria-label="Main navigation" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-        <motion.div
+      <nav id="main-nav" role="navigation" aria-label="Main navigation" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -464,11 +525,11 @@ const Portfolio = () => {
               className={`relative px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === item.id
                   ? isDark ? 'text-white' : 'text-black'
-                  : isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-black'
+                  : isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-400 hover:text-black'
               }`}
             >
               {view === item.id && (
-                <motion.div
+                <m.div
                   layoutId="navIndicator"
                   className={`absolute inset-0 rounded-xl ${
                     isDark ? 'bg-white/15' : 'bg-black/10'
@@ -479,13 +540,13 @@ const Portfolio = () => {
               <span className="relative z-10">{item.label}</span>
             </button>
           ))}
-        </motion.div>
+        </m.div>
       </nav>
 
       <main id="main-content" className="h-full w-full">
         <AnimatePresence mode="wait">
           {view === 'home' && (
-            <motion.div
+            <m.div
               key="home"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -493,103 +554,109 @@ const Portfolio = () => {
               transition={{ duration: 0.3 }}
               className="relative h-full w-full"
             >
-              {/* Header */}
               <header role="banner" className="absolute top-0 left-0 right-0 p-8 flex items-center justify-between z-10">
                 <div className="relative">
                   <button
                     onClick={() => setShowShortcuts(!showShortcuts)}
                     aria-label="Show keyboard shortcuts"
                     aria-expanded={showShortcuts}
-                    className="w-6 h-6 rounded-full border border-zinc-700 text-zinc-600 hover:text-zinc-400 hover:border-zinc-500 text-xs font-mono transition-colors"
+                    aria-controls="shortcuts-menu"
+                    className="w-6 h-6 rounded-full border border-zinc-700 text-zinc-400 hover:text-zinc-400 hover:border-zinc-500 text-xs font-mono transition-colors"
                   >
                     ?
                   </button>
                 <AnimatePresence>
                   {showShortcuts && (
-                    <motion.div
+                    <m.div
+                      id="shortcuts-menu"
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       className="absolute top-10 left-0 p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono space-y-1.5 w-48 shadow-xl"
                     >
-                      <div className="flex justify-between text-zinc-500">
+                      <div className="flex justify-between text-zinc-300">
                         <span>Navigate</span>
                         <span className="text-zinc-400">1 2 3</span>
                       </div>
-                      <div className="flex justify-between text-zinc-500">
+                      <div className="flex justify-between text-zinc-300">
                         <span>Debug console</span>
                         <span className="text-zinc-400">Ctrl+Shift+D</span>
                       </div>
-                      <div className="flex justify-between text-zinc-500">
+                      <div className="flex justify-between text-zinc-300">
                         <span>Close</span>
                         <span className="text-zinc-400">Esc</span>
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>
-              <span className="font-mono text-xs tracking-wider text-zinc-600">
+              <span className="font-mono text-xs tracking-wider text-zinc-400">
                 {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
                 <span className="ml-1.5 opacity-50">IL</span>
               </span>
             </header>
 
-            {/* Main Content */}
             <div className="h-full flex items-center justify-center px-8">
               <div className="flex items-center gap-16 max-w-5xl">
-                {/* Left - Photo */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                   className="flex-shrink-0"
                 >
-                  <img
-                    src={`${import.meta.env.BASE_URL}profile.jpg`}
-                    alt="Elad Sertshuk, Full-Stack Developer specializing in .NET"
-                    width="160"
-                    height="160"
-                    loading="eager"
-                    className={`w-40 h-40 rounded-2xl object-cover ${
-                      isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
-                    }`}
-                  />
-                </motion.div>
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${import.meta.env.BASE_URL}profile-160.webp 160w, ${import.meta.env.BASE_URL}profile-320.webp 320w`}
+                      sizes="160px"
+                    />
+                    <img
+                      src={`${import.meta.env.BASE_URL}profile.jpg`}
+                      alt="Elad Sertshuk, Full-Stack Developer specializing in .NET"
+                      width="160"
+                      height="160"
+                      loading="eager"
+                      fetchPriority="high"
+                      className={`w-40 h-40 rounded-2xl object-cover ${
+                        isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
+                      }`}
+                    />
+                  </picture>
+                </m.div>
 
-                {/* Right - Info */}
                 <div className="flex-1 space-y-6">
-                  {/* Name & Role */}
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
                     <h1
+                      role="button"
+                      tabIndex="0"
                       onClick={handleNameClick}
+                      onKeyDown={handleNameKeyDown}
                       className={`text-5xl font-bold tracking-tight mb-3 cursor-default select-none ${
                         isDark ? 'text-white' : 'text-zinc-900'
                       }`}
                     >
                       Elad Sertshuk
                     </h1>
-                    <p className={`text-lg ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    <p className={`text-lg ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
                       Full-stack developer, mostly .NET
                     </p>
-                  </motion.div>
+                  </m.div>
 
-                  {/* About */}
-                  <motion.p
+                  <m.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className={`text-base leading-relaxed max-w-lg ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}
+                    className={`text-base leading-relaxed max-w-lg ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}
                   >
                     I build backend systems, debug other people's code, and occasionally make things look nice on the frontend.
                     Currently obsessing over developer tooling and real-time applications.
-                  </motion.p>
+                  </m.p>
 
-                  {/* Skills */}
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
@@ -603,7 +670,7 @@ const Portfolio = () => {
                             className={`px-3 py-1.5 rounded-lg text-sm border ${
                               isDark
                                 ? `${colors.bg} ${colors.text} ${colors.border}`
-                                : 'bg-black/5 text-zinc-600 border-transparent'
+                                : 'bg-black/5 text-zinc-400 border-transparent'
                             }`}
                           >
                             {skill.name}
@@ -611,10 +678,10 @@ const Portfolio = () => {
                         );
                       })}
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  {/* Links */}
-                  <motion.div
+                  <m.div
+                    id="contact-section"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
@@ -624,11 +691,11 @@ const Portfolio = () => {
                       href="https://github.com/eladser"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="GitHub profile (opens in new tab)"
+                      aria-label="GitHub profile"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
-                          ? 'text-zinc-500 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
+                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -638,16 +705,17 @@ const Portfolio = () => {
                         gh
                         <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
                       </span>
+                      <span className="sr-only">(opens in new tab)</span>
                     </a>
                     <a
                       href="https://linkedin.com/in/eladser"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="LinkedIn profile (opens in new tab)"
+                      aria-label="LinkedIn profile"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
-                          ? 'text-zinc-500 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
+                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -659,14 +727,15 @@ const Portfolio = () => {
                         in
                         <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
                       </span>
+                      <span className="sr-only">(opens in new tab)</span>
                     </a>
                     <a
                       href="mailto:elad.ser@gmail.com"
                       aria-label="Email me at elad.ser@gmail.com"
                       className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                         isDark
-                          ? 'text-zinc-500 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
+                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
+                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                       }`}
                     >
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -678,13 +747,12 @@ const Portfolio = () => {
                         <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
                       </span>
                     </a>
-                  </motion.div>
+                  </m.div>
                 </div>
               </div>
             </div>
 
-            {/* Footer */}
-            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-zinc-600">
+            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-zinc-400">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                 <span>Available for work</span>
@@ -694,11 +762,11 @@ const Portfolio = () => {
                 <span className="font-mono">Israel</span>
               </div>
             </footer>
-          </motion.div>
+          </m.div>
         )}
 
         {view === 'projects' && (
-          <motion.div
+          <m.div
             key="projects"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -706,10 +774,9 @@ const Portfolio = () => {
             transition={{ duration: 0.3 }}
             className="relative h-full w-full overflow-auto"
           >
-            {/* Showcase Content */}
             <div className="min-h-full flex items-center justify-center px-8 py-24">
               <div className="max-w-5xl w-full">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-12"
@@ -717,14 +784,13 @@ const Portfolio = () => {
                   <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     Showcase
                   </h2>
-                  <p className={`text-base ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                  <p className={`text-base ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Some things I've built over the years
                   </p>
-                </motion.div>
+                </m.div>
 
-                {/* Main Projects */}
                 <div className="space-y-6 mb-12">
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
@@ -745,14 +811,15 @@ const Portfolio = () => {
                         className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
                           isDark
                             ? 'text-zinc-400 hover:text-white hover:bg-white/10'
-                            : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
+                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                         }`}
                       >
                         <Github size={14} />
                         Source
+                        <span className="sr-only">(opens in new tab)</span>
                       </a>
                     </div>
-                    <p className={`mb-4 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    <p className={`mb-4 ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
                       Got tired of adding Console.WriteLine everywhere to figure out what's happening.
                       Built a middleware that shows me all HTTP traffic in real-time through a web dashboard.
                       Uses SignalR to push updates as they happen. Now I actually know why things break.
@@ -766,9 +833,9 @@ const Portfolio = () => {
                         </span>
                       ))}
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
@@ -790,7 +857,7 @@ const Portfolio = () => {
                             NuGet
                           </span>
                         </div>
-                        <p className={`text-sm ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                        <p className={`text-sm ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
                           Utility functions I kept copying between projects — JSON formatting, string helpers.
                           Packaged it properly, now on NuGet.
                         </p>
@@ -802,18 +869,18 @@ const Portfolio = () => {
                         className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
                           isDark
                             ? 'text-zinc-400 hover:text-white hover:bg-white/10'
-                            : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5'
+                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
                         }`}
                       >
                         <Github size={14} />
                         Source
+                        <span className="sr-only">(opens in new tab)</span>
                       </a>
                     </div>
-                  </motion.div>
+                  </m.div>
                 </div>
 
-                {/* Interactive Demo */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
@@ -822,15 +889,14 @@ const Portfolio = () => {
                   <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     What it looks like
                   </h3>
-                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Live HTTP traffic from the debug middleware
                   </p>
 
                   <TerminalDemo isDark={isDark} />
-                </motion.div>
+                </m.div>
 
-                {/* Typing Game */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
@@ -839,21 +905,20 @@ const Portfolio = () => {
                   <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     Mini Game
                   </h3>
-                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                  <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     How fast can you type .NET code?
                   </p>
 
                   <TypingGame isDark={isDark} />
-                </motion.div>
+                </m.div>
 
-                {/* Contact */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                   className={`text-center pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
-                  <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                  <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Interested in working together?{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
@@ -864,25 +929,24 @@ const Portfolio = () => {
                       Send me an email
                     </a>
                   </p>
-                </motion.div>
+                </m.div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
 
         {view === 'about' && (
-          <motion.div
+          <m.div
             key="about"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="relative h-full w-full"
+            className="relative h-full w-full overflow-auto"
           >
-            {/* About Content */}
-            <div className="h-full flex items-center justify-center px-8 pb-20">
+            <div className="min-h-full flex items-center justify-center px-8 py-24">
               <div className="max-w-2xl w-full">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-8"
@@ -890,9 +954,9 @@ const Portfolio = () => {
                   <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     About
                   </h2>
-                </motion.div>
+                </m.div>
 
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
@@ -903,15 +967,14 @@ const Portfolio = () => {
                     work faster — middleware, debugging tools, utilities. The boring stuff that
                     nobody notices until it's missing.
                   </p>
-                  <p className={`leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                  <p className={`leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-400'}`}>
                     I've worked on enterprise backends, real-time systems with SignalR, and enough
                     frontend to get by. Currently interested in developer experience tooling —
                     the kind of thing that saves you 30 seconds a hundred times a day.
                   </p>
-                </motion.div>
+                </m.div>
 
-                {/* ASCII Art */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.15 }}
@@ -920,52 +983,76 @@ const Portfolio = () => {
                   <pre className="font-mono text-xs text-purple-400/60 leading-tight select-none overflow-x-auto">
                     {asciiArt}
                   </pre>
-                </motion.div>
+                </m.div>
 
-                {/* Currently + Tools */}
                 <div className="grid grid-cols-2 gap-4 mt-10">
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                     className="p-6 rounded-xl border bg-white/[0.02] border-white/10"
                   >
-                    <h3 className="text-sm font-medium mb-4 text-zinc-500">
+                    <h3 className="text-sm font-medium mb-4 text-zinc-300">
                       Currently
                     </h3>
                     <p className="leading-relaxed text-zinc-400 text-sm">
                       Working on SignalR-based tooling. Maintaining debug middleware.
                       Open to new opportunities.
                     </p>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
                     className="p-6 rounded-xl border bg-white/[0.02] border-white/10"
                   >
-                    <h3 className="text-sm font-medium mb-4 text-zinc-500">
+                    <h3 className="text-sm font-medium mb-4 text-zinc-300">
                       Tools
                     </h3>
-                    <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-500">
+                    <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-300">
                       <span className="px-2 py-1 rounded bg-white/5">Rider</span>
                       <span className="px-2 py-1 rounded bg-white/5">VS Code</span>
                       <span className="px-2 py-1 rounded bg-white/5">DataGrip</span>
                       <span className="px-2 py-1 rounded bg-white/5">Windows Terminal</span>
                       <span className="px-2 py-1 rounded bg-white/5">Git</span>
                     </div>
-                  </motion.div>
+                  </m.div>
                 </div>
 
-                {/* Contact */}
-                <motion.div
+                <div className="space-y-4 mt-10">
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <TechTimeline isDark={isDark} />
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 }}
+                  >
+                    <GitHubActivity isDark={isDark} username="eladser" useRealData={false} />
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <AnalyticsDashboard isDark={isDark} />
+                  </m.div>
+                </div>
+
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.45 }}
                   className={`mt-10 pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
-                  <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                  <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Best way to reach me:{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
@@ -976,10 +1063,10 @@ const Portfolio = () => {
                       elad.ser@gmail.com
                     </a>
                   </p>
-                </motion.div>
+                </m.div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         )}
         </AnimatePresence>
       </main>

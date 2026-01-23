@@ -41,6 +41,9 @@
     <link rel="apple-touch-icon" href="./profile.jpg" />
     <link rel="manifest" href="./manifest.json" />
 
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Elad Sertshuk - Developer Updates" href="./rss.xml" />
+
     <!-- DNS Prefetch for performance -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -49,6 +52,9 @@
     <!-- Preconnect for critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical image for LCP -->
+    <link rel="preload" as="image" href="./profile.jpg" fetchpriority="high" />
 
     <!-- Fonts with optimized loading -->
     <link
@@ -121,9 +127,161 @@
       "inLanguage": "en-US"
     }
     </script>
+
+    <!-- Structured Data - ProfilePage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Elad Sertshuk",
+        "alternateName": "eladser",
+        "description": "Full-stack developer specializing in .NET Core, ASP.NET, and SignalR",
+        "image": "https://eladser.github.io/portfolio/profile.jpg",
+        "jobTitle": "Full-Stack Developer"
+      }
+    }
+    </script>
+
+    <!-- Structured Data - SoftwareApplication Schema for Debug Dashboard -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Debug Dashboard",
+      "applicationCategory": "DeveloperApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "operatingSystem": "Windows, Linux, macOS",
+      "description": "Real-time HTTP traffic monitoring middleware for .NET applications. Shows all HTTP requests, database queries, and cache operations through a live web dashboard using SignalR.",
+      "author": {
+        "@type": "Person",
+        "name": "Elad Sertshuk"
+      },
+      "programmingLanguage": "C#",
+      "url": "https://github.com/eladser/debug-dashboard",
+      "codeRepository": "https://github.com/eladser/debug-dashboard",
+      "keywords": "debugging, .NET Core, SignalR, middleware, developer tools, HTTP monitoring"
+    }
+    </script>
+
+    <!-- Structured Data - SoftwareApplication Schema for .NET Tools -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": ".NET Tools",
+      "applicationCategory": "DeveloperApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "operatingSystem": "Windows, Linux, macOS",
+      "description": "Collection of utility functions for .NET development including JSON formatting and string helpers. Available as a NuGet package for easy integration into .NET projects.",
+      "author": {
+        "@type": "Person",
+        "name": "Elad Sertshuk"
+      },
+      "programmingLanguage": "C#",
+      "url": "https://github.com/eladser/dotnet-tools",
+      "codeRepository": "https://github.com/eladser/dotnet-tools",
+      "keywords": "utilities, .NET, NuGet, JSON, string helpers, developer tools"
+    }
+    </script>
+
+    <!-- Structured Data - FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What technologies does Elad Sertshuk specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Elad specializes in C#, .NET Core, ASP.NET, and SignalR for backend development. He also works with SQL Server for databases, and React, TypeScript, and JavaScript for frontend development. His DevOps stack includes Docker, Azure, and AWS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Debug Dashboard project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Debug Dashboard is a middleware that shows HTTP traffic in real-time through a web dashboard. It uses SignalR to push updates as they happen, helping developers understand what's happening in their .NET applications without adding console logging everywhere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of projects does Elad work on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Elad focuses on developer tooling and utilities - middleware, debugging tools, and backend systems. His work includes enterprise backends, real-time systems with SignalR, and developer experience tooling that improves workflow efficiency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Elad available for new projects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Elad is currently available for work and open to new opportunities. You can reach him at elad.ser@gmail.com or connect via GitHub and LinkedIn."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Structured Data - BreadcrumbList Schema for SPA Navigation -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://eladser.github.io/portfolio/#home"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Showcase",
+          "item": "https://eladser.github.io/portfolio/#projects"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "About",
+          "item": "https://eladser.github.io/portfolio/#about"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Plausible Analytics - Privacy-friendly analytics without cookies -->
+    <!--
+      To activate:
+      1. Sign up at https://plausible.io
+      2. Add your site: eladser.github.io
+      3. Uncomment the script below
+      4. Replace 'yourdomain.com' with 'eladser.github.io'
+
+      Features:
+      - No cookies, GDPR compliant
+      - Lightweight (< 1 KB)
+      - Open source
+      - Privacy-focused
+    -->
+    <!-- <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script> -->
   </body>
 </html>
