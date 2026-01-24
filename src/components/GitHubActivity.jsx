@@ -18,7 +18,9 @@ import { ChevronDown, ChevronUp, Github, GitCommit, GitFork, Star, AlertCircle }
 
 // Demo data structure (used as fallback or when no API call is made)
 const demoActivity = {
-  contributions: 847,
+  publicRepos: 12,
+  totalStars: 40,
+  totalForks: 6,
   repos: [
     {
       name: 'AspNetDebugDashboard',
@@ -60,6 +62,18 @@ const languageColors = {
   'Python': '#3572A5',
   'Java': '#b07219',
   'Go': '#00ADD8',
+};
+
+// Helper to get relative time
+const getRelativeTime = (date) => {
+  const now = new Date();
+  const diff = Math.floor((now - date) / 1000); // seconds
+
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
+  return `${Math.floor(diff / 604800)}w ago`;
 };
 
 const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = false }) => {
@@ -119,8 +133,14 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
           updated: getRelativeTime(new Date(repo.updated_at)),
         }));
 
+        // Calculate total stars and forks from all repos
+        const totalStars = repos.reduce((sum, repo) => sum + repo.stars, 0);
+        const totalForks = repos.reduce((sum, repo) => sum + repo.forks, 0);
+
         setData({
-          contributions: userData.public_repos + userData.public_gists,
+          publicRepos: userData.public_repos,
+          totalStars,
+          totalForks,
           repos: repos.slice(0, 3),
           recentCommits,
         });
@@ -134,18 +154,6 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
 
     fetchGitHubData();
   }, [username, useRealData]);
-
-  // Helper to get relative time
-  const getRelativeTime = (date) => {
-    const now = new Date();
-    const diff = Math.floor((now - date) / 1000); // seconds
-
-    if (diff < 60) return 'just now';
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-    if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
-    return `${Math.floor(diff / 604800)}w ago`;
-  };
 
   return (
     <div
@@ -233,10 +241,10 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                        {data.contributions}
+                        {data.publicRepos}
                       </div>
                       <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                        Contributions
+                        Public Repos
                       </div>
                     </m.div>
 
@@ -249,10 +257,10 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                        {data.repos.length}
+                        {data.totalStars}
                       </div>
                       <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                        Public Repos
+                        Total Stars
                       </div>
                     </m.div>
 
@@ -265,10 +273,10 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       }`}
                     >
                       <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                        {data.repos.reduce((sum, repo) => sum + repo.stars, 0)}
+                        {data.totalForks}
                       </div>
                       <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                        Total Stars
+                        Total Forks
                       </div>
                     </m.div>
                   </div>
