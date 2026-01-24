@@ -820,7 +820,7 @@ const Portfolio = () => {
                         Debug Dashboard
                       </h3>
                       <a
-                        href="https://github.com/eladser/debug-dashboard"
+                        href="https://github.com/eladser/AspNetDebugDashboard"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
@@ -878,7 +878,7 @@ const Portfolio = () => {
                         </p>
                       </div>
                       <a
-                        href="https://github.com/eladser/dotnet-tools"
+                        href="https://github.com/eladser/.net-tools"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
@@ -946,7 +946,7 @@ app.Run();`
                       }
                     ]}
                     highlightLines={[7, 10]}
-                    demoUrl="https://github.com/eladser/debug-dashboard"
+                    demoUrl="https://github.com/eladser/AspNetDebugDashboard"
                   />
                 </m.div>
 
