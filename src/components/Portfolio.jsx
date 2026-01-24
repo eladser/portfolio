@@ -565,7 +565,7 @@ const Portfolio = () => {
               transition={{ duration: 0.3 }}
               className="relative h-full w-full"
             >
-              <header role="banner" className="absolute top-0 left-0 right-0 p-8 flex items-center justify-between z-10">
+              <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
                 <div className="relative flex items-center gap-3">
                   <button
                     onClick={() => setShowShortcuts(!showShortcuts)}
@@ -608,8 +608,8 @@ const Portfolio = () => {
               </span>
             </header>
 
-            <div className="h-full flex items-center justify-center px-8">
-              <div className="flex items-center gap-16 max-w-5xl">
+            <div className="h-full flex items-center justify-center px-4 sm:px-8 pb-24 sm:pb-16">
+              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full">
                 <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -629,7 +629,7 @@ const Portfolio = () => {
                       height="160"
                       loading="eager"
                       fetchPriority="high"
-                      className={`w-40 h-40 rounded-2xl object-cover ${
+                      className={`w-28 h-28 md:w-40 md:h-40 rounded-2xl object-cover ${
                         isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
                       }`}
                     />
@@ -642,7 +642,7 @@ const Portfolio = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <h1 className={`text-5xl font-bold tracking-tight mb-3`}>
+                    <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 text-center md:text-left`}>
                       <button
                         onClick={handleNameClick}
                         onKeyDown={handleNameKeyDown}
@@ -656,7 +656,7 @@ const Portfolio = () => {
                         Elad Sertshuk
                       </button>
                     </h1>
-                    <p className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
+                    <p className={`text-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                       Full-stack developer, mostly .NET
                     </p>
                   </m.div>
@@ -665,7 +665,7 @@ const Portfolio = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className={`text-base leading-relaxed max-w-lg ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
+                    className={`text-base leading-relaxed max-w-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
                   >
                     I build backend systems, debug other people's code, and occasionally make things look nice on the frontend.
                     Currently obsessing over developer tooling and real-time applications.
@@ -676,7 +676,7 @@ const Portfolio = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
                   >
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                       {skills.map((skill) => {
                         const colors = skillColors[skill.color];
                         return (
@@ -700,7 +700,7 @@ const Portfolio = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="flex items-center gap-4 pt-2"
+                    className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 pt-2"
                   >
                     <a
                       href="https://github.com/eladser"
@@ -767,12 +767,12 @@ const Portfolio = () => {
               </div>
             </div>
 
-            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-8 flex items-center justify-between text-xs text-gray-300">
+            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 text-xs text-gray-300">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
                 <span>Available for work</span>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
                 <span className="font-mono text-gray-400">react + vite + tailwind</span>
                 <span className="font-mono text-gray-300">Israel</span>
               </div>
@@ -789,14 +789,14 @@ const Portfolio = () => {
             transition={{ duration: 0.3 }}
             className="relative h-full w-full overflow-auto"
           >
-            <div className="min-h-full flex items-center justify-center px-8 py-24">
+            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 py-12 sm:py-24">
               <div className="max-w-5xl w-full">
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-12"
+                  className="mb-8 sm:mb-12"
                 >
-                  <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                  <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     Showcase
                   </h2>
                   <p className={`text-base ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -809,14 +809,14 @@ const Portfolio = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className={`p-6 rounded-xl border-l-2 border ${
+                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
                       isDark
                         ? 'bg-zinc-900 border-white/10 border-l-purple-800'
                         : 'bg-black/[0.02] border-black/10 border-l-purple-800'
                     }`}
                   >
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
+                      <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                         Debug Dashboard
                       </h3>
                       <a
@@ -854,16 +854,16 @@ const Portfolio = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className={`p-6 rounded-xl border ${
+                    className={`p-4 sm:p-6 rounded-xl border ${
                       isDark
                         ? 'bg-zinc-900 border-white/10'
                         : 'bg-black/[0.02] border-black/10'
                     }`}
                   >
-                    <div className="flex items-start gap-6">
+                    <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                          <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                             .NET Tools
                           </h3>
                           <span className={`text-xs px-2 py-0.5 rounded ${
@@ -901,7 +901,7 @@ const Portfolio = () => {
                   transition={{ delay: 0.3 }}
                   className="mb-8"
                 >
-                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     How to use it
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -956,7 +956,7 @@ app.Run();`
                   transition={{ delay: 0.35 }}
                   className="mb-8"
                 >
-                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     What it looks like
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -972,7 +972,7 @@ app.Run();`
                   transition={{ delay: 0.45 }}
                   className="mb-8"
                 >
-                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     Mini Game
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -988,7 +988,7 @@ app.Run();`
                   transition={{ delay: 0.5 }}
                   className="mb-8"
                 >
-                  <h3 className={`text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  <h3 className={`text-base sm:text-lg font-semibold mb-2 ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     Try the Terminal
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
@@ -1030,14 +1030,14 @@ app.Run();`
             transition={{ duration: 0.3 }}
             className="relative h-full w-full overflow-auto"
           >
-            <div className="min-h-full flex items-center justify-center px-8 py-24">
+            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 py-12 sm:py-24">
               <div className="max-w-2xl w-full">
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-8"
+                  className="mb-6 sm:mb-8"
                 >
-                  <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                  <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     About
                   </h2>
                 </m.div>
@@ -1048,7 +1048,7 @@ app.Run();`
                   transition={{ delay: 0.1 }}
                   className="space-y-6"
                 >
-                  <p className={`text-lg leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
+                  <p className={`text-base sm:text-lg leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
                     Most of my work is in C# and .NET. I like building things that help developers
                     work faster — middleware, debugging tools, utilities. The boring stuff that
                     nobody notices until it's missing.
@@ -1071,14 +1071,14 @@ app.Run();`
                   </pre>
                 </m.div>
 
-                <div className="grid grid-cols-2 gap-4 mt-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 sm:mt-10">
                   <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="p-6 rounded-xl border bg-zinc-900 border-white/10"
+                    className="p-4 sm:p-6 rounded-xl border bg-zinc-900 border-white/10"
                   >
-                    <h3 className="text-sm font-medium mb-4 text-zinc-300">
+                    <h3 className="text-sm font-medium mb-3 sm:mb-4 text-zinc-300">
                       Currently
                     </h3>
                     <p className="leading-relaxed text-gray-300 text-sm">
@@ -1091,9 +1091,9 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
-                    className="p-6 rounded-xl border bg-zinc-900 border-white/10"
+                    className="p-4 sm:p-6 rounded-xl border bg-zinc-900 border-white/10"
                   >
-                    <h3 className="text-sm font-medium mb-4 text-zinc-300">
+                    <h3 className="text-sm font-medium mb-3 sm:mb-4 text-zinc-300">
                       Tools
                     </h3>
                     <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-300">
