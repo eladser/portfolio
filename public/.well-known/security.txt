@@ -8,5 +8,5 @@ Canonical: https://eladser.github.io/portfolio/.well-known/security.txt
 # please report them via email. I'll respond as soon as possible.
 #
 # For GitHub repository security issues:
-# - Debug Dashboard: https://github.com/eladser/debug-dashboard/security
-# - .NET Tools: https://github.com/eladser/dotnet-tools/security
+# - Debug Dashboard: https://github.com/eladser/AspNetDebugDashboard/security
+# - .NET Tools: https://github.com/eladser/.net-tools/security

@@ -89,7 +89,7 @@ Tools:       Git, Vite, Visual Studio, VS Code
 ├─────────────────────────────────────────────┤
 │ Real-time HTTP traffic monitoring for .NET  │
 │ Technologies: C#, SignalR, ASP.NET Core     │
-│ GitHub: github.com/eladser/debug-dashboard  │
+│ GitHub: github.com/eladser/AspNetDebugDashboard │
 └─────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────┐
@@ -97,7 +97,7 @@ Tools:       Git, Vite, Visual Studio, VS Code
 ├─────────────────────────────────────────────┤
 │ Utility functions for .NET development      │
 │ Technologies: C#, NuGet                     │
-│ GitHub: github.com/eladser/dotnet-tools     │
+│ GitHub: github.com/eladser/.net-tools       │
 └─────────────────────────────────────────────┘
 `,
     },
