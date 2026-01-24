@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github } from 'lucide-react';
-import TechTimeline from './TechTimeline';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
@@ -1120,14 +1119,6 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 }}
-                  >
-                    <TechTimeline isDark={isDark} />
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
                   >
                     <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
                   </m.div>
