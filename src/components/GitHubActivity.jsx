@@ -89,6 +89,26 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         if (!reposResponse.ok) throw new Error('Failed to fetch repos');
         const reposData = await reposResponse.json();
 
+        // Fetch recent events (includes push events with commits)
+        const eventsResponse = await fetch(
+          `https://api.github.com/users/${username}/events?per_page=30`
+        );
+        let recentCommits = demoActivity.recentCommits;
+        if (eventsResponse.ok) {
+          const eventsData = await eventsResponse.json();
+          const pushEvents = eventsData
+            .filter((event) => event.type === 'PushEvent' && event.payload?.commits?.length > 0)
+            .slice(0, 5);
+
+          if (pushEvents.length > 0) {
+            recentCommits = pushEvents.map((event) => ({
+              message: event.payload.commits[0].message.split('\n')[0], // First line only
+              repo: event.repo.name.replace(`${username}/`, ''),
+              time: getRelativeTime(new Date(event.created_at)),
+            })).slice(0, 3);
+          }
+        }
+
         // Transform to our format
         const repos = reposData.map((repo) => ({
           name: repo.name,
@@ -102,7 +122,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         setData({
           contributions: userData.public_repos + userData.public_gists,
           repos: repos.slice(0, 3),
-          recentCommits: demoActivity.recentCommits, // GitHub API v3 doesn't expose all commits easily
+          recentCommits,
         });
       } catch (err) {
         setError(err.message);
