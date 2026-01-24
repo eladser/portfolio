@@ -21,7 +21,7 @@ const demoActivity = {
   contributions: 847,
   repos: [
     {
-      name: 'debug-dashboard',
+      name: 'AspNetDebugDashboard',
       description: 'Real-time HTTP traffic monitoring middleware for .NET',
       language: 'C#',
       stars: 23,
@@ -29,9 +29,9 @@ const demoActivity = {
       updated: '2 days ago',
     },
     {
-      name: 'dotnet-tools',
+      name: '.net-tools',
       description: 'Collection of utility functions for .NET projects',
-      language: 'C#',
+      language: 'JavaScript',
       stars: 12,
       forks: 2,
       updated: '1 week ago',
@@ -46,8 +46,8 @@ const demoActivity = {
     },
   ],
   recentCommits: [
-    { message: 'Add SignalR connection retry logic', repo: 'debug-dashboard', time: '2h ago' },
-    { message: 'Update README with usage examples', repo: 'dotnet-tools', time: '1d ago' },
+    { message: 'Add SignalR connection retry logic', repo: 'AspNetDebugDashboard', time: '2h ago' },
+    { message: 'Update README with usage examples', repo: '.net-tools', time: '1d ago' },
     { message: 'Improve timeline component accessibility', repo: 'portfolio', time: '3h ago' },
   ],
 };
