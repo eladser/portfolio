@@ -276,7 +276,6 @@ Status: ☕ Ready for coffee and code!
             className={`flex-1 bg-transparent outline-none ${isDark ? 'text-green-400' : 'text-green-700'}`}
             spellCheck="false"
             autoComplete="off"
-            autoFocus
           />
           <ChevronRight size={14} className="animate-pulse" aria-hidden="true" />
         </div>
