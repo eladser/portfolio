@@ -96,9 +96,9 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         if (!userResponse.ok) throw new Error('Failed to fetch user data');
         const userData = await userResponse.json();
 
-        // Fetch repos
+        // Fetch all repos (up to 100) for accurate totals
         const reposResponse = await fetch(
-          `https://api.github.com/users/${username}/repos?sort=updated&per_page=5`
+          `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`
         );
         if (!reposResponse.ok) throw new Error('Failed to fetch repos');
         const reposData = await reposResponse.json();
@@ -117,7 +117,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
           if (pushEvents.length > 0) {
             recentCommits = pushEvents.map((event) => ({
               message: event.payload.commits[0].message.split('\n')[0], // First line only
-              repo: event.repo.name.replace(`${username}/`, ''),
+              repo: event.repo.name.split('/')[1] || event.repo.name, // Get repo name after /
               time: getRelativeTime(new Date(event.created_at)),
             })).slice(0, 3);
           }
@@ -133,9 +133,9 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
           updated: getRelativeTime(new Date(repo.updated_at)),
         }));
 
-        // Calculate total stars and forks from all repos
-        const totalStars = repos.reduce((sum, repo) => sum + repo.stars, 0);
-        const totalForks = repos.reduce((sum, repo) => sum + repo.forks, 0);
+        // Calculate total stars and forks from ALL fetched repos
+        const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        const totalForks = reposData.reduce((sum, repo) => sum + repo.forks_count, 0);
 
         setData({
           publicRepos: userData.public_repos,
