@@ -6,7 +6,6 @@ import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
 import TechStackViz from './TechStackViz';
-import GitHubHeatmap from './GitHubHeatmap';
 import SoundToggle from './SoundToggle';
 import useEasterEggs from '../hooks/useEasterEggs';
 import useSoundEffects from '../hooks/useSoundEffects';
@@ -1129,14 +1128,6 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                  >
-                    <GitHubHeatmap isDark={isDark} username="eladser" />
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.45 }}
                   >
                     <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
                   </m.div>
