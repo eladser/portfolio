@@ -103,24 +103,33 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         if (!reposResponse.ok) throw new Error('Failed to fetch repos');
         const reposData = await reposResponse.json();
 
-        // Fetch recent events (includes push events with commits)
-        const eventsResponse = await fetch(
-          `https://api.github.com/users/${username}/events?per_page=30`
-        );
-        let recentCommits = demoActivity.recentCommits;
-        if (eventsResponse.ok) {
-          const eventsData = await eventsResponse.json();
-          const pushEvents = eventsData
-            .filter((event) => event.type === 'PushEvent' && event.payload?.commits?.length > 0)
-            .slice(0, 5);
+        // Fetch recent commits from top repos
+        let recentCommits = [];
+        const topRepos = reposData.slice(0, 3);
 
-          if (pushEvents.length > 0) {
-            recentCommits = pushEvents.map((event) => ({
-              message: event.payload.commits[0].message.split('\n')[0], // First line only
-              repo: event.repo.name.split('/')[1] || event.repo.name, // Get repo name after /
-              time: getRelativeTime(new Date(event.created_at)),
-            })).slice(0, 3);
+        for (const repo of topRepos) {
+          try {
+            const commitsResponse = await fetch(
+              `https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`
+            );
+            if (commitsResponse.ok) {
+              const commits = await commitsResponse.json();
+              if (commits.length > 0) {
+                recentCommits.push({
+                  message: commits[0].commit.message.split('\n')[0],
+                  repo: repo.name,
+                  time: getRelativeTime(new Date(commits[0].commit.author.date)),
+                });
+              }
+            }
+          } catch {
+            // Skip this repo if commits fetch fails
           }
+        }
+
+        // Fallback to demo data if no commits found
+        if (recentCommits.length === 0) {
+          recentCommits = demoActivity.recentCommits;
         }
 
         // Transform to our format
