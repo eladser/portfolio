@@ -805,10 +805,78 @@ const Portfolio = () => {
                 </m.div>
 
                 <div className="space-y-6 mb-12">
+                  {/* AeroLens - Featured Project */}
                   <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
+                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
+                      isDark
+                        ? 'bg-zinc-900 border-white/10 border-l-sky-500'
+                        : 'bg-black/[0.02] border-black/10 border-l-sky-500'
+                    }`}
+                  >
+                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
+                      <div className="flex items-center gap-3">
+                        <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                          AeroLens
+                        </h3>
+                        <span className={`text-xs px-2 py-0.5 rounded ${
+                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
+                        }`}>
+                          Live
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <a
+                          href="https://aerolens.eladser.dev"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
+                            isDark
+                              ? 'bg-sky-950 text-sky-400 hover:bg-sky-900'
+                              : 'bg-sky-950 text-sky-600 hover:bg-sky-100'
+                          }`}
+                        >
+                          Try it
+                          <span className="sr-only">(opens in new tab)</span>
+                        </a>
+                        <a
+                          href="https://github.com/eladser/AeroLens"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
+                            isDark
+                              ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
+                              : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
+                          }`}
+                        >
+                          <Github size={14} />
+                          Source
+                          <span className="sr-only">(opens in new tab)</span>
+                        </a>
+                      </div>
+                    </div>
+                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
+                      Real-time flight tracking with AI-powered delay predictions. Track thousands of aircraft worldwide,
+                      get weather-based disruption alerts, and manage your trips. Built with React 19, ASP.NET Core 8,
+                      SignalR, and multi-provider AI (Groq, Mistral, Gemini).
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {['React', 'TypeScript', 'ASP.NET Core', 'SignalR', 'AI/ML'].map((tag) => (
+                        <span key={tag} className={`text-xs px-2 py-1 rounded ${
+                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
+                        }`}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
                     className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
                       isDark
                         ? 'bg-zinc-900 border-white/10 border-l-purple-800'
