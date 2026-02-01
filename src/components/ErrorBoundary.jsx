@@ -41,7 +41,7 @@ class ErrorBoundary extends Component {
   };
 
   handleGoHome = () => {
-    window.location.href = '/portfolio/';
+    window.location.href = '/';
   };
 
   toggleDetails = () => {
