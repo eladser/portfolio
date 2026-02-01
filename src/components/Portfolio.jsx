@@ -7,7 +7,7 @@ import TerminalComponent from './Terminal';
 import TechStackViz from './TechStackViz';
 import SoundToggle from './SoundToggle';
 import useEasterEggs from '../hooks/useEasterEggs';
-import useSoundEffects from '../hooks/useSoundEffects';
+import { useSound } from '../contexts/SoundContext';
 
 const skills = [
   { name: 'C#', color: 'purple' },
@@ -335,7 +335,7 @@ const Portfolio = () => {
 
   // Easter eggs and sound effects
   const { konamiActivated } = useEasterEggs();
-  const { playSound } = useSoundEffects();
+  const { playSound } = useSound();
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -658,7 +658,7 @@ const Portfolio = () => {
                       </button>
                     </h1>
                     <p className={`text-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Full-stack developer, mostly .NET
+                      .NET Developer &amp; Tooling Engineer
                     </p>
                   </m.div>
 
@@ -668,8 +668,8 @@ const Portfolio = () => {
                     transition={{ delay: 0.3 }}
                     className={`text-base leading-relaxed max-w-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
                   >
-                    I build backend systems, debug other people's code, and occasionally make things look nice on the frontend.
-                    Currently obsessing over developer tooling and real-time applications.
+                    Building backend systems, real-time applications, and developer tools.
+                    Focused on ASP.NET Core, SignalR, and making debugging less painful.
                   </m.p>
 
                   <m.div

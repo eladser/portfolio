@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import ErrorBoundary from './components/ErrorBoundary';
+import { SoundProvider } from './contexts/SoundContext';
 
 const Portfolio = lazy(() => import('./components/Portfolio'));
 const NotFound = lazy(() => import('./components/NotFound'));
@@ -16,17 +17,19 @@ const PageLoader = () => (
 const App = () => {
   return (
     <ErrorBoundary>
-      <LazyMotion features={domAnimation} strict>
-        <BrowserRouter basename="/">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Portfolio />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          {import.meta.env.DEV && <PerformanceMonitor />}
-        </BrowserRouter>
-      </LazyMotion>
+      <SoundProvider>
+        <LazyMotion features={domAnimation} strict>
+          <BrowserRouter basename="/">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Portfolio />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            {import.meta.env.DEV && <PerformanceMonitor />}
+          </BrowserRouter>
+        </LazyMotion>
+      </SoundProvider>
     </ErrorBoundary>
   );
 };

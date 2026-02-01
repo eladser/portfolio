@@ -1,20 +1,8 @@
 import { Volume2, VolumeX } from 'lucide-react';
-import useSoundEffects from '../hooks/useSoundEffects';
-
-/**
- * SoundToggle - Toggle button for sound effects
- *
- * Features:
- * - Toggle sound on/off
- * - Visual feedback
- * - Accessible
- *
- * Usage:
- * <SoundToggle isDark={true} />
- */
+import { useSound } from '../contexts/SoundContext';
 
 const SoundToggle = ({ isDark = true }) => {
-  const { soundEnabled, toggleSound, playSound } = useSoundEffects();
+  const { soundEnabled, toggleSound, playSound } = useSound();
 
   const handleClick = () => {
     if (!soundEnabled) {
