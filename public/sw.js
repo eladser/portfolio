@@ -1,9 +1,9 @@
-const CACHE_NAME = 'portfolio-v1';
+const CACHE_NAME = 'portfolio-v2';
 const ASSETS = [
-  '/portfolio/',
-  '/portfolio/index.html',
-  '/portfolio/profile.jpg',
-  '/portfolio/favicon.svg'
+  '/',
+  '/index.html',
+  '/profile.jpg',
+  '/favicon.svg'
 ];
 
 self.addEventListener('install', (e) => {
