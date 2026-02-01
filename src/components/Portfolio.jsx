@@ -25,6 +25,7 @@ const skills = [
   { name: 'Azure', color: 'blue' },
   { name: 'AWS', color: 'orange' },
   { name: 'Git', color: 'orange' },
+  { name: 'AI/ML', color: 'cyan' },
 ];
 
 const skillColors = {
