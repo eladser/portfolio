@@ -17,7 +17,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <LazyMotion features={domAnimation} strict>
-        <BrowserRouter basename="/portfolio">
+        <BrowserRouter basename="/">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Portfolio />} />
