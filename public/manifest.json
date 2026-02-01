@@ -2,32 +2,32 @@
   "name": "Elad Sertshuk Portfolio",
   "short_name": "Elad Sertshuk",
   "description": "Full-stack .NET developer portfolio",
-  "start_url": "/portfolio/",
-  "scope": "/portfolio/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
   "icons": [
     {
-      "src": "/portfolio/profile-160.webp",
+      "src": "/profile-160.webp",
       "sizes": "160x160",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/portfolio/profile-320.webp",
+      "src": "/profile-320.webp",
       "sizes": "320x320",
       "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "/portfolio/profile-320.webp",
+      "src": "/profile-320.webp",
       "sizes": "320x320",
       "type": "image/webp",
       "purpose": "maskable"
     },
     {
-      "src": "/portfolio/profile.jpg",
+      "src": "/profile.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any maskable"
