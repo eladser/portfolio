@@ -10,7 +10,11 @@ const NotFound = lazy(() => import('./components/NotFound'));
 
 const PageLoader = () => (
   <div className="h-screen w-screen bg-[#0a0a0a] flex items-center justify-center">
-    <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+    <img
+      src="/logo-loading.png"
+      alt="Loading..."
+      className="w-24 h-24 animate-pulse"
+    />
   </div>
 );
 
