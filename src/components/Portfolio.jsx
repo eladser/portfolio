@@ -568,6 +568,12 @@ const Portfolio = () => {
             >
               <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
                 <div className="relative flex items-center gap-3">
+                  <img
+                    src={`${import.meta.env.BASE_URL}logo-header.png`}
+                    alt=""
+                    className="w-7 h-7 opacity-80 hover:opacity-100 transition-opacity"
+                  />
+                  <div className="w-px h-4 bg-zinc-700" />
                   <button
                     onClick={() => setShowShortcuts(!showShortcuts)}
                     aria-label="Show keyboard shortcuts"
@@ -644,18 +650,25 @@ const Portfolio = () => {
                     transition={{ delay: 0.2 }}
                   >
                     <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 text-center md:text-left`}>
-                      <button
-                        onClick={handleNameClick}
-                        onKeyDown={handleNameKeyDown}
-                        className={`cursor-default select-none transition-colors ${
-                          isDark
-                            ? 'text-white hover:text-zinc-200'
-                            : 'text-zinc-900 hover:text-zinc-700'
-                        }`}
-                        aria-label="Click 5 times to open debug console"
-                      >
-                        Elad Sertshuk
-                      </button>
+                      <span className="inline-flex items-center gap-3">
+                        <img
+                          src={`${import.meta.env.BASE_URL}logo-hero.png`}
+                          alt=""
+                          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
+                        />
+                        <button
+                          onClick={handleNameClick}
+                          onKeyDown={handleNameKeyDown}
+                          className={`cursor-default select-none transition-colors ${
+                            isDark
+                              ? 'text-white hover:text-zinc-200'
+                              : 'text-zinc-900 hover:text-zinc-700'
+                          }`}
+                          aria-label="Click 5 times to open debug console"
+                        >
+                          Elad Sertshuk
+                        </button>
+                      </span>
                     </h1>
                     <p className={`text-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
                       .NET Developer &amp; Tooling Engineer
