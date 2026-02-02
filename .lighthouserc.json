@@ -5,7 +5,7 @@
       "startServerReadyPattern": "Local:.*http://localhost:5000",
       "startServerReadyTimeout": 30000,
       "url": [
-        "http://localhost:5000/portfolio/"
+        "http://localhost:5000/"
       ],
       "numberOfRuns": 3,
       "settings": {
