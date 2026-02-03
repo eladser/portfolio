@@ -876,6 +876,19 @@ const Portfolio = () => {
                       get weather-based disruption alerts, and manage your trips. Built with React 19, ASP.NET Core 8,
                       SignalR, and multi-provider AI (Groq, Mistral, Gemini).
                     </p>
+                    <a
+                      href="https://aerolens.eladser.dev"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mb-4 rounded-lg overflow-hidden border border-white/10 hover:border-sky-500/50 transition-colors"
+                    >
+                      <img
+                        src={`${import.meta.env.BASE_URL}aerolens-preview.png`}
+                        alt="AeroLens - Real-time flight tracking map"
+                        className="w-full h-auto"
+                        loading="lazy"
+                      />
+                    </a>
                     <div className="flex flex-wrap gap-2">
                       {['React', 'TypeScript', 'ASP.NET Core', 'SignalR', 'AI/ML'].map((tag) => (
                         <span key={tag} className={`text-xs px-2 py-1 rounded ${
