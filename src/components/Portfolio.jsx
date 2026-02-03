@@ -883,9 +883,9 @@ const Portfolio = () => {
                       className="block mb-4 rounded-lg overflow-hidden border border-white/10 hover:border-sky-500/50 transition-colors"
                     >
                       <img
-                        src={`${import.meta.env.BASE_URL}aerolens-preview.png`}
-                        alt="AeroLens - Real-time flight tracking map"
-                        className="w-full h-auto"
+                        src={`${import.meta.env.BASE_URL}aerolens-preview.gif`}
+                        alt="AeroLens demo"
+                        className="w-full h-auto max-w-lg mx-auto"
                         loading="lazy"
                       />
                     </a>
