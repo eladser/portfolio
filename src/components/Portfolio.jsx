@@ -882,11 +882,13 @@ const Portfolio = () => {
                       rel="noopener noreferrer"
                       className="block mb-4 rounded-lg overflow-hidden border border-white/10 hover:border-sky-500/50 transition-colors"
                     >
-                      <img
-                        src={`${import.meta.env.BASE_URL}aerolens-preview.gif`}
-                        alt="AeroLens demo"
-                        className="w-full h-auto max-w-lg mx-auto"
-                        loading="lazy"
+                      <video
+                        src={`${import.meta.env.BASE_URL}aerolens-demo.webm`}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-auto max-w-xl mx-auto"
                       />
                     </a>
                     <div className="flex flex-wrap gap-2">
