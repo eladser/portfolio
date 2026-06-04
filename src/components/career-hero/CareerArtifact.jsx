@@ -166,11 +166,11 @@ export function CareerArtifact({ index, modelUrl, progress }) {
       else if (n.material) n.material.opacity = pose.o;
     });
 
-    // Outer group carries the scroll-driven travel: position, Y/X rotation, dynamic scale
-    const t = state.clock.elapsedTime;
-    group.position.set(pose.x, Math.sin(t * 0.4 + index) * 0.04, pose.z);
+    // Outer group carries the scroll-driven travel only — no ambient idle motion. The
+    // bob/sway was reading as "the page is bouncing" rather than "the object feels alive".
+    group.position.set(pose.x, 0, pose.z);
     group.rotation.x = pose.rx;
-    group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // travel + tiny idle sway
+    group.rotation.y = pose.ry;
     const sm = pose.scaleMul ?? 1;
     group.scale.setScalar(sm);
 

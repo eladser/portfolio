@@ -21,6 +21,9 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
       end: `+=${distance}`,
       pin: true,
       pinSpacing: true,
+      pinType: 'transform',                 // explicit — required for non-window scrollers
+      anticipatePin: 1,                     // avoid the engagement jump on first pin
+      invalidateOnRefresh: true,            // re-measure on refresh, not just on first init
       scrub: true,
       onUpdate: (self) => setProgress(self.progress),
     });
