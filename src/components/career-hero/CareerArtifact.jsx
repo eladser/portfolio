@@ -18,11 +18,11 @@ const WINDOWS = [
   { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
 
-// Per-artifact natural-size fit + base rotation (zeroed for now — tune per model)
+// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel)
 const BASE = [
-  { fitHeight: 2.6, rx: 0.05, ry: 0.0, rz: 0 },
-  { fitHeight: 2.4, rx: 0.00, ry: 0.0, rz: 0 },
-  { fitHeight: 2.6, rx: 0.00, ry: 0.0, rz: 0 },
+  { fitHeight: 2.6, rx:  0.00, ry: -0.57, rz: -0.27 },  // elbit
+  { fitHeight: 2.4, rx:  0.03, ry: -0.64, rz: -0.17 },  // kla
+  { fitHeight: 2.6, rx: -0.03, ry: -0.61, rz: -0.10 },  // wem
 ];
 
 // Travel amounts during the entry/exit phases
@@ -79,10 +79,22 @@ export function CareerArtifact({ index, modelUrl, progress }) {
     cloned.position.sub(center);
     const base = BASE[index];
     const factor = base.fitHeight / size.y;
+    // Boost texture quality on the compressed GLBs: max anisotropy + trilinear filter,
+    // bumps env reflections so reflective surfaces (monitors, metal) read better.
+    const applyToTex = (t) => {
+      if (!t) return;
+      t.anisotropy = 16;                              // most GPUs cap here; safe default
+      t.magFilter = THREE.LinearFilter;
+      t.minFilter = THREE.LinearMipmapLinearFilter;
+      t.generateMipmaps = true;
+      t.needsUpdate = true;
+    };
+    const TEX_SLOTS = ['map', 'normalMap', 'metalnessMap', 'roughnessMap', 'aoMap', 'emissiveMap'];
     const applyToMat = (m) => {
       if (!m) return;
-      m.envMapIntensity = 1.15;
+      m.envMapIntensity = 1.45;
       m.transparent = true;
+      TEX_SLOTS.forEach((slot) => applyToTex(m[slot]));
     };
     cloned.traverse((n) => {
       if (n.isMesh) {
