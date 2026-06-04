@@ -20,18 +20,15 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
-            }
-            if (id.includes('framer-motion')) {
-              return 'vendor-motion';
-            }
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-            if (id.includes('react-router')) {
-              return 'vendor-router';
-            }
+            // 3D stack — heavy, only loaded for the hero. Splitting these out lets the
+            // browser parse react + tailwind + framer first.
+            if (id.includes('three') && !id.includes('@react-three')) return 'vendor-three';
+            if (id.includes('@react-three')) return 'vendor-r3f';
+            if (id.includes('gsap')) return 'vendor-gsap';
+            if (id.includes('react') || id.includes('react-dom')) return 'vendor-react';
+            if (id.includes('framer-motion')) return 'vendor-motion';
+            if (id.includes('lucide-react') || id.includes('@phosphor-icons')) return 'vendor-icons';
+            if (id.includes('react-router')) return 'vendor-router';
             return 'vendor-misc';
           }
         },

@@ -2,7 +2,7 @@
 // HUD + terminal stream sit over the canvas at z:2; canvas at z:1; nav stays above.
 // Mobile + prefers-reduced-motion: canvas hidden, static frame shown instead.
 
-import { useRef, useState, useEffect, Suspense } from 'react';
+import { useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -17,26 +17,13 @@ import { FuturePrompt } from './career-hero/FuturePrompt';
 import { RotationDebugPanel } from './career-hero/RotationDebugPanel';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
-function useEnable3D() {
-  const [enabled, setEnabled] = useState(true);
-  useEffect(() => {
-    const mq1 = window.matchMedia('(hover: hover) and (min-width: 900px)');
-    const mq2 = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const decide = () => setEnabled(mq1.matches && !mq2.matches);
-    decide();
-    mq1.addEventListener('change', decide);
-    mq2.addEventListener('change', decide);
-    return () => {
-      mq1.removeEventListener('change', decide);
-      mq2.removeEventListener('change', decide);
-    };
-  }, []);
-  return enabled;
-}
+// Parent gates the mount via useEnable3D + React.lazy, so by the time this renders
+// 3D is always enabled. Kept the variable name for the few code paths that still
+// reference it inside the JSX.
+const enabled3D = true;
 
 export function CareerHero3D({ scroller }) {
   const containerRef = useRef(null);
-  const enabled3D = useEnable3D();
   const progress = useScrollProgress(containerRef, { distance: 2400, scroller });
 
   // Determine current chapter for HUD title fallback / aria
@@ -144,3 +131,5 @@ export function CareerHero3D({ scroller }) {
     </section>
   );
 }
+
+export default CareerHero3D;

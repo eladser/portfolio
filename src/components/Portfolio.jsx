@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
-import { CareerHero3D } from './CareerHero3D';
+import { CareerHeroStatic } from './CareerHeroStatic';
+import { useEnable3D } from '../hooks/useEnable3D';
+const CareerHero3D = lazy(() => import('./CareerHero3D'));
 import { PROJECTS } from '../data/projects';
 import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
 import { ProjectCard } from './showcase/ProjectCard';
@@ -345,6 +347,7 @@ const Portfolio = () => {
   // Easter eggs and sound effects
   const { konamiActivated } = useEasterEggs();
   const { playSound } = useSound();
+  const enable3D = useEnable3D();
 
   // M5b easter eggs: manifesto, verbose mode, fast-scroll WARN
   const [showManifesto, setShowManifesto] = useState(false);
@@ -596,7 +599,13 @@ const Portfolio = () => {
               ref={homeScrollRef}
               className="relative h-full w-full overflow-y-auto overflow-x-hidden"
             >
-              <CareerHero3D scroller={homeScrollRef} />
+              {enable3D ? (
+                <Suspense fallback={<CareerHeroStatic />}>
+                  <CareerHero3D scroller={homeScrollRef} />
+                </Suspense>
+              ) : (
+                <CareerHeroStatic />
+              )}
               <div className="relative w-full" style={{ minHeight: '100dvh' }}>
               <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
                 <div className="relative flex items-center gap-3">
