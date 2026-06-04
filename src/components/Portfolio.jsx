@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
+import { CareerHero3D } from './CareerHero3D';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
@@ -326,6 +327,7 @@ const Portfolio = () => {
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const homeScrollRef = useRef(null);
   const [nameClicks, setNameClicks] = useState(0);
   const consoleRef = useRef(null);
   const consoleCloseButtonRef = useRef(null);
@@ -564,8 +566,11 @@ const Portfolio = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="relative h-full w-full"
+              ref={homeScrollRef}
+              className="relative h-full w-full overflow-y-auto overflow-x-hidden"
             >
+              <CareerHero3D scroller={homeScrollRef} />
+              <div className="relative w-full" style={{ minHeight: '100dvh' }}>
               <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
                 <div className="relative flex items-center gap-3">
                   <img
@@ -791,6 +796,7 @@ const Portfolio = () => {
                 <span className="font-mono text-gray-300">Israel</span>
               </div>
             </footer>
+              </div>
           </m.div>
         )}
 
