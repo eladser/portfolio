@@ -14,28 +14,35 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
   useEffect(() => {
     if (!ref.current) return;
     const scrollerEl = (scroller && scroller.current) || undefined;
-    const st = ScrollTrigger.create({
-      trigger: ref.current,
-      scroller: scrollerEl,                 // tie to the SPA's home-view scroll container
-      start: 'top top',
-      end: `+=${distance}`,
-      pin: true,
-      pinSpacing: true,
-      pinType: 'transform',                 // explicit — required for non-window scrollers
-      anticipatePin: 1,                     // avoid the engagement jump on first pin
-      invalidateOnRefresh: true,            // re-measure on refresh, not just on first init
-      scrub: true,
-      onUpdate: (self) => setProgress(self.progress),
-    });
-    stRef.current = st;
+    // Defer creation past the wrapper's 300ms mount animation. If ScrollTrigger measures
+    // while the parent motion.div is still transforming, the first scroll bounces every
+    // tick as ScrollTrigger auto-corrects against the stale layout.
+    let st;
+    const initTimer = setTimeout(() => {
+      st = ScrollTrigger.create({
+        trigger: ref.current,
+        scroller: scrollerEl,               // tie to the SPA's home-view scroll container
+        start: 'top top',
+        end: `+=${distance}`,
+        pin: true,
+        pinSpacing: true,
+        pinType: 'transform',               // explicit — required for non-window scrollers
+        anticipatePin: 1,                   // avoid the engagement jump on first pin
+        invalidateOnRefresh: true,          // re-measure on refresh, not just on first init
+        scrub: true,
+        onUpdate: (self) => setProgress(self.progress),
+      });
+      stRef.current = st;
+    }, 400);
     // WEM lesson: layout shifts after fonts/images load → ScrollTrigger caches wrong start.
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener('load', onLoad);
-    const t = setTimeout(() => ScrollTrigger.refresh(), 800);
+    const t = setTimeout(() => ScrollTrigger.refresh(), 1200);
     return () => {
       window.removeEventListener('load', onLoad);
+      clearTimeout(initTimer);
       clearTimeout(t);
-      st.kill();
+      if (st) st.kill();
     };
   }, [ref, distance, scroller]);
 

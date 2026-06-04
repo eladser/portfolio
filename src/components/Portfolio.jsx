@@ -565,9 +565,9 @@ const Portfolio = () => {
           {view === 'home' && (
             <m.div
               key="home"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               ref={homeScrollRef}
               className="relative h-full w-full overflow-y-auto overflow-x-hidden"
