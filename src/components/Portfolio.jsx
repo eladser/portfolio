@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
 import { CareerHero3D } from './CareerHero3D';
+import { PROJECTS } from '../data/projects';
+import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
+import { ProjectCard } from './showcase/ProjectCard';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
@@ -824,178 +827,13 @@ const Portfolio = () => {
                   </p>
                 </m.div>
 
-                <div className="space-y-6 mb-12">
-                  {/* AeroLens - Featured Project */}
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10 border-l-sky-500'
-                        : 'bg-black/[0.02] border-black/10 border-l-sky-500'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
-                      <div className="flex items-center gap-3">
-                        <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                          AeroLens
-                        </h3>
-                        <span className={`text-xs px-2 py-0.5 rounded ${
-                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
-                        }`}>
-                          Live
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <a
-                          href="https://aerolens.eladser.dev"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                            isDark
-                              ? 'bg-sky-950 text-sky-400 hover:bg-sky-900'
-                              : 'bg-sky-950 text-sky-600 hover:bg-sky-100'
-                          }`}
-                        >
-                          Try it
-                          <span className="sr-only">(opens in new tab)</span>
-                        </a>
-                        <a
-                          href="https://github.com/eladser/AeroLens"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                            isDark
-                              ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                              : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                          }`}
-                        >
-                          <Github size={14} />
-                          Source
-                          <span className="sr-only">(opens in new tab)</span>
-                        </a>
-                      </div>
-                    </div>
-                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Real-time flight tracker with AI delay predictions. It pulls in live aircraft positions
-                      and weather data, and lets you save trips you want to keep an eye on. React 19 frontend,
-                      ASP.NET Core 8 + SignalR backend. The AI calls fall back between Groq, Mistral, and Gemini.
-                    </p>
-                    <a
-                      href="https://aerolens.eladser.dev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block mb-4 rounded-lg overflow-hidden border border-white/10 hover:border-sky-500/50 transition-colors"
-                    >
-                      <video
-                        src={`${import.meta.env.BASE_URL}aerolens-demo.webm`}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-auto max-w-xl mx-auto"
-                      />
-                    </a>
-                    <div className="flex flex-wrap gap-2">
-                      {['React', 'TypeScript', 'ASP.NET Core', 'SignalR', 'AI/ML'].map((tag) => (
-                        <span key={tag} className={`text-xs px-2 py-1 rounded ${
-                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
-                        }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 }}
-                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10 border-l-purple-800'
-                        : 'bg-black/[0.02] border-black/10 border-l-purple-800'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
-                      <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                        Debug Dashboard
-                      </h3>
-                      <a
-                        href="https://github.com/eladser/AspNetDebugDashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                          isDark
-                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                        }`}
-                      >
-                        <Github size={14} />
-                        Source
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Got tired of adding Console.WriteLine everywhere to figure out what's happening.
-                      Built a middleware that shows me all HTTP traffic in real-time through a web dashboard.
-                      Uses SignalR to push updates as they happen. Now I actually know why things break.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {['C#', '.NET Core', 'SignalR'].map((tag) => (
-                        <span key={tag} className={`text-xs px-2 py-1 rounded ${
-                          isDark ? 'bg-purple-950 text-purple-400' : 'bg-purple-950 text-purple-600'
-                        }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className={`p-4 sm:p-6 rounded-xl border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10'
-                        : 'bg-black/[0.02] border-black/10'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                            .NET Tools
-                          </h3>
-                          <span className={`text-xs px-2 py-0.5 rounded ${
-                            isDark ? 'bg-emerald-950 text-emerald-400' : 'bg-emerald-950 text-emerald-600'
-                          }`}>
-                            NuGet
-                          </span>
-                        </div>
-                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                          Utility functions I kept copy-pasting between projects. JSON formatting, string helpers,
-                          a few other things. Packaged it up and put it on NuGet so I'd stop doing that.
-                        </p>
-                      </div>
-                      <a
-                        href="https://github.com/eladser/.net-tools"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                          isDark
-                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                        }`}
-                      >
-                        <Github size={14} />
-                        Source
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                  </m.div>
+                <div className="mb-12">
+                  <FeaturedProjectCard project={PROJECTS[0]} />
+                  <div className="grid md:grid-cols-2 gap-5">
+                    {PROJECTS.slice(1).map((p, i) => (
+                      <ProjectCard key={p.id} project={p} index={i} />
+                    ))}
+                  </div>
                 </div>
 
                 <m.div
