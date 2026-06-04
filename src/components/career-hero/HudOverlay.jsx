@@ -22,7 +22,9 @@ function opacityFor(index, p) {
   }
   if (p < T2A) return 0;
   if (p < T2B) return smoothstep((p - T2A) / (T2B - T2A));
-  return 1;
+  if (p < 0.90) return 1;
+  // tail fade to hand off to the FuturePrompt (fully gone by p=0.95)
+  return 1 - smoothstep(Math.min(1, (p - 0.90) / 0.05));
 }
 
 export function HudOverlay({ chapter, index, progress }) {

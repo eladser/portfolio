@@ -39,6 +39,21 @@ const RX_TUMBLE     =  0.15; // small forward/back nod through the transition
 function poseFor(index, p) {
   const w = WINDOWS[index];
   if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
+
+  // WEM tail fade: at the end of the hero, WEM dollies out + fades fully by p=0.95
+  // so the FuturePrompt below it is unobstructed
+  if (index === 2 && p > 0.90) {
+    const t = smoothstep(Math.min(1, (p - 0.90) / 0.05));
+    return {
+      o:        1 - t,
+      x:       -t * X_DRIFT * 0.5,
+      z:        t * Z_EXIT_FWD * 0.5,
+      ry:      -t * RY_TRAVEL * 0.4,
+      rx:       t * RX_TUMBLE * 0.4,
+      scaleMul: 1 + (SCALE_EXIT - 1) * t * 0.4,
+    };
+  }
+
   if (p >= w.ss && p <= w.se) return { o: 1, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
 
   // Entering: from deep back + right, scaling up, rotating in

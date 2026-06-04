@@ -33,10 +33,13 @@ export function TerminalStream({ chapters, progress }) {
     return () => { cancelled = true; clearTimeout(start); };
   }, [full]);
 
+  // Tail fade: clear out for the FuturePrompt at the end of the hero
+  const tailFade = progress > 0.90 ? Math.max(0, 1 - (progress - 0.90) / 0.05) : 1;
+
   return (
     <div
       className="absolute bottom-10 right-10 max-w-lg font-mono text-xs leading-relaxed text-white/75 pointer-events-none select-none whitespace-pre"
-      style={{ minHeight: '6rem' }}
+      style={{ minHeight: '6rem', opacity: tailFade }}
     >
       <span className="text-[#4ECDC4]/70">{'>'} </span>
       <span>{shown}</span>
