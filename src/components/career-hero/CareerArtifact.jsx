@@ -18,12 +18,11 @@ const WINDOWS = [
   { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
 
-// Per-artifact natural-size fit + base rotation (tune via ?debug=rot panel).
-// Reset to zero — the panel is now bug-free, so re-tune and the values bake 1:1.
+// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel)
 const BASE = [
-  { fitHeight: 2.6, rx: 0, ry: 0, rz: 0 },  // elbit
-  { fitHeight: 2.4, rx: 0, ry: 0, rz: 0 },  // kla
-  { fitHeight: 2.6, rx: 0, ry: 0, rz: 0 },  // wem
+  { fitHeight: 2.6, rx: 0.03, ry: -0.81, rz: -0.14 },  // elbit
+  { fitHeight: 2.4, rx: 0.10, ry: -1.32, rz: -0.07 },  // kla
+  { fitHeight: 2.6, rx: 0.14, ry: -1.65, rz:  0.07 },  // wem
 ];
 
 // Travel amounts during the entry/exit phases
