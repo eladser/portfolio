@@ -878,9 +878,9 @@ const Portfolio = () => {
                       </div>
                     </div>
                     <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Real-time flight tracking with AI delay predictions. Tracks thousands of aircraft worldwide,
-                      surfaces weather-based disruption alerts, and lets you manage your trips in one place. Built
-                      on React 19 + ASP.NET Core 8 + SignalR, with multi-provider AI fallback (Groq, Mistral, Gemini).
+                      Real-time flight tracker with AI delay predictions. It pulls in live aircraft positions
+                      and weather data, and lets you save trips you want to keep an eye on. React 19 frontend,
+                      ASP.NET Core 8 + SignalR backend. The AI calls fall back between Groq, Mistral, and Gemini.
                     </p>
                     <a
                       href="https://aerolens.eladser.dev"
@@ -1108,7 +1108,7 @@ app.Run();`
                   className={`text-center pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    If something here looks useful, drop me a line.{' '}
+                    If any of this looks useful, email me.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${
@@ -1152,15 +1152,13 @@ app.Run();`
                   className="space-y-6"
                 >
                   <p className={`text-base sm:text-lg leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                    Most of what I do is C# and .NET. I like building the stuff developers actually use day
-                    to day. Middleware, debug tooling, internal utilities. The kind of thing nobody notices
-                    until it stops working.
+                    Most of my work is C# and .NET. The stuff I find interesting is the invisible plumbing.
+                    Middleware, debug tools, internal libraries that everyone uses but nobody talks about.
                   </p>
                   <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                    Most of my career has been enterprise backends and real-time systems with SignalR.
-                    Picked up enough frontend along the way to ship full features. Lately I keep coming back
-                    to developer-experience problems. The ones where you save someone 30 seconds, a hundred
-                    times a day.
+                    Career-wise, mostly enterprise backends and real-time stuff with SignalR. Enough frontend
+                    to be useful when I need to be. Lately I keep coming back to DX tooling. The kind that
+                    saves you two seconds, a few hundred times a day.
                   </p>
                 </m.div>
 
@@ -1235,7 +1233,7 @@ app.Run();`
                   className={`mt-10 pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Easiest way to reach me is email.{' '}
+                    Email's the easiest way to reach me.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${

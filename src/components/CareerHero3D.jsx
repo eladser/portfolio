@@ -107,10 +107,10 @@ export function CareerHero3D({ scroller }) {
             Elad Sertshuk
           </h1>
           <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
-            I've had three jobs in ten years. Started at <span className="text-[#4ECDC4]/90">Elbit</span> writing
-            simulator software, then moved to <span className="text-[#4ECDC4]/90">KLA</span> and spent five
-            years there building tools for semiconductor fabs. Now I'm at <span className="text-[#4ECDC4]/90">WEM</span> on
-            the energy side. Mostly backend C# the whole way.
+            Backend C# for about ten years now. Three jobs so far:
+            {' '}<span className="text-[#4ECDC4]/90">Elbit</span> on defense simulators,
+            {' '}<span className="text-[#4ECDC4]/90">KLA</span> on semiconductor fab tools (five years),
+            {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> doing grid-scale energy.
           </p>
           <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
             <span className="text-[#4ECDC4]">↓</span>

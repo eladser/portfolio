@@ -5,9 +5,9 @@ import { useMemo } from 'react';
 
 const BRIDGES = [
   // Elbit → KLA: 0.30..0.50
-  { from: 0.30, to: 0.50, text: 'After four years at Elbit I jumped to KLA.' },
+  { from: 0.30, to: 0.50, text: 'Four years at Elbit, then I switched to KLA.' },
   // KLA → WEM: 0.65..0.85
-  { from: 0.65, to: 0.85, text: 'Stayed five years on fab tools. Then WEM came up.' },
+  { from: 0.65, to: 0.85, text: 'Five years on fab tools. Joined WEM in 2025.' },
 ];
 
 function bridgeForProgress(p) {

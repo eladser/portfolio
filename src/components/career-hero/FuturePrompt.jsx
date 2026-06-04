@@ -18,7 +18,7 @@ export function FuturePrompt({ progress }) {
         What's next?
       </h2>
       <p className="text-white/65 text-base md:text-lg max-w-lg mb-8">
-        Honestly not sure yet. If you've got something good, drop me a line.
+        Honestly not sure yet. Email me if you've got something interesting.
       </p>
       <a
         href="mailto:elad.ser@gmail.com"
