@@ -2,7 +2,7 @@
 // slides in from the right, holds centred, then slides out to the left while rotating —
 // not just fading. Per-artifact phase windows give clean handoffs without overlap reads.
 
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -61,6 +61,15 @@ export function CareerArtifact({ index, modelUrl, progress }) {
   const innerRef = useRef();
   const { scene } = useGLTF(modelUrl, true, true);
 
+  // Live rotation overrides from ?debug=rot panel (no-op when not in debug)
+  const [liveBase, setLiveBase] = useState(null);
+  useEffect(() => {
+    const read = () => setLiveBase((window.__hero_base && window.__hero_base[index]) || null);
+    read();
+    window.addEventListener('hero-base-changed', read);
+    return () => window.removeEventListener('hero-base-changed', read);
+  }, [index]);
+
   // Clone + recenter + fit-scale to consistent height across artifacts
   const { content, scaleFactor } = useMemo(() => {
     const cloned = scene.clone(true);
@@ -104,11 +113,21 @@ export function CareerArtifact({ index, modelUrl, progress }) {
     group.position.set(pose.x, Math.sin(t * 0.4 + index) * 0.04, pose.z);
     group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // base + tiny idle sway
 
-    // Inner group holds the base "facing" tilt — kept tiny so the model reads as front-on
+    // Inner group holds the base "facing" tilt — kept tiny so the model reads as front-on.
+    // When ?debug=rot is active, live slider values override all three axes.
     if (innerRef.current) {
       const base = BASE[index];
-      innerRef.current.rotation.x = base.rx;
-      innerRef.current.rotation.z = base.rz;
+      if (liveBase) {
+        innerRef.current.rotation.x = liveBase.rx;
+        innerRef.current.rotation.y = liveBase.ry;
+        innerRef.current.rotation.z = liveBase.rz;
+        // when debugging rotation, override outer Y too so idle/scroll rotations don't fight the slider
+        group.rotation.y = liveBase.ry;
+      } else {
+        innerRef.current.rotation.x = base.rx;
+        innerRef.current.rotation.y = base.ry;
+        innerRef.current.rotation.z = base.rz;
+      }
     }
   });
 

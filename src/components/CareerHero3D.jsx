@@ -10,6 +10,8 @@ import { CAREER } from '../data/career';
 import { CareerArtifact } from './career-hero/CareerArtifact';
 import { HudOverlay } from './career-hero/HudOverlay';
 import { TerminalStream } from './career-hero/TerminalStream';
+import { YearTicker } from './career-hero/YearTicker';
+import { RotationDebugPanel } from './career-hero/RotationDebugPanel';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
 function useEnable3D() {
@@ -80,6 +82,13 @@ export function CareerHero3D({ scroller }) {
         </div>
       )}
 
+      {/* Big background year ticker — sits behind everything except the page bg */}
+      {enabled3D && (
+        <div className="absolute inset-0 z-[0]">
+          <YearTicker chapters={CAREER} progress={progress} />
+        </div>
+      )}
+
       {/* Content layer */}
       <div className="relative z-[2] w-full h-full pointer-events-none">
         <header className="absolute top-8 left-10 font-mono text-xs text-white/55 tracking-[0.18em]">
@@ -97,12 +106,14 @@ export function CareerHero3D({ scroller }) {
 
         {/* Scroll hint at top, fades out after a bit of scroll */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[10px] text-white/40 tracking-[0.3em] uppercase pointer-events-none"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/40 tracking-[0.3em] uppercase pointer-events-none"
           style={{ opacity: Math.max(0, 1 - progress * 6) }}
         >
           scroll ↓
         </div>
       </div>
+
+      <RotationDebugPanel />
     </section>
   );
 }

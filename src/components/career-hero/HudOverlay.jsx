@@ -1,5 +1,5 @@
-// Per-chapter HUD card (bottom-left). Opacity driven by the same per-artifact curve
-// as the 3D crossfade so the card hands off in sync with the model.
+// Per-chapter HUD — left side, vertically centered. Big typography so the chapter
+// reads as a real title, not a footer caption. Opacity matches the per-artifact crossfade.
 
 import { useMemo } from 'react';
 
@@ -27,27 +27,36 @@ function opacityFor(index, p) {
 
 export function HudOverlay({ chapter, index, progress }) {
   const o = useMemo(() => opacityFor(index, progress), [index, progress]);
-  // Lift the card up slightly as it enters (translateY 8 → 0), matches Emil's enter rule
-  const yPx = (1 - o) * 8;
+  const yPx = (1 - o) * 14;
   return (
     <div
-      className="absolute bottom-10 left-10 max-w-md font-mono text-xs leading-relaxed pointer-events-none select-none"
+      className="absolute left-12 top-1/2 -translate-y-1/2 max-w-lg font-mono pointer-events-none select-none"
       style={{
         opacity: o,
-        transform: `translateY(${yPx}px)`,
+        transform: `translate(0, calc(-50% + ${yPx}px))`,
         willChange: 'opacity, transform',
       }}
       aria-hidden={o < 0.01}
     >
-      <div className="text-[#4ECDC4] tracking-[0.18em] mb-1">{chapter.org}</div>
-      <div className="text-white/85 tracking-wide mb-2">{chapter.years} · {chapter.role}</div>
-      <div className="text-white/55 mb-3">{chapter.detail}</div>
-      <div className="flex flex-wrap gap-x-2 gap-y-1 text-white/70">
-        {chapter.stack.map((s, i) => (
-          <span key={s} className="px-1.5 py-0.5 rounded-sm bg-white/[0.04] border border-white/[0.08]">
-            {s}
-          </span>
-        ))}
+      {/* Accent rail */}
+      <div className="flex items-start gap-5">
+        <div className="w-px self-stretch min-h-[180px] bg-gradient-to-b from-[#4ECDC4] via-[#4ECDC4]/40 to-transparent mt-2" aria-hidden="true" />
+        <div>
+          <div className="text-[#4ECDC4] text-[10px] tracking-[0.32em] mb-3">CHAPTER {String(index + 1).padStart(2, '0')}</div>
+          <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] mb-4">
+            {chapter.org}
+          </h2>
+          <div className="text-white/85 text-base md:text-lg mb-1 tracking-wide">{chapter.years}</div>
+          <div className="text-white/90 text-lg md:text-xl mb-2">{chapter.role}</div>
+          <div className="text-white/55 text-sm mb-6 italic">{chapter.detail}</div>
+          <div className="flex flex-wrap gap-x-2 gap-y-1.5 text-white/75 text-xs">
+            {chapter.stack.map((s) => (
+              <span key={s} className="px-2 py-0.5 rounded-sm bg-white/[0.04] border border-white/[0.10]">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
