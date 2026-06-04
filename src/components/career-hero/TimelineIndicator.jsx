@@ -65,8 +65,8 @@ export function TimelineIndicator({ chapters, progress }) {
                 }`}
               />
               <div
-                className={`absolute top-6 text-[10px] font-mono tracking-wider whitespace-nowrap ${
-                  isActive ? 'text-[#4ECDC4]' : 'text-white/40'
+                className={`absolute top-6 text-[11px] font-mono tracking-wider whitespace-nowrap ${
+                  isActive ? 'text-[#4ECDC4]' : 'text-white/45'
                 }`}
               >
                 {n.year}
