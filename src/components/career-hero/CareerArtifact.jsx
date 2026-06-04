@@ -18,11 +18,13 @@ const WINDOWS = [
   { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
 
-// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel)
+// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel).
+// ry doubled vs the original slider values to compensate for an earlier panel bug
+// that double-applied Y rotation while tuning. Future tunes via the panel are 1:1.
 const BASE = [
-  { fitHeight: 2.6, rx:  0.00, ry: -0.57, rz: -0.27 },  // elbit
-  { fitHeight: 2.4, rx:  0.03, ry: -0.64, rz: -0.17 },  // kla
-  { fitHeight: 2.6, rx: -0.03, ry: -0.61, rz: -0.10 },  // wem
+  { fitHeight: 2.6, rx:  0.00, ry: -1.14, rz: -0.27 },  // elbit
+  { fitHeight: 2.4, rx:  0.03, ry: -1.28, rz: -0.17 },  // kla
+  { fitHeight: 2.6, rx: -0.03, ry: -1.22, rz: -0.10 },  // wem
 ];
 
 // Travel amounts during the entry/exit phases
@@ -110,6 +112,26 @@ export function CareerArtifact({ index, modelUrl, progress }) {
     const pose = poseFor(index, progress);
     const group = groupRef.current;
     if (!group) return;
+
+    // Debug mode: lay all 3 artifacts side-by-side, fully visible, no scroll motion,
+    // so the slider value the user tunes maps 1:1 to the baked BASE[i] value.
+    if (liveBase) {
+      group.visible = true;
+      group.position.set((index - 1) * 3.2, 0, 0);
+      group.rotation.y = 0;
+      content.traverse((n) => {
+        if (!n.isMesh) return;
+        if (Array.isArray(n.material)) n.material.forEach((m) => { if (m) m.opacity = 1; });
+        else if (n.material) n.material.opacity = 1;
+      });
+      if (innerRef.current) {
+        innerRef.current.rotation.x = liveBase.rx;
+        innerRef.current.rotation.y = liveBase.ry;
+        innerRef.current.rotation.z = liveBase.rz;
+      }
+      return;
+    }
+
     group.visible = pose.o > 0.01;
     if (!group.visible) return;
 
@@ -125,21 +147,12 @@ export function CareerArtifact({ index, modelUrl, progress }) {
     group.position.set(pose.x, Math.sin(t * 0.4 + index) * 0.04, pose.z);
     group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // base + tiny idle sway
 
-    // Inner group holds the base "facing" tilt — kept tiny so the model reads as front-on.
-    // When ?debug=rot is active, live slider values override all three axes.
+    // Inner group holds the base "facing" rotation (tuned via the debug panel)
     if (innerRef.current) {
       const base = BASE[index];
-      if (liveBase) {
-        innerRef.current.rotation.x = liveBase.rx;
-        innerRef.current.rotation.y = liveBase.ry;
-        innerRef.current.rotation.z = liveBase.rz;
-        // when debugging rotation, override outer Y too so idle/scroll rotations don't fight the slider
-        group.rotation.y = liveBase.ry;
-      } else {
-        innerRef.current.rotation.x = base.rx;
-        innerRef.current.rotation.y = base.ry;
-        innerRef.current.rotation.z = base.rz;
-      }
+      innerRef.current.rotation.x = base.rx;
+      innerRef.current.rotation.y = base.ry;
+      innerRef.current.rotation.z = base.rz;
     }
   });
 
