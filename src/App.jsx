@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import PerformanceMonitor from './components/PerformanceMonitor';
 import ErrorBoundary from './components/ErrorBoundary';
+import { LiveStrip } from './components/LiveStrip';
 import { SoundProvider } from './contexts/SoundContext';
 
 const Portfolio = lazy(() => import('./components/Portfolio'));
@@ -30,6 +31,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
+            <LiveStrip />
             {import.meta.env.DEV && <PerformanceMonitor />}
           </BrowserRouter>
         </LazyMotion>
