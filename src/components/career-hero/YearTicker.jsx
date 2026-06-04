@@ -24,6 +24,8 @@ function transitionBurst(p) {
 export function YearTicker({ chapters, progress }) {
   const { year, burst } = useMemo(() => {
     const ys = chapters.map((c) => c.yearStart);
+    // After the last chapter, the year resolves to "?" — the future
+    if (progress > 0.95) return { year: '?', burst: 0 };
     let v;
     if (progress < 0.30) v = ys[0];
     else if (progress < 0.50) {

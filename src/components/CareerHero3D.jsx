@@ -13,6 +13,7 @@ import { TerminalStream } from './career-hero/TerminalStream';
 import { YearTicker } from './career-hero/YearTicker';
 import { TimelineIndicator } from './career-hero/TimelineIndicator';
 import { BridgeCaption } from './career-hero/BridgeCaption';
+import { FuturePrompt } from './career-hero/FuturePrompt';
 import { RotationDebugPanel } from './career-hero/RotationDebugPanel';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
@@ -100,22 +101,21 @@ export function CareerHero3D({ scroller }) {
           style={{ opacity: Math.max(0, 1 - progress * 7) }}
         >
           <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-4">
-            BACKEND ENGINEER · 10 YEARS · 3 CHAPTERS
+            BACKEND / FULL-STACK · TEN YEARS · HAIFA, IL
           </div>
           <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02] mb-5">
             Elad Sertshuk
           </h1>
           <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
-            Code I've written for the last ten years runs in
-            <span className="text-[#4ECDC4]/90"> defense simulators</span>,
-            <span className="text-[#4ECDC4]/90"> semiconductor fabs</span>, and
-            <span className="text-[#4ECDC4]/90"> grid-scale energy</span>.
-            Three jobs, three high-stakes domains. Same person doing the boring work
-            that has to keep running.
+            Three jobs in ten years — Elbit, then KLA, now WEM.
+            {' '}<span className="text-[#4ECDC4]/90">Defense simulators</span> →
+            {' '}<span className="text-[#4ECDC4]/90">semiconductor fabs</span> →
+            {' '}<span className="text-[#4ECDC4]/90">grid-scale energy</span>.
+            Mostly backend, mostly C#. The boring stuff people only notice when it breaks.
           </p>
           <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
             <span className="text-[#4ECDC4]">↓</span>
-            <span>SCROLL · WALK THROUGH ONE AT A TIME</span>
+            <span>SCROLL</span>
           </div>
         </header>
 
@@ -127,6 +127,7 @@ export function CareerHero3D({ scroller }) {
             ))}
             <TerminalStream chapters={CAREER} progress={progress} />
             <BridgeCaption progress={progress} />
+            <FuturePrompt progress={progress} />
           </>
         )}
 
