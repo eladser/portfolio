@@ -11,41 +11,12 @@ import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
 import { StackUsageViz } from './StackUsageViz';
-import SoundToggle from './SoundToggle';
 import useEasterEggs from '../hooks/useEasterEggs';
 import { useSound } from '../contexts/SoundContext';
 import { useHoldKey } from '../hooks/useHoldKey';
 import { useFastScrollDetector } from '../hooks/useFastScrollDetector';
 import { ManifestoOverlay } from './easter-eggs/ManifestoOverlay';
 import { VerboseOverlay } from './easter-eggs/VerboseOverlay';
-
-const skills = [
-  { name: 'C#', color: 'purple' },
-  { name: '.NET Core', color: 'purple' },
-  { name: 'ASP.NET', color: 'purple' },
-  { name: 'SignalR', color: 'purple' },
-  { name: 'SQL Server', color: 'blue' },
-  { name: 'Node.js', color: 'green' },
-  { name: 'React', color: 'cyan' },
-  { name: 'TypeScript', color: 'blue' },
-  { name: 'JavaScript', color: 'yellow' },
-  { name: 'HTML/CSS', color: 'orange' },
-  { name: 'Tailwind', color: 'cyan' },
-  { name: 'Docker', color: 'blue' },
-  { name: 'Azure', color: 'blue' },
-  { name: 'AWS', color: 'orange' },
-  { name: 'Git', color: 'orange' },
-  { name: 'AI/ML', color: 'cyan' },
-];
-
-const skillColors = {
-  purple: { bg: 'bg-purple-950', text: 'text-purple-400', border: 'border-purple-800' },
-  blue: { bg: 'bg-blue-950', text: 'text-blue-400', border: 'border-blue-800' },
-  green: { bg: 'bg-emerald-950', text: 'text-emerald-400', border: 'border-emerald-800' },
-  cyan: { bg: 'bg-cyan-950', text: 'text-cyan-400', border: 'border-cyan-800' },
-  yellow: { bg: 'bg-amber-950', text: 'text-amber-400', border: 'border-amber-800' },
-  orange: { bg: 'bg-orange-950', text: 'text-orange-400', border: 'border-orange-800' },
-};
 
 const asciiArt = `+----------------------------------+
 |  public class Developer          |
@@ -335,9 +306,7 @@ const Portfolio = () => {
   const [view, setView] = useState('home');
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
-  const [showShortcuts, setShowShortcuts] = useState(false);
   const homeScrollRef = useRef(null);
-  const [nameClicks, setNameClicks] = useState(0);
   const consoleRef = useRef(null);
   const consoleCloseButtonRef = useRef(null);
   const consoleTriggerRef = useRef(null);
@@ -440,22 +409,6 @@ const Portfolio = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showConsole]);
-
-  const handleNameClick = () => {
-    const newCount = nameClicks + 1;
-    setNameClicks(newCount);
-    if (newCount >= 5) {
-      setShowConsole(true);
-      setNameClicks(0);
-    }
-  };
-
-  const handleNameKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleNameClick();
-    }
-  };
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#0a0a0a] text-white">
@@ -622,235 +575,6 @@ const Portfolio = () => {
                   <span>react + vite + r3f</span>
                 </div>
               </footer>
-              {false && (
-              <div className="relative w-full" style={{ minHeight: '100dvh' }}>
-              <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
-                <div className="relative flex items-center gap-3">
-                  <img
-                    src={`${import.meta.env.BASE_URL}logo-header.png`}
-                    alt=""
-                    className="w-7 h-7 opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                  <div className="w-px h-4 bg-zinc-700" />
-                  <button
-                    onClick={() => setShowShortcuts(!showShortcuts)}
-                    aria-label="Show keyboard shortcuts"
-                    aria-expanded={showShortcuts}
-                    aria-controls="shortcuts-menu"
-                    className="w-6 h-6 rounded-full border border-zinc-700 text-gray-300 hover:text-gray-300 hover:border-zinc-500 text-xs font-mono transition-colors"
-                  >
-                    ?
-                  </button>
-                  <SoundToggle isDark={isDark} />
-                <AnimatePresence>
-                  {showShortcuts && (
-                    <m.div
-                      id="shortcuts-menu"
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      className="absolute top-10 left-0 p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono space-y-1.5 w-48 shadow-xl"
-                    >
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Navigate</span>
-                        <span className="text-gray-300">1 2 3</span>
-                      </div>
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Debug console</span>
-                        <span className="text-gray-300">Ctrl+Shift+D</span>
-                      </div>
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Close</span>
-                        <span className="text-gray-300">Esc</span>
-                      </div>
-                    </m.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <span className="font-mono text-xs tracking-wider text-gray-300">
-                {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
-                <span className="ml-1.5 text-gray-400">IL</span>
-              </span>
-            </header>
-
-            <div className="h-full flex items-center justify-center px-4 sm:px-8 pb-24 sm:pb-16">
-              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full">
-                <m.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="flex-shrink-0"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcSet={`${import.meta.env.BASE_URL}profile-160.webp 160w, ${import.meta.env.BASE_URL}profile-320.webp 320w`}
-                      sizes="160px"
-                    />
-                    <img
-                      src={`${import.meta.env.BASE_URL}profile.jpg`}
-                      alt="Elad Sertshuk, Full-Stack Developer specializing in .NET"
-                      width="160"
-                      height="160"
-                      loading="eager"
-                      fetchPriority="high"
-                      className={`w-28 h-28 md:w-40 md:h-40 rounded-2xl object-cover ${
-                        isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
-                      }`}
-                    />
-                  </picture>
-                </m.div>
-
-                <div className="flex-1 space-y-6">
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 text-center md:text-left`}>
-                      <span className="inline-flex items-center gap-3">
-                        <img
-                          src={`${import.meta.env.BASE_URL}logo-hero.png`}
-                          alt=""
-                          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
-                        />
-                        <button
-                          onClick={handleNameClick}
-                          onKeyDown={handleNameKeyDown}
-                          className={`cursor-default select-none transition-colors ${
-                            isDark
-                              ? 'text-white hover:text-zinc-200'
-                              : 'text-zinc-900 hover:text-zinc-700'
-                          }`}
-                          aria-label="Click 5 times to open debug console"
-                        >
-                          Elad Sertshuk
-                        </button>
-                      </span>
-                    </h1>
-                    <p className={`text-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      .NET Developer &amp; Tooling Engineer
-                    </p>
-                  </m.div>
-
-                  <m.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className={`text-base leading-relaxed max-w-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
-                  >
-                    I build backend systems and real-time apps, mostly in ASP.NET Core and SignalR.
-                    Also a fair bit of developer tooling. Trying to make debugging less of a slog.
-                  </m.p>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                      {skills.map((skill) => {
-                        const colors = skillColors[skill.color];
-                        return (
-                          <span
-                            key={skill.name}
-                            className={`px-3 py-1.5 rounded-lg text-sm border ${
-                              isDark
-                                ? `${colors.bg} ${colors.text} ${colors.border}`
-                                : 'bg-black/5 text-gray-300 border-transparent'
-                            }`}
-                          >
-                            {skill.name}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    id="contact-section"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 pt-2"
-                  >
-                    <a
-                      href="https://github.com/eladser"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub profile"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        gh
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                      <span className="sr-only">(opens in new tab)</span>
-                    </a>
-                    <a
-                      href="https://linkedin.com/in/eladser"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn profile"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                        <rect x="2" y="9" width="4" height="12" />
-                        <circle cx="4" cy="4" r="2" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        in
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                      <span className="sr-only">(opens in new tab)</span>
-                    </a>
-                    <a
-                      href="mailto:elad.ser@gmail.com"
-                      aria-label="Email me at elad.ser@gmail.com"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        @
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                    </a>
-                  </m.div>
-                </div>
-              </div>
-            </div>
-
-            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 text-xs text-gray-300">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                <span>Available for work</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-                <span className="font-mono text-gray-400">react + vite + tailwind</span>
-                <span className="font-mono text-gray-300">Israel</span>
-              </div>
-            </footer>
-              </div>
-              )}
           </m.div>
         )}
 
