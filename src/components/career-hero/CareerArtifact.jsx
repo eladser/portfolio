@@ -22,37 +22,48 @@ const WINDOWS = [
 const BASE = [
   { fitHeight: 2.6, rx: 0.03, ry: -0.81, rz: -0.14 },  // elbit
   { fitHeight: 2.4, rx: 0.10, ry: -1.32, rz: -0.07 },  // kla
-  { fitHeight: 2.6, rx: 0.14, ry: -1.65, rz:  0.07 },  // wem
+  { fitHeight: 2.6, rx: 0.14, ry: -1.75, rz:  0.07 },  // wem
 ];
 
-// Travel amounts during the entry/exit phases
-const X_TRAVEL = 5.0;       // slide horizontally
-const Z_TRAVEL = -0.8;      // recede slightly back
-const RY_TRAVEL = 0.55;     // ~31° rotation arc
+// Cinematic transition: a "depth tunnel" where outgoing artifact rushes toward the camera
+// and out, while incoming artifact emerges from deep space, scaling + rotating into place.
+// Side-slide is small; the drama lives on the Z axis and in the rotation arc.
+const X_DRIFT       = 1.6;   // small horizontal drift, just enough to feel direction
+const Z_ENTRY_BACK  = -7.5;  // entering artifact starts this far behind the camera plane
+const Z_EXIT_FWD    =  4.0;  // exiting artifact comes this far toward the camera
+const SCALE_FROM    =  0.35; // entering starts this fraction of full size
+const SCALE_EXIT    =  1.35; // exiting grows slightly as it passes the camera
+const RY_TRAVEL     =  1.2;  // ~69° rotation arc — heavier than before
+const RX_TUMBLE     =  0.15; // small forward/back nod through the transition
 
 function poseFor(index, p) {
   const w = WINDOWS[index];
-  // Outside the window: invisible
-  if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0 };
-  // Settled (hold)
-  if (p >= w.ss && p <= w.se) return { o: 1, x: 0, z: 0, ry: 0 };
-  // Entering: slides in from +X, rotates from +ry
+  if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
+  if (p >= w.ss && p <= w.se) return { o: 1, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
+
+  // Entering: from deep back + right, scaling up, rotating in
   if (p < w.ss) {
     const t = (w.ss - w.es) === 0 ? 1 : smoothstep((p - w.es) / (w.ss - w.es));
+    const k = 1 - t;
     return {
-      o:  t,
-      x:  (1 - t) * X_TRAVEL,
-      z:  (1 - t) * Z_TRAVEL,
-      ry: (1 - t) * RY_TRAVEL,
+      o:        t,
+      x:        k * X_DRIFT,
+      z:        k * Z_ENTRY_BACK,
+      ry:       k * RY_TRAVEL,
+      rx:      -k * RX_TUMBLE,                // slight chin-up while rising from depth
+      scaleMul: SCALE_FROM + (1 - SCALE_FROM) * t,
     };
   }
-  // Exiting: slides to -X, rotates the other way
+
+  // Exiting: dolly toward camera, growing + rotating + fading
   const t = (w.ee - w.se) === 0 ? 1 : smoothstep((p - w.se) / (w.ee - w.se));
   return {
-    o:  1 - t,
-    x:  -t * X_TRAVEL,
-    z:  t * Z_TRAVEL,
-    ry: -t * RY_TRAVEL,
+    o:        1 - t,
+    x:       -t * X_DRIFT,
+    z:        t * Z_EXIT_FWD,
+    ry:      -t * RY_TRAVEL,
+    rx:       t * RX_TUMBLE,
+    scaleMul: 1 + (SCALE_EXIT - 1) * t,
   };
 }
 
@@ -140,10 +151,13 @@ export function CareerArtifact({ index, modelUrl, progress }) {
       else if (n.material) n.material.opacity = pose.o;
     });
 
-    // Outer group carries the scroll-driven travel (position + Y-rotation)
+    // Outer group carries the scroll-driven travel: position, Y/X rotation, dynamic scale
     const t = state.clock.elapsedTime;
     group.position.set(pose.x, Math.sin(t * 0.4 + index) * 0.04, pose.z);
-    group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // base + tiny idle sway
+    group.rotation.x = pose.rx;
+    group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // travel + tiny idle sway
+    const sm = pose.scaleMul ?? 1;
+    group.scale.setScalar(sm);
 
     // Inner group holds the base "facing" rotation (tuned via the debug panel)
     if (innerRef.current) {
