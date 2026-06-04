@@ -101,17 +101,16 @@ export function CareerHero3D({ scroller }) {
           style={{ opacity: Math.max(0, 1 - progress * 7) }}
         >
           <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-4">
-            BACKEND / FULL-STACK · TEN YEARS · HAIFA, IL
+            BACKEND / FULL-STACK ENGINEER · HAIFA, IL
           </div>
           <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02] mb-5">
             Elad Sertshuk
           </h1>
           <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
-            Three jobs in ten years — Elbit, then KLA, now WEM.
-            {' '}<span className="text-[#4ECDC4]/90">Defense simulators</span> →
-            {' '}<span className="text-[#4ECDC4]/90">semiconductor fabs</span> →
-            {' '}<span className="text-[#4ECDC4]/90">grid-scale energy</span>.
-            Mostly backend, mostly C#. The boring stuff people only notice when it breaks.
+            I've had three jobs in ten years. Started at <span className="text-[#4ECDC4]/90">Elbit</span> writing
+            simulator software, then moved to <span className="text-[#4ECDC4]/90">KLA</span> and spent five
+            years there building tools for semiconductor fabs. Now I'm at <span className="text-[#4ECDC4]/90">WEM</span> on
+            the energy side. Mostly backend C# the whole way.
           </p>
           <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
             <span className="text-[#4ECDC4]">↓</span>

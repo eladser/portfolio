@@ -12,13 +12,13 @@ export function FuturePrompt({ progress }) {
       aria-hidden={o < 0.1}
     >
       <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-6">
-        CHAPTER 4 · NOT WRITTEN YET
+        CHAPTER 4 · TBD
       </div>
       <h2 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
         What's next?
       </h2>
       <p className="text-white/65 text-base md:text-lg max-w-lg mb-8">
-        Open to interesting problems. If you have one, let me know.
+        Honestly not sure yet. If you've got something good, drop me a line.
       </p>
       <a
         href="mailto:elad.ser@gmail.com"

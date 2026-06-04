@@ -8,7 +8,7 @@ export const CAREER = [
     years: '2014–18',
     yearStart: 2014,
     role: 'simulator instructor stations',
-    detail: 'defense domain · live trainer telemetry',
+    detail: 'instructor consoles, WPF apps',
     stack: ['C#', 'C++', 'Java', 'WPF', 'WCF'],
     model: '/assets/models/elbit-station.glb',
     snippet: [

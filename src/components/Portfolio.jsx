@@ -686,8 +686,8 @@ const Portfolio = () => {
                     transition={{ delay: 0.3 }}
                     className={`text-base leading-relaxed max-w-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
                   >
-                    Building backend systems, real-time applications, and developer tools.
-                    Focused on ASP.NET Core, SignalR, and making debugging less painful.
+                    I build backend systems and real-time apps, mostly in ASP.NET Core and SignalR.
+                    Also a fair bit of developer tooling. Trying to make debugging less of a slog.
                   </m.p>
 
                   <m.div
@@ -878,9 +878,9 @@ const Portfolio = () => {
                       </div>
                     </div>
                     <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Real-time flight tracking with AI-powered delay predictions. Track thousands of aircraft worldwide,
-                      get weather-based disruption alerts, and manage your trips. Built with React 19, ASP.NET Core 8,
-                      SignalR, and multi-provider AI (Groq, Mistral, Gemini).
+                      Real-time flight tracking with AI delay predictions. Tracks thousands of aircraft worldwide,
+                      surfaces weather-based disruption alerts, and lets you manage your trips in one place. Built
+                      on React 19 + ASP.NET Core 8 + SignalR, with multi-provider AI fallback (Groq, Mistral, Gemini).
                     </p>
                     <a
                       href="https://aerolens.eladser.dev"
@@ -976,8 +976,8 @@ const Portfolio = () => {
                           </span>
                         </div>
                         <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                          Utility functions I kept copying between projects — JSON formatting, string helpers.
-                          Packaged it properly, now on NuGet.
+                          Utility functions I kept copy-pasting between projects. JSON formatting, string helpers,
+                          a few other things. Packaged it up and put it on NuGet so I'd stop doing that.
                         </p>
                       </div>
                       <a
@@ -1108,7 +1108,7 @@ app.Run();`
                   className={`text-center pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Interested in working together?{' '}
+                    If something here looks useful, drop me a line.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${
@@ -1152,14 +1152,15 @@ app.Run();`
                   className="space-y-6"
                 >
                   <p className={`text-base sm:text-lg leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                    Most of my work is in C# and .NET. I like building things that help developers
-                    work faster — middleware, debugging tools, utilities. The boring stuff that
-                    nobody notices until it's missing.
+                    Most of what I do is C# and .NET. I like building the stuff developers actually use day
+                    to day. Middleware, debug tooling, internal utilities. The kind of thing nobody notices
+                    until it stops working.
                   </p>
                   <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                    I've worked on enterprise backends, real-time systems with SignalR, and enough
-                    frontend to get by. Currently interested in developer experience tooling —
-                    the kind of thing that saves you 30 seconds a hundred times a day.
+                    Most of my career has been enterprise backends and real-time systems with SignalR.
+                    Picked up enough frontend along the way to ship full features. Lately I keep coming back
+                    to developer-experience problems. The ones where you save someone 30 seconds, a hundred
+                    times a day.
                   </p>
                 </m.div>
 
@@ -1234,7 +1235,7 @@ app.Run();`
                   className={`mt-10 pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Best way to reach me:{' '}
+                    Easiest way to reach me is email.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${
