@@ -11,6 +11,8 @@ import { CareerArtifact } from './career-hero/CareerArtifact';
 import { HudOverlay } from './career-hero/HudOverlay';
 import { TerminalStream } from './career-hero/TerminalStream';
 import { YearTicker } from './career-hero/YearTicker';
+import { TimelineIndicator } from './career-hero/TimelineIndicator';
+import { BridgeCaption } from './career-hero/BridgeCaption';
 import { RotationDebugPanel } from './career-hero/RotationDebugPanel';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
@@ -91,16 +93,40 @@ export function CareerHero3D({ scroller }) {
 
       {/* Content layer */}
       <div className="relative z-[2] w-full h-full pointer-events-none">
-        <header className="absolute top-8 left-10 font-mono text-xs text-white/55 tracking-[0.18em]">
-          ELAD SERTSHUK · BACKEND / FULL-STACK · 10+ YRS
+        {/* Framing — sets the context BEFORE the visitor sees a 3D simulator + 2014 and is
+            confused. Fades out as scroll progresses; the chapter HUD takes over from there. */}
+        <header
+          className="absolute top-12 left-12 max-w-2xl"
+          style={{ opacity: Math.max(0, 1 - progress * 7) }}
+        >
+          <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-4">
+            BACKEND ENGINEER · 10 YEARS · 3 CHAPTERS
+          </div>
+          <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02] mb-5">
+            Elad Sertshuk
+          </h1>
+          <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
+            Code I've written for the last ten years runs in
+            <span className="text-[#4ECDC4]/90"> defense simulators</span>,
+            <span className="text-[#4ECDC4]/90"> semiconductor fabs</span>, and
+            <span className="text-[#4ECDC4]/90"> grid-scale energy</span>.
+            Three jobs, three high-stakes domains. Same person doing the boring work
+            that has to keep running.
+          </p>
+          <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
+            <span className="text-[#4ECDC4]">↓</span>
+            <span>SCROLL · WALK THROUGH ONE AT A TIME</span>
+          </div>
         </header>
 
         {enabled3D && (
           <>
+            <TimelineIndicator chapters={CAREER} progress={progress} />
             {CAREER.map((chap, i) => (
               <HudOverlay key={chap.id} chapter={chap} index={i} progress={progress} />
             ))}
             <TerminalStream chapters={CAREER} progress={progress} />
+            <BridgeCaption progress={progress} />
           </>
         )}
 
