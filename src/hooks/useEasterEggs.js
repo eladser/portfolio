@@ -37,7 +37,7 @@ const useEasterEggs = () => {
         setKonamiActivated(true);
         setSecretMode(true);
         // Show notification
-        console.log('🎮 Konami Code Activated!');
+        console.log('[konami] activated');
         console.log('Secret message: You found the easter egg! Keep exploring...');
         // Auto-dismiss notification after 3 seconds
         setTimeout(() => {

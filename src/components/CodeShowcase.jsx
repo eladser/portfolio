@@ -169,8 +169,8 @@ const CodeShowcase = ({
             lineProps={(lineNumber) => {
               const style = { display: 'block' };
               if (highlightLines.includes(lineNumber)) {
-                style.backgroundColor = isDark ? 'rgba(168, 85, 247, 0.1)' : 'rgba(168, 85, 247, 0.15)';
-                style.borderLeft = '3px solid rgb(168, 85, 247)';
+                style.backgroundColor = isDark ? 'rgba(78, 205, 196, 0.10)' : 'rgba(78, 205, 196, 0.18)';
+                style.borderLeft = '3px solid #4ECDC4';
                 style.paddingLeft = '0.5rem';
               }
               return { style };

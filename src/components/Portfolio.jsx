@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { Terminal, X, Github } from 'lucide-react';
+import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
@@ -1254,13 +1254,13 @@ app.Run();`
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl backdrop-blur-xl bg-purple-950 border-2 border-purple-500/50 shadow-2xl"
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-4 rounded-2xl backdrop-blur-xl bg-[#0a0a0a]/95 border border-[#4ECDC4]/40 shadow-2xl shadow-[#4ECDC4]/10"
           >
             <div className="flex items-center gap-3">
-              <span className="text-3xl">🎮</span>
+              <Gamepad2 className="w-7 h-7 text-[#4ECDC4]" strokeWidth={1.5} aria-hidden="true" />
               <div>
-                <div className="text-white font-bold text-lg">Konami Code Activated!</div>
-                <div className="text-purple-200 text-sm">Secret developer mode unlocked</div>
+                <div className="text-white font-bold text-lg">Konami Code Activated</div>
+                <div className="text-[#4ECDC4]/80 text-sm">Secret developer mode unlocked</div>
               </div>
             </div>
           </m.div>
