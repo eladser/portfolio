@@ -606,17 +606,21 @@ const Portfolio = () => {
               ) : (
                 <CareerHeroStatic />
               )}
-              {/* Thin footer below the hero — the hero IS the home, this just closes it
-                  out without the redundant profile-pic-and-chips block. */}
-              <footer className="w-full px-6 py-10 text-center font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
-                &copy; 2026 &middot;{' '}
-                <a
-                  href="mailto:elad.ser@gmail.com"
-                  className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
-                >
-                  elad.ser@gmail.com
-                </a>
-                {' '}&middot; react + vite + r3f
+              {/* Thin footer below the hero — right-aligned so it doesn't collide with
+                  the centered nav pill OR the bottom-left LiveStrip widget. */}
+              <footer className="flex justify-end px-10 pt-10 pb-24 font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 justify-end text-right">
+                  <span>&copy; 2026</span>
+                  <span aria-hidden="true">&middot;</span>
+                  <a
+                    href="mailto:elad.ser@gmail.com"
+                    className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
+                  >
+                    elad.ser@gmail.com
+                  </a>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>react + vite + r3f</span>
+                </div>
               </footer>
               {false && (
               <div className="relative w-full" style={{ minHeight: '100dvh' }}>

@@ -87,12 +87,32 @@ export function CareerHero3D({ scroller }) {
           className="absolute top-12 left-12 max-w-2xl"
           style={{ opacity: Math.max(0, 1 - progress * 7) }}
         >
-          <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-4">
-            BACKEND / FULL-STACK ENGINEER · HAIFA, IL
+          <div className="flex items-center gap-5 mb-5">
+            <picture>
+              <source
+                type="image/webp"
+                srcSet={`${import.meta.env.BASE_URL}profile-160.webp 160w, ${import.meta.env.BASE_URL}profile-320.webp 320w`}
+                sizes="80px"
+              />
+              <img
+                src={`${import.meta.env.BASE_URL}profile.jpg`}
+                alt=""
+                width="80"
+                height="80"
+                loading="eager"
+                fetchPriority="high"
+                className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover ring-1 ring-white/15"
+              />
+            </picture>
+            <div>
+              <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-2">
+                BACKEND / FULL-STACK ENGINEER · HAIFA, IL
+              </div>
+              <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02]">
+                Elad Sertshuk
+              </h1>
+            </div>
           </div>
-          <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02] mb-5">
-            Elad Sertshuk
-          </h1>
           <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
             Backend C# for about ten years now. Three jobs so far:
             {' '}<span className="text-[#4ECDC4]/90">Elbit</span> on defense simulators,
