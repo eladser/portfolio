@@ -4,6 +4,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* brand */
+  --teal:        #4ECDC4;
+  --teal-rgb:    78, 205, 196;
+  --teal-glow:   rgba(78, 205, 196, 0.22);
+  --coral:       #FF6B6B;
+  --coral-rgb:   255, 107, 107;
+
+  /* motion tokens (Emil curves — built-ins are too weak) */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-tap:     160ms;
+  --dur-hover:   200ms;
+  --dur-overlay: 250ms;
+  --dur-cross:   650ms;
+}
+
 @layer base {
   html, body, #root {
     @apply h-full w-full;
@@ -16,8 +34,8 @@
   }
 
   ::selection {
-    background: #E535AB;
-    color: white;
+    background: var(--teal);
+    color: #0a0a0a;
   }
 
   /* Scrollbar */
@@ -80,7 +98,7 @@
     overflow: visible;
     clip: auto;
     white-space: normal;
-    background: rgb(168, 85, 247);
+    background: var(--teal);
     color: white;
     z-index: 9999;
     border-radius: 0.5rem;
@@ -91,23 +109,23 @@
 @layer base {
   /* Ensure all focusable elements have visible focus */
   *:focus-visible {
-    outline: 2px solid rgb(168, 85, 247);
+    outline: 2px solid var(--teal);
     outline-offset: 2px;
   }
 
   /* Enhanced focus for interactive elements */
   button:focus-visible,
   a:focus-visible {
-    outline: 2px solid rgb(168, 85, 247);
+    outline: 2px solid var(--teal);
     outline-offset: 2px;
   }
 
   /* Input focus with clear indicator */
   input:focus-visible,
   textarea:focus-visible {
-    outline: 2px solid rgb(168, 85, 247);
+    outline: 2px solid var(--teal);
     outline-offset: 0;
-    border-color: rgb(168, 85, 247) !important;
+    border-color: var(--teal) !important;
   }
 }
 
