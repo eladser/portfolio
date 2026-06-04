@@ -8,14 +8,14 @@ const smoothstep = (t) => t * t * (3 - 2 * t);
 
 // 0..1 burst factor — peaks (1.0) at the midpoint of either transition window
 function transitionBurst(p) {
-  // Elbit → KLA transition: 0.30..0.50, peak 0.40
-  if (p >= 0.30 && p <= 0.50) {
-    const t = (p - 0.30) / 0.20;          // 0..1
+  // Elbit → KLA transition: 0.12..0.32, peak 0.22
+  if (p >= 0.12 && p <= 0.32) {
+    const t = (p - 0.12) / 0.20;          // 0..1
     return Math.sin(t * Math.PI);          // bell: 0→1→0
   }
-  // KLA → WEM transition: 0.65..0.85, peak 0.75
-  if (p >= 0.65 && p <= 0.85) {
-    const t = (p - 0.65) / 0.20;
+  // KLA → WEM transition: 0.50..0.70, peak 0.60
+  if (p >= 0.50 && p <= 0.70) {
+    const t = (p - 0.50) / 0.20;
     return Math.sin(t * Math.PI);
   }
   return 0;
@@ -25,15 +25,15 @@ export function YearTicker({ chapters, progress }) {
   const { year, burst } = useMemo(() => {
     const ys = chapters.map((c) => c.yearStart);
     // After the last chapter, the year resolves to "?" — the future
-    if (progress > 0.95) return { year: '?', burst: 0 };
+    if (progress > 0.92) return { year: '?', burst: 0 };
     let v;
-    if (progress < 0.30) v = ys[0];
-    else if (progress < 0.50) {
-      const t = smoothstep((progress - 0.30) / 0.20);
+    if (progress < 0.12) v = ys[0];
+    else if (progress < 0.32) {
+      const t = smoothstep((progress - 0.12) / 0.20);
       v = ys[0] + (ys[1] - ys[0]) * t;
-    } else if (progress < 0.65) v = ys[1];
-    else if (progress < 0.85) {
-      const t = smoothstep((progress - 0.65) / 0.20);
+    } else if (progress < 0.50) v = ys[1];
+    else if (progress < 0.70) {
+      const t = smoothstep((progress - 0.50) / 0.20);
       v = ys[1] + (ys[2] - ys[1]) * t;
     } else v = ys[2];
     return { year: Math.round(v), burst: transitionBurst(progress) };
