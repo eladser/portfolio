@@ -1,15 +1,21 @@
 // Slides in from the right when `whoami` is typed in the terminal. Content is in
 // Elad's voice — no invented credentials, just a tight bio.
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function ManifestoOverlay({ open, onClose }) {
+  // Keep onClose in a ref so the keydown effect doesn't re-bind on every parent render.
+  // Parent re-renders every ~1s (clock tick) — if we depend on onClose directly the
+  // listener detaches/re-attaches constantly and Esc presses fall through the gap.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e) => { if (e.key === 'Escape') onCloseRef.current(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+  }, [open]);
 
   return (
     <div

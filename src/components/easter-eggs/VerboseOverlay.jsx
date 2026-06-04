@@ -11,10 +11,16 @@ export function VerboseOverlay({ open, onClose, scroller }) {
   const rafRef = useRef();
   const frameTimes = useRef([]);
 
+  // Stable onClose so the keydown effect doesn't re-bind every parent render
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
+
   useEffect(() => {
     if (!open) return;
 
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    // Esc closes. Backtick can also close it but only via the same 3s hold that opens
+    // it (handled in useHoldKey toggle, not here) — kept symmetric so it doesn't conflict.
+    const onKey = (e) => { if (e.key === 'Escape') onCloseRef.current(); };
     window.addEventListener('keydown', onKey);
 
     const measure = (t) => {
