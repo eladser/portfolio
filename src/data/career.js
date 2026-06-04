@@ -43,8 +43,8 @@ export const CAREER = [
     years: '2025–present',
     yearStart: 2025,
     role: 'Lead Software Engineer',
-    detail: 'leads 2 engineers',
-    stack: ['C# microservices', 'React/TS', 'PostgreSQL', 'Terraform', 'AWS'],
+    detail: 'leads 2 engineers · LLM integration work',
+    stack: ['C# microservices', 'React/TS', 'PostgreSQL', 'Terraform', 'AWS', 'Claude/Gemini'],
     model: '/assets/models/wem-bess.glb',
     snippet: [
       'await using var tx = await db.Database.BeginTransactionAsync(ct);',

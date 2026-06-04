@@ -37,6 +37,14 @@ export const STACK_TIMELINE = [
   { name: 'Docker',      category: 'devops',   usage: [0,0,0,0,0,1,2,2,2,2,2,3,3] },
   { name: 'Kubernetes',  category: 'devops',   usage: [0,0,0,0,0,0,0,1,1,1,1,2,2] },
   { name: 'Terraform',   category: 'devops',   usage: [0,0,0,0,0,0,0,0,0,0,1,3,3] },
+
+  // AI / LLM — started solo in 2024, became day-job at WEM in 2025
+  { name: 'Claude',      category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,1,3,3] },
+  { name: 'Gemini',      category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,1,2,3] },
+  { name: 'Groq',        category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,0,2,3] },
+  { name: 'Mistral',     category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,0,2,2] },
+  { name: 'MCP servers', category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,0,1,3] },
+  { name: 'agents/skills',category: 'ai',      usage: [0,0,0,0,0,0,0,0,0,0,0,2,3] },
 ];
 
 // Job boundaries — for the vertical separators between Elbit/KLA/WEM in the chart
@@ -46,9 +54,10 @@ export const JOB_BOUNDARIES = [
 ];
 
 export const CATEGORY_COLORS = {
-  backend:  { bar: 'bg-[#4ECDC4]', text: 'text-[#4ECDC4]', label: 'backend' },
-  frontend: { bar: 'bg-sky-400',   text: 'text-sky-400',   label: 'frontend' },
+  backend:  { bar: 'bg-[#4ECDC4]',   text: 'text-[#4ECDC4]',   label: 'backend' },
+  frontend: { bar: 'bg-sky-400',     text: 'text-sky-400',     label: 'frontend' },
   database: { bar: 'bg-emerald-400', text: 'text-emerald-400', label: 'database' },
-  cloud:    { bar: 'bg-amber-400', text: 'text-amber-400', label: 'cloud' },
-  devops:   { bar: 'bg-rose-400',  text: 'text-rose-400',  label: 'devops' },
+  cloud:    { bar: 'bg-amber-400',   text: 'text-amber-400',   label: 'cloud' },
+  devops:   { bar: 'bg-rose-400',    text: 'text-rose-400',    label: 'devops' },
+  ai:       { bar: 'bg-violet-400',  text: 'text-violet-400',  label: 'ai / llm' },
 };

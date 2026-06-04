@@ -5,7 +5,7 @@
 import { useState, useMemo } from 'react';
 import { STACK_TIMELINE, STACK_YEARS, JOB_BOUNDARIES, CATEGORY_COLORS } from '../data/stack-timeline';
 
-const CATEGORIES = ['backend', 'frontend', 'database', 'cloud', 'devops'];
+const CATEGORIES = ['backend', 'frontend', 'database', 'cloud', 'devops', 'ai'];
 
 function jobForYear(y) {
   if (y <= 2018) return 'Elbit';
@@ -41,7 +41,7 @@ export function StackUsageViz() {
           {CATEGORIES.map((cat) => (
             <div key={cat} className="flex items-center gap-1.5">
               <span className={`inline-block w-2 h-2 rounded-sm ${CATEGORY_COLORS[cat].bar}`} />
-              <span className="text-zinc-400">{cat}</span>
+              <span className="text-zinc-400">{CATEGORY_COLORS[cat].label}</span>
             </div>
           ))}
         </div>

@@ -110,7 +110,8 @@ export function CareerHero3D({ scroller }) {
             Backend C# for about ten years now. Three jobs so far:
             {' '}<span className="text-[#4ECDC4]/90">Elbit</span> on defense simulators,
             {' '}<span className="text-[#4ECDC4]/90">KLA</span> on semiconductor fab tools (five years),
-            {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> doing grid-scale energy.
+            {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> on grid-scale energy,
+            with a fair bit of <span className="text-violet-400/90">LLM integration</span> mixed in lately.
           </p>
           <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
             <span className="text-[#4ECDC4]">↓</span>
