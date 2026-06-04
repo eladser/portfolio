@@ -30,7 +30,10 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
         anticipatePin: 1,                   // avoid the engagement jump on first pin
         invalidateOnRefresh: true,          // re-measure on refresh, not just on first init
         scrub: true,
-        onUpdate: (self) => setProgress(self.progress),
+        onUpdate: (self) => {
+          setProgress(self.progress);
+          window.__hero_progress = self.progress;  // exposed for verbose easter egg
+        },
       });
       stRef.current = st;
     }, 400);

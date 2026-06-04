@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
 import { CareerHero3D } from './CareerHero3D';
@@ -12,6 +12,10 @@ import { StackUsageViz } from './StackUsageViz';
 import SoundToggle from './SoundToggle';
 import useEasterEggs from '../hooks/useEasterEggs';
 import { useSound } from '../contexts/SoundContext';
+import { useHoldKey } from '../hooks/useHoldKey';
+import { useFastScrollDetector } from '../hooks/useFastScrollDetector';
+import { ManifestoOverlay } from './easter-eggs/ManifestoOverlay';
+import { VerboseOverlay } from './easter-eggs/VerboseOverlay';
 
 const skills = [
   { name: 'C#', color: 'purple' },
@@ -341,6 +345,26 @@ const Portfolio = () => {
   // Easter eggs and sound effects
   const { konamiActivated } = useEasterEggs();
   const { playSound } = useSound();
+
+  // M5b easter eggs: manifesto, verbose mode, fast-scroll WARN
+  const [showManifesto, setShowManifesto] = useState(false);
+  const [showVerbose, setShowVerbose] = useState(false);
+  const [injectedTerminalLine, setInjectedTerminalLine] = useState(null);
+  const terminalCommands = {
+    whoami: {
+      description: 'Show who you are talking to',
+      execute: () => {
+        setShowManifesto(true);
+        return 'elad-sertshuk — see panel ↗';
+      },
+    },
+  };
+  useHoldKey('Backquote', 3000, useCallback(() => setShowVerbose((v) => !v), []));
+  useFastScrollDetector(homeScrollRef, { heroDistance: 2400, thresholdMs: 1200 },
+    useCallback((elapsedMs) => {
+      const secs = (elapsedMs / 1000).toFixed(1);
+      setInjectedTerminalLine({ type: 'error', content: `WARN: you blinked through 10 years of work in ${secs} seconds` });
+    }, []));
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -936,7 +960,11 @@ app.Run();`
                     Interactive terminal with commands about me
                   </p>
 
-                  <TerminalComponent isDark={isDark} />
+                  <TerminalComponent
+                    isDark={isDark}
+                    commands={terminalCommands}
+                    injectedLine={injectedTerminalLine}
+                  />
                 </m.div>
 
                 <m.div
@@ -1109,6 +1137,10 @@ app.Run();`
           </m.div>
         )}
       </AnimatePresence>
+
+      {/* M5b easter eggs */}
+      <ManifestoOverlay open={showManifesto} onClose={() => setShowManifesto(false)} />
+      <VerboseOverlay open={showVerbose} onClose={() => setShowVerbose(false)} scroller={homeScrollRef} />
     </div>
   );
 };
