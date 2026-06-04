@@ -21,9 +21,12 @@ export function RotationDebugPanel() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setEnabled(params.get('debug') === 'rot');
-    // initialise the global if not already
-    if (!window[KEY]) write(CAREER.map(() => ({ rx: 0, ry: 0, rz: 0 })));
+    const on = params.get('debug') === 'rot';
+    setEnabled(on);
+    // ONLY initialise the global when debug is on — otherwise artifacts would
+    // detect a live override and stay in side-by-side debug mode permanently
+    if (on && !window[KEY]) write(CAREER.map(() => ({ rx: 0, ry: 0, rz: 0 })));
+    if (!on && window[KEY]) { delete window[KEY]; window.dispatchEvent(new Event('hero-base-changed')); }
   }, []);
 
   if (!enabled) return null;

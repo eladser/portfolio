@@ -18,13 +18,12 @@ const WINDOWS = [
   { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
 
-// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel).
-// ry doubled vs the original slider values to compensate for an earlier panel bug
-// that double-applied Y rotation while tuning. Future tunes via the panel are 1:1.
+// Per-artifact natural-size fit + base rotation (tune via ?debug=rot panel).
+// Reset to zero — the panel is now bug-free, so re-tune and the values bake 1:1.
 const BASE = [
-  { fitHeight: 2.6, rx:  0.00, ry: -1.14, rz: -0.27 },  // elbit
-  { fitHeight: 2.4, rx:  0.03, ry: -1.28, rz: -0.17 },  // kla
-  { fitHeight: 2.6, rx: -0.03, ry: -1.22, rz: -0.10 },  // wem
+  { fitHeight: 2.6, rx: 0, ry: 0, rz: 0 },  // elbit
+  { fitHeight: 2.4, rx: 0, ry: 0, rz: 0 },  // kla
+  { fitHeight: 2.6, rx: 0, ry: 0, rz: 0 },  // wem
 ];
 
 // Travel amounts during the entry/exit phases
