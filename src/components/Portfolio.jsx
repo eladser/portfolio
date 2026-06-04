@@ -8,7 +8,7 @@ import { ProjectCard } from './showcase/ProjectCard';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
-import TechStackViz from './TechStackViz';
+import { StackUsageViz } from './StackUsageViz';
 import SoundToggle from './SoundToggle';
 import useEasterEggs from '../hooks/useEasterEggs';
 import { useSound } from '../contexts/SoundContext';
@@ -1052,7 +1052,7 @@ app.Run();`
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <TechStackViz isDark={isDark} />
+                    <StackUsageViz />
                   </m.div>
 
                   <m.div
