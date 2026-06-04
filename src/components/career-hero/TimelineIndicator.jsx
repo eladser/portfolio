@@ -7,21 +7,21 @@ import { useMemo } from 'react';
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
 function activeIndex(p) {
-  if (p < 0.22) return 0;   // Elbit hold + first half of T1
-  if (p < 0.60) return 1;   // KLA — through second half of T1 + KLA hold + first half of T2
-  if (p < 0.88) return 2;   // WEM — second half of T2 + WEM hold + start of tail fade
-  return 3;                 // future "?" — lights up at the end
+  if (p < 0.42) return 0;
+  if (p < 0.75) return 1;
+  if (p < 0.92) return 2;
+  return 3;            // future "?" — lights up at the end
 }
 
 // Connector fill 0..1 across the whole timeline (4 evenly-spaced nodes)
 function lineFill(p) {
   // Three settled holds; connector lands at each node when that chapter is active
-  if (p < 0.06) return 0;
-  if (p < 0.22) return smoothstep((p - 0.06) / 0.16) * (1 / 3);
-  if (p < 0.40) return 1 / 3;
-  if (p < 0.60) return 1 / 3 + smoothstep((p - 0.40) / 0.20) * (1 / 3);
-  if (p < 0.78) return 2 / 3;
-  return 2 / 3 + Math.min(1, (p - 0.78) / 0.14) * (1 / 3);
+  if (p < 0.15) return 0;
+  if (p < 0.40) return smoothstep((p - 0.15) / 0.25) * (1 / 3);
+  if (p < 0.55) return 1 / 3;
+  if (p < 0.80) return 1 / 3 + smoothstep((p - 0.55) / 0.25) * (1 / 3);
+  if (p < 0.92) return 2 / 3;
+  return 2 / 3 + Math.min(1, (p - 0.92) / 0.08) * (1 / 3);
 }
 
 export function TimelineIndicator({ chapters, progress }) {

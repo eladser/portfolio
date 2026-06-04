@@ -6,8 +6,8 @@ import { useMemo } from 'react';
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
 function opacityFor(index, p) {
-  const T1A = 0.12, T1B = 0.32;
-  const T2A = 0.50, T2B = 0.70;
+  const T1A = 0.30, T1B = 0.50;
+  const T2A = 0.65, T2B = 0.85;
   if (index === 0) {
     if (p < T1A) return 1;
     if (p > T1B) return 0;
@@ -22,9 +22,9 @@ function opacityFor(index, p) {
   }
   if (p < T2A) return 0;
   if (p < T2B) return smoothstep((p - T2A) / (T2B - T2A));
-  if (p < 0.85) return 1;
-  // tail fade to hand off to the FuturePrompt (fully gone by p=0.92)
-  return 1 - smoothstep(Math.min(1, (p - 0.85) / 0.07));
+  if (p < 0.90) return 1;
+  // tail fade to hand off to the FuturePrompt (fully gone by p=0.95)
+  return 1 - smoothstep(Math.min(1, (p - 0.90) / 0.05));
 }
 
 export function HudOverlay({ chapter, index, progress }) {

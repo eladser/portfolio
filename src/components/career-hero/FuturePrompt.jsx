@@ -2,8 +2,8 @@
 // One question, one address. No marketing.
 
 export function FuturePrompt({ progress }) {
-  if (progress < 0.85) return null;
-  const o = Math.min(1, (progress - 0.85) / 0.10);   // 0 at 0.85, 1 at 0.95+
+  if (progress < 0.90) return null;
+  const o = Math.min(1, (progress - 0.90) / 0.08);   // 0 at 0.90, 1 at 0.98+
 
   return (
     <div

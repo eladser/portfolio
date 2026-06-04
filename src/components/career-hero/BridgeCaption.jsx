@@ -4,10 +4,10 @@
 import { useMemo } from 'react';
 
 const BRIDGES = [
-  // Elbit → KLA: 0.12..0.32
-  { from: 0.12, to: 0.32, text: 'Four years at Elbit, then I switched to KLA.' },
-  // KLA → WEM: 0.50..0.70
-  { from: 0.50, to: 0.70, text: 'Five years on fab tools. Joined WEM in 2025.' },
+  // Elbit → KLA: 0.30..0.50
+  { from: 0.30, to: 0.50, text: 'Four years at Elbit, then I switched to KLA.' },
+  // KLA → WEM: 0.65..0.85
+  { from: 0.65, to: 0.85, text: 'Five years on fab tools. Joined WEM in 2025.' },
 ];
 
 function bridgeForProgress(p) {

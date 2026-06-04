@@ -4,8 +4,8 @@
 import { useEffect, useState, useMemo } from 'react';
 
 function activeIndex(p) {
-  if (p < 0.22) return 0;
-  if (p < 0.60) return 1;
+  if (p < 0.42) return 0;
+  if (p < 0.75) return 1;
   return 2;
 }
 
@@ -34,7 +34,7 @@ export function TerminalStream({ chapters, progress }) {
   }, [full]);
 
   // Tail fade: clear out for the FuturePrompt at the end of the hero
-  const tailFade = progress > 0.85 ? Math.max(0, 1 - (progress - 0.85) / 0.07) : 1;
+  const tailFade = progress > 0.90 ? Math.max(0, 1 - (progress - 0.90) / 0.05) : 1;
 
   return (
     <div

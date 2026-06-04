@@ -13,9 +13,9 @@ const smoothstep = (t) => t * t * (3 - 2 * t);
 // Crossfade windows are the gaps where two artifacts swap. First and last have a zero-length
 // entry/exit so they're "anchored" at the boundary.
 const WINDOWS = [
-  { es: 0.00, ss: 0.00, se: 0.12, ee: 0.32 },  // Elbit  — quick intro hold, exits 0.12→0.32
-  { es: 0.12, ss: 0.32, se: 0.50, ee: 0.70 },  // KLA    — enters 0.12→0.32, holds, exits 0.50→0.70
-  { es: 0.50, ss: 0.70, se: 1.00, ee: 1.00 },  // WEM    — enters 0.50→0.70, anchored at end
+  { es: 0.00, ss: 0.00, se: 0.30, ee: 0.50 },  // Elbit  — visible from start, exits 0.30→0.50
+  { es: 0.30, ss: 0.50, se: 0.65, ee: 0.85 },  // KLA    — enters 0.30→0.50, holds, exits 0.65→0.85
+  { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
 
 // Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel)
@@ -40,10 +40,10 @@ function poseFor(index, p) {
   const w = WINDOWS[index];
   if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
 
-  // WEM tail fade: at the end of the hero, WEM dollies out + fades fully by p=0.92
+  // WEM tail fade: at the end of the hero, WEM dollies out + fades fully by p=0.95
   // so the FuturePrompt below it is unobstructed
-  if (index === 2 && p > 0.85) {
-    const t = smoothstep(Math.min(1, (p - 0.85) / 0.07));
+  if (index === 2 && p > 0.90) {
+    const t = smoothstep(Math.min(1, (p - 0.90) / 0.05));
     return {
       o:        1 - t,
       x:       -t * X_DRIFT * 0.5,
