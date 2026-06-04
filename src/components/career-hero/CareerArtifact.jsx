@@ -1,61 +1,79 @@
-// One GLB pinned in 3-space. Visibility + light pose tweaks driven by overall pin progress.
-// Idle sin-wave rotation while visible so it never freezes. Recenters + fits the model.
+// One GLB driven by scroll. As scroll progresses through the pinned hero, each artifact
+// slides in from the right, holds centred, then slides out to the left while rotating —
+// not just fading. Per-artifact phase windows give clean handoffs without overlap reads.
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
-// Per-artifact opacity over the pin (0..1). True crossfade: pair-sums stay near 1
-// through the two transition windows.
-function opacityFor(index, p) {
-  const T1A = 0.30, T1B = 0.50;   // Elbit → KLA
-  const T2A = 0.65, T2B = 0.85;   // KLA → WEM
-  if (index === 0) {
-    if (p < T1A) return 1;
-    if (p > T1B) return 0;
-    return 1 - smoothstep((p - T1A) / (T1B - T1A));
-  }
-  if (index === 1) {
-    if (p < T1A) return 0;
-    if (p < T1B) return smoothstep((p - T1A) / (T1B - T1A));
-    if (p < T2A) return 1;
-    if (p < T2B) return 1 - smoothstep((p - T2A) / (T2B - T2A));
-    return 0;
-  }
-  // index 2
-  if (p < T2A) return 0;
-  if (p < T2B) return smoothstep((p - T2A) / (T2B - T2A));
-  return 1;
-}
-
-// Per-artifact base pose (centred-ish, varied tilt). World coords; camera at z=6, fov 38.
-const BASE = [
-  { rx:  0.15, ry:  0.30, rz: 0,    target: 2.3, y:  0.1 },  // Elbit
-  { rx:  0.00, ry: -0.35, rz: 0,    target: 2.0, y:  0.0 },  // KLA
-  { rx:  0.00, ry:  0.40, rz: 0,    target: 2.4, y: -0.1 },  // WEM
+// Visibility phase windows: [enterStart, settledStart, settledEnd, exitEnd]
+// Crossfade windows are the gaps where two artifacts swap. First and last have a zero-length
+// entry/exit so they're "anchored" at the boundary.
+const WINDOWS = [
+  { es: 0.00, ss: 0.00, se: 0.30, ee: 0.50 },  // Elbit  — visible from start, exits 0.30→0.50
+  { es: 0.30, ss: 0.50, se: 0.65, ee: 0.85 },  // KLA    — enters 0.30→0.50, holds, exits 0.65→0.85
+  { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
 ];
+
+// Per-artifact natural-size fit + base rotation (zeroed for now — tune per model)
+const BASE = [
+  { fitHeight: 2.6, rx: 0.05, ry: 0.0, rz: 0 },
+  { fitHeight: 2.4, rx: 0.00, ry: 0.0, rz: 0 },
+  { fitHeight: 2.6, rx: 0.00, ry: 0.0, rz: 0 },
+];
+
+// Travel amounts during the entry/exit phases
+const X_TRAVEL = 5.0;       // slide horizontally
+const Z_TRAVEL = -0.8;      // recede slightly back
+const RY_TRAVEL = 0.55;     // ~31° rotation arc
+
+function poseFor(index, p) {
+  const w = WINDOWS[index];
+  // Outside the window: invisible
+  if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0 };
+  // Settled (hold)
+  if (p >= w.ss && p <= w.se) return { o: 1, x: 0, z: 0, ry: 0 };
+  // Entering: slides in from +X, rotates from +ry
+  if (p < w.ss) {
+    const t = (w.ss - w.es) === 0 ? 1 : smoothstep((p - w.es) / (w.ss - w.es));
+    return {
+      o:  t,
+      x:  (1 - t) * X_TRAVEL,
+      z:  (1 - t) * Z_TRAVEL,
+      ry: (1 - t) * RY_TRAVEL,
+    };
+  }
+  // Exiting: slides to -X, rotates the other way
+  const t = (w.ee - w.se) === 0 ? 1 : smoothstep((p - w.se) / (w.ee - w.se));
+  return {
+    o:  1 - t,
+    x:  -t * X_TRAVEL,
+    z:  t * Z_TRAVEL,
+    ry: -t * RY_TRAVEL,
+  };
+}
 
 export function CareerArtifact({ index, modelUrl, progress }) {
   const groupRef = useRef();
   const innerRef = useRef();
-  const { scene } = useGLTF(modelUrl, true, true);  // draco + meshopt decoders
+  const { scene } = useGLTF(modelUrl, true, true);
 
-  // Clone so multiple GLBs don't share materials; recenter + fit-scale to `target` height
+  // Clone + recenter + fit-scale to consistent height across artifacts
   const { content, scaleFactor } = useMemo(() => {
     const cloned = scene.clone(true);
     const box = new THREE.Box3().setFromObject(cloned);
     const size = box.getSize(new THREE.Vector3());
     const center = box.getCenter(new THREE.Vector3());
     cloned.position.sub(center);
-    const tgt = BASE[index].target;
-    const factor = tgt / Math.max(size.x, size.y, size.z);
+    const base = BASE[index];
+    const factor = base.fitHeight / size.y;
     const applyToMat = (m) => {
       if (!m) return;
       m.envMapIntensity = 1.15;
-      m.transparent = true;            // enables opacity; keep depth-write on for solid look
+      m.transparent = true;
     };
     cloned.traverse((n) => {
       if (n.isMesh) {
@@ -67,29 +85,30 @@ export function CareerArtifact({ index, modelUrl, progress }) {
     return { content: cloned, scaleFactor: factor };
   }, [scene, index]);
 
-  // Per-frame: apply opacity to materials + idle sway. Skip work when invisible.
   useFrame((state) => {
-    const o = opacityFor(index, progress);
+    const pose = poseFor(index, progress);
     const group = groupRef.current;
     if (!group) return;
-    group.visible = o > 0.01;
+    group.visible = pose.o > 0.01;
     if (!group.visible) return;
 
-    // Apply opacity to all meshes (handle material arrays)
+    // Material opacity (handle material arrays)
     content.traverse((n) => {
       if (!n.isMesh) return;
-      if (Array.isArray(n.material)) n.material.forEach((m) => { if (m) m.opacity = o; });
-      else if (n.material) n.material.opacity = o;
+      if (Array.isArray(n.material)) n.material.forEach((m) => { if (m) m.opacity = pose.o; });
+      else if (n.material) n.material.opacity = pose.o;
     });
 
-    // Idle sway (alive feel) + tiny crossfade lift on the way out
+    // Outer group carries the scroll-driven travel (position + Y-rotation)
     const t = state.clock.elapsedTime;
-    const base = BASE[index];
+    group.position.set(pose.x, Math.sin(t * 0.4 + index) * 0.04, pose.z);
+    group.rotation.y = pose.ry + Math.sin(t * 0.18 + index) * 0.05;  // base + tiny idle sway
+
+    // Inner group holds the base "facing" tilt — kept tiny so the model reads as front-on
     if (innerRef.current) {
+      const base = BASE[index];
       innerRef.current.rotation.x = base.rx;
-      innerRef.current.rotation.y = base.ry + Math.sin(t * 0.18 + index) * 0.06;
       innerRef.current.rotation.z = base.rz;
-      innerRef.current.position.y = base.y + Math.sin(t * 0.4 + index) * 0.03;
     }
   });
 
