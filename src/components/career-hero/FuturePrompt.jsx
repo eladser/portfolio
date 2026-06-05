@@ -26,6 +26,25 @@ export function FuturePrompt({ progress }) {
       >
         elad.ser@gmail.com
       </a>
+      <div className="mt-6 flex items-center gap-5 font-mono text-xs text-white/45 tracking-wider">
+        <a
+          href="https://github.com/eladser"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#4ECDC4] transition-colors pointer-events-auto"
+        >
+          github
+        </a>
+        <span aria-hidden="true">·</span>
+        <a
+          href="https://linkedin.com/in/eladser"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#4ECDC4] transition-colors pointer-events-auto"
+        >
+          linkedin
+        </a>
+      </div>
     </div>
   );
 }

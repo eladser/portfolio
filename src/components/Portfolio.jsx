@@ -563,6 +563,24 @@ const Portfolio = () => {
                   <span>&copy; 2026</span>
                   <span aria-hidden="true">&middot;</span>
                   <a
+                    href="https://github.com/eladser"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
+                  >
+                    github
+                  </a>
+                  <span aria-hidden="true">&middot;</span>
+                  <a
+                    href="https://linkedin.com/in/eladser"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
+                  >
+                    linkedin
+                  </a>
+                  <span aria-hidden="true">&middot;</span>
+                  <a
                     href="mailto:elad.ser@gmail.com"
                     className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
                   >
