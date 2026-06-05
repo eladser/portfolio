@@ -46,6 +46,8 @@ export function YearTicker({ chapters, progress }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
       <span
+        aria-hidden="true"
+        role="presentation"
         className="font-mono font-bold leading-none"
         style={{
           fontSize: 'clamp(280px, 38vw, 540px)',

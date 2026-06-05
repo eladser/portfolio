@@ -412,14 +412,11 @@ const Portfolio = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#0a0a0a] text-white">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-[#4ECDC4] focus:text-black focus:px-4 focus:py-2 focus:rounded">
         Skip to main content
       </a>
-      <a href="#main-nav" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+      <a href="#main-nav" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-[#4ECDC4] focus:text-black focus:px-4 focus:py-2 focus:rounded">
         Skip to navigation
-      </a>
-      <a href="#contact-section" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
-        Skip to contact
       </a>
 
       <div
