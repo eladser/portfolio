@@ -118,7 +118,7 @@ export function CareerHero3D({ scroller }) {
             {' '}<span className="text-[#4ECDC4]/90">Elbit</span> on defense simulators,
             {' '}<span className="text-[#4ECDC4]/90">KLA</span> on semiconductor fab tools (five years),
             {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> on grid-scale energy,
-            with a fair bit of <span className="text-violet-400/90">LLM integration</span> mixed in lately.
+            with a fair bit of <span className="text-violet-400/90">LLM integration</span> mixed in lately. Also shipping <a href="https://github.com/eladser/seerlens" target="_blank" rel="noopener noreferrer" className="text-violet-400/90 underline decoration-violet-400/30 underline-offset-4 hover:decoration-violet-400 transition-colors pointer-events-auto">Seerlens</a> on the side, local devtools for those AI calls.
           </p>
           <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-5 pointer-events-auto">
             <div className="flex items-center gap-3">

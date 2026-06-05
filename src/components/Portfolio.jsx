@@ -792,6 +792,20 @@ app.Run();`
                     to be useful when I need to be. Lately I keep coming back to DX tooling. The kind that
                     saves you two seconds, a few hundred times a day.
                   </p>
+                  <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
+                    Current side project is{' '}
+                    <a
+                      href="https://github.com/eladser/seerlens"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#4ECDC4] hover:underline"
+                    >
+                      Seerlens
+                    </a>
+                    , local devtools for AI calls. Think browser Network tab, pointed at your LLM calls.
+                    It catches the kind of regression you can't see in a stack trace: a prompt tweak that
+                    quietly makes answers worse.
+                  </p>
                 </m.div>
 
                 <m.div
