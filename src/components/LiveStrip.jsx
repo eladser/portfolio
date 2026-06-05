@@ -35,6 +35,33 @@ export function LiveStrip() {
             )}
           </div>
         )}
+        {/* Contact links — visible on every view since LiveStrip is fixed. */}
+        <div className="mt-1.5 pt-1.5 border-t border-white/10 flex items-center gap-2.5 text-white/55">
+          <a
+            href="https://github.com/eladser"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#4ECDC4] transition-colors"
+          >
+            gh
+          </a>
+          <span className="text-white/15" aria-hidden="true">/</span>
+          <a
+            href="https://linkedin.com/in/eladser"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#4ECDC4] transition-colors"
+          >
+            in
+          </a>
+          <span className="text-white/15" aria-hidden="true">/</span>
+          <a
+            href="mailto:elad.ser@gmail.com"
+            className="hover:text-[#4ECDC4] transition-colors"
+          >
+            email
+          </a>
+        </div>
       </div>
     </div>
   );

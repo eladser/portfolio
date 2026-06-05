@@ -120,9 +120,34 @@ export function CareerHero3D({ scroller }) {
             {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> on grid-scale energy,
             with a fair bit of <span className="text-violet-400/90">LLM integration</span> mixed in lately.
           </p>
-          <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-3">
-            <span className="text-[#4ECDC4]">↓</span>
-            <span>SCROLL</span>
+          <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-5 pointer-events-auto">
+            <div className="flex items-center gap-3">
+              <span className="text-[#4ECDC4]">↓</span>
+              <span>SCROLL</span>
+            </div>
+            <span className="text-white/20" aria-hidden="true">·</span>
+            <a
+              href="https://github.com/eladser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#4ECDC4] transition-colors"
+            >
+              GITHUB
+            </a>
+            <a
+              href="https://linkedin.com/in/eladser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#4ECDC4] transition-colors"
+            >
+              LINKEDIN
+            </a>
+            <a
+              href="mailto:elad.ser@gmail.com"
+              className="hover:text-[#4ECDC4] transition-colors"
+            >
+              EMAIL
+            </a>
           </div>
         </header>
 
