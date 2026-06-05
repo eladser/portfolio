@@ -2,11 +2,28 @@
 
 export const PROJECTS = [
   {
+    id: 'seerlens',
+    name: 'Seerlens',
+    tagline: 'local devtools for AI calls',
+    status: { label: 'On NuGet', tone: 'teal' },
+    featured: true,
+    description:
+      "Think of it as the browser Network tab pointed at your AI calls. One line of setup and a local dashboard shows every LLM call your app makes: the prompt, what it cost, how many tokens, how long it took, and which tools it called. Built around OpenTelemetry so it works from .NET, Python, or JS. Runs on your machine, no signup.",
+    tags: ['C#', '.NET', 'OpenTelemetry', 'LLM observability'],
+    links: {
+      source: 'https://github.com/eladser/seerlens',
+      nuget: 'https://www.nuget.org/packages/Seerlens',
+    },
+    githubRepo: 'eladser/seerlens',
+    fallbackStars: 0,
+    media: { type: 'gif', src: 'seerlens-demo.gif' },
+    accent: 'teal',
+  },
+  {
     id: 'aerolens',
     name: 'AeroLens',
     tagline: 'real-time flight tracking',
     status: { label: 'Live', tone: 'sky' },
-    featured: true,
     description:
       "Real-time flight tracker with AI delay predictions. It pulls in live aircraft positions and weather data, and lets you save trips you want to keep an eye on. React 19 frontend, ASP.NET Core 8 + SignalR backend. The AI calls fall back between Groq, Mistral, and Gemini.",
     tags: ['React 19', 'ASP.NET Core 8', 'SignalR', 'AI/ML'],
@@ -15,9 +32,8 @@ export const PROJECTS = [
       source: 'https://github.com/eladser/AeroLens',
     },
     githubRepo: 'eladser/AeroLens',
-    fallbackStars: 0,            // updated by GitHub API at runtime
-    media: { type: 'video', src: 'aerolens-demo.webm' },
-    accent: 'sky',                // border-l-sky-500 etc.
+    fallbackStars: 0,
+    accent: 'sky',
   },
   {
     id: 'debug-dashboard',
