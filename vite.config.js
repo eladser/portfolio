@@ -18,23 +18,9 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor-react';
-            }
-            if (id.includes('framer-motion')) {
-              return 'vendor-motion';
-            }
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-            if (id.includes('react-router')) {
-              return 'vendor-router';
-            }
-            return 'vendor-misc';
-          }
-        },
+        // No manual chunks — let Vite handle automatic code-splitting based on the
+        // import graph. Lazy-loaded CareerHero3D already gives us the mobile-perf win
+        // (mobile skips the 3D bundle entirely via useEnable3D + React.lazy).
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]'

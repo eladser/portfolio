@@ -22,7 +22,7 @@ import { Terminal as TerminalIcon, ChevronRight } from 'lucide-react';
  * />
  */
 
-const Terminal = ({ isDark = true, commands = {}, prompt = 'elad@portfolio:~$' }) => {
+const Terminal = ({ isDark = true, commands = {}, prompt = 'elad@portfolio:~$', injectedLine = null }) => {
   const [history, setHistory] = useState([
     { type: 'output', content: 'Welcome to Elad\'s Portfolio Terminal v2.0.0' },
     { type: 'output', content: 'Type "help" to see available commands.' },
@@ -201,6 +201,13 @@ Status: ☕ Ready for coffee and code!
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [history]);
+
+  // Append an externally-injected line (used by the fast-scroll warn easter egg).
+  // Re-firing requires a new object reference (so {content, key} pattern).
+  useEffect(() => {
+    if (!injectedLine || !injectedLine.content) return;
+    setHistory((prev) => [...prev, { type: injectedLine.type || 'output', content: injectedLine.content }]);
+  }, [injectedLine]);
 
   // Focus input when clicking terminal
   const handleTerminalClick = () => {

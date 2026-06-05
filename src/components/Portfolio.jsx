@@ -1,41 +1,22 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
+import { CareerHeroStatic } from './CareerHeroStatic';
+import { useEnable3D } from '../hooks/useEnable3D';
+const CareerHero3D = lazy(() => import('./CareerHero3D'));
+import { PROJECTS } from '../data/projects';
+import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
+import { ProjectCard } from './showcase/ProjectCard';
 import GitHubActivity from './GitHubActivity';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
-import TechStackViz from './TechStackViz';
-import SoundToggle from './SoundToggle';
+import { StackUsageViz } from './StackUsageViz';
 import useEasterEggs from '../hooks/useEasterEggs';
 import { useSound } from '../contexts/SoundContext';
-
-const skills = [
-  { name: 'C#', color: 'purple' },
-  { name: '.NET Core', color: 'purple' },
-  { name: 'ASP.NET', color: 'purple' },
-  { name: 'SignalR', color: 'purple' },
-  { name: 'SQL Server', color: 'blue' },
-  { name: 'Node.js', color: 'green' },
-  { name: 'React', color: 'cyan' },
-  { name: 'TypeScript', color: 'blue' },
-  { name: 'JavaScript', color: 'yellow' },
-  { name: 'HTML/CSS', color: 'orange' },
-  { name: 'Tailwind', color: 'cyan' },
-  { name: 'Docker', color: 'blue' },
-  { name: 'Azure', color: 'blue' },
-  { name: 'AWS', color: 'orange' },
-  { name: 'Git', color: 'orange' },
-  { name: 'AI/ML', color: 'cyan' },
-];
-
-const skillColors = {
-  purple: { bg: 'bg-purple-950', text: 'text-purple-400', border: 'border-purple-800' },
-  blue: { bg: 'bg-blue-950', text: 'text-blue-400', border: 'border-blue-800' },
-  green: { bg: 'bg-emerald-950', text: 'text-emerald-400', border: 'border-emerald-800' },
-  cyan: { bg: 'bg-cyan-950', text: 'text-cyan-400', border: 'border-cyan-800' },
-  yellow: { bg: 'bg-amber-950', text: 'text-amber-400', border: 'border-amber-800' },
-  orange: { bg: 'bg-orange-950', text: 'text-orange-400', border: 'border-orange-800' },
-};
+import { useHoldKey } from '../hooks/useHoldKey';
+import { useFastScrollDetector } from '../hooks/useFastScrollDetector';
+import { ManifestoOverlay } from './easter-eggs/ManifestoOverlay';
+import { VerboseOverlay } from './easter-eggs/VerboseOverlay';
 
 const asciiArt = `+----------------------------------+
 |  public class Developer          |
@@ -325,8 +306,7 @@ const Portfolio = () => {
   const [view, setView] = useState('home');
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
-  const [showShortcuts, setShowShortcuts] = useState(false);
-  const [nameClicks, setNameClicks] = useState(0);
+  const homeScrollRef = useRef(null);
   const consoleRef = useRef(null);
   const consoleCloseButtonRef = useRef(null);
   const consoleTriggerRef = useRef(null);
@@ -336,6 +316,27 @@ const Portfolio = () => {
   // Easter eggs and sound effects
   const { konamiActivated } = useEasterEggs();
   const { playSound } = useSound();
+  const enable3D = useEnable3D();
+
+  // M5b easter eggs: manifesto, verbose mode, fast-scroll WARN
+  const [showManifesto, setShowManifesto] = useState(false);
+  const [showVerbose, setShowVerbose] = useState(false);
+  const [injectedTerminalLine, setInjectedTerminalLine] = useState(null);
+  const terminalCommands = {
+    whoami: {
+      description: 'Show who you are talking to',
+      execute: () => {
+        setShowManifesto(true);
+        return 'elad-sertshuk — see panel ↗';
+      },
+    },
+  };
+  useHoldKey('Backquote', 3000, useCallback(() => setShowVerbose((v) => !v), []));
+  useFastScrollDetector(homeScrollRef, { heroDistance: 2400, thresholdMs: 1200 },
+    useCallback((elapsedMs) => {
+      const secs = (elapsedMs / 1000).toFixed(1);
+      setInjectedTerminalLine({ type: 'error', content: `WARN: you blinked through 10 years of work in ${secs} seconds` });
+    }, []));
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -409,32 +410,13 @@ const Portfolio = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showConsole]);
 
-  const handleNameClick = () => {
-    const newCount = nameClicks + 1;
-    setNameClicks(newCount);
-    if (newCount >= 5) {
-      setShowConsole(true);
-      setNameClicks(0);
-    }
-  };
-
-  const handleNameKeyDown = (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleNameClick();
-    }
-  };
-
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#0a0a0a] text-white">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-[#4ECDC4] focus:text-black focus:px-4 focus:py-2 focus:rounded">
         Skip to main content
       </a>
-      <a href="#main-nav" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
+      <a href="#main-nav" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-[#4ECDC4] focus:text-black focus:px-4 focus:py-2 focus:rounded">
         Skip to navigation
-      </a>
-      <a href="#contact-section" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-purple-500 focus:text-white focus:px-4 focus:py-2 focus:rounded">
-        Skip to contact
       </a>
 
       <div
@@ -560,237 +542,36 @@ const Portfolio = () => {
           {view === 'home' && (
             <m.div
               key="home"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="relative h-full w-full"
+              ref={homeScrollRef}
+              className="relative h-full w-full overflow-y-auto overflow-x-hidden"
             >
-              <header role="banner" className="absolute top-0 left-0 right-0 p-4 sm:p-8 flex items-center justify-between z-10">
-                <div className="relative flex items-center gap-3">
-                  <img
-                    src={`${import.meta.env.BASE_URL}logo-header.png`}
-                    alt=""
-                    className="w-7 h-7 opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                  <div className="w-px h-4 bg-zinc-700" />
-                  <button
-                    onClick={() => setShowShortcuts(!showShortcuts)}
-                    aria-label="Show keyboard shortcuts"
-                    aria-expanded={showShortcuts}
-                    aria-controls="shortcuts-menu"
-                    className="w-6 h-6 rounded-full border border-zinc-700 text-gray-300 hover:text-gray-300 hover:border-zinc-500 text-xs font-mono transition-colors"
+              {enable3D ? (
+                <Suspense fallback={<CareerHeroStatic />}>
+                  <CareerHero3D scroller={homeScrollRef} />
+                </Suspense>
+              ) : (
+                <CareerHeroStatic />
+              )}
+              {/* Thin footer below the hero — right-aligned so it doesn't collide with
+                  the centered nav pill OR the bottom-left LiveStrip widget. */}
+              <footer className="flex justify-end px-10 pt-10 pb-24 font-mono text-[10px] tracking-[0.24em] text-white/35 uppercase">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 justify-end text-right">
+                  <span>&copy; 2026</span>
+                  <span aria-hidden="true">&middot;</span>
+                  <a
+                    href="mailto:elad.ser@gmail.com"
+                    className="text-white/60 hover:text-[#4ECDC4] transition-colors lowercase tracking-normal"
                   >
-                    ?
-                  </button>
-                  <SoundToggle isDark={isDark} />
-                <AnimatePresence>
-                  {showShortcuts && (
-                    <m.div
-                      id="shortcuts-menu"
-                      initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      className="absolute top-10 left-0 p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono space-y-1.5 w-48 shadow-xl"
-                    >
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Navigate</span>
-                        <span className="text-gray-300">1 2 3</span>
-                      </div>
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Debug console</span>
-                        <span className="text-gray-300">Ctrl+Shift+D</span>
-                      </div>
-                      <div className="flex justify-between text-zinc-300">
-                        <span>Close</span>
-                        <span className="text-gray-300">Esc</span>
-                      </div>
-                    </m.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <span className="font-mono text-xs tracking-wider text-gray-300">
-                {time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Jerusalem' })}
-                <span className="ml-1.5 text-gray-400">IL</span>
-              </span>
-            </header>
-
-            <div className="h-full flex items-center justify-center px-4 sm:px-8 pb-24 sm:pb-16">
-              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 max-w-5xl w-full">
-                <m.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  className="flex-shrink-0"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcSet={`${import.meta.env.BASE_URL}profile-160.webp 160w, ${import.meta.env.BASE_URL}profile-320.webp 320w`}
-                      sizes="160px"
-                    />
-                    <img
-                      src={`${import.meta.env.BASE_URL}profile.jpg`}
-                      alt="Elad Sertshuk, Full-Stack Developer specializing in .NET"
-                      width="160"
-                      height="160"
-                      loading="eager"
-                      fetchPriority="high"
-                      className={`w-28 h-28 md:w-40 md:h-40 rounded-2xl object-cover ${
-                        isDark ? 'ring-1 ring-white/10' : 'ring-1 ring-black/10'
-                      }`}
-                    />
-                  </picture>
-                </m.div>
-
-                <div className="flex-1 space-y-6">
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 text-center md:text-left`}>
-                      <span className="inline-flex items-center gap-3">
-                        <img
-                          src={`${import.meta.env.BASE_URL}logo-hero.png`}
-                          alt=""
-                          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
-                        />
-                        <button
-                          onClick={handleNameClick}
-                          onKeyDown={handleNameKeyDown}
-                          className={`cursor-default select-none transition-colors ${
-                            isDark
-                              ? 'text-white hover:text-zinc-200'
-                              : 'text-zinc-900 hover:text-zinc-700'
-                          }`}
-                          aria-label="Click 5 times to open debug console"
-                        >
-                          Elad Sertshuk
-                        </button>
-                      </span>
-                    </h1>
-                    <p className={`text-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      .NET Developer &amp; Tooling Engineer
-                    </p>
-                  </m.div>
-
-                  <m.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className={`text-base leading-relaxed max-w-lg text-center md:text-left ${isDark ? 'text-gray-300' : 'text-gray-300'}`}
-                  >
-                    Building backend systems, real-time applications, and developer tools.
-                    Focused on ASP.NET Core, SignalR, and making debugging less painful.
-                  </m.p>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                      {skills.map((skill) => {
-                        const colors = skillColors[skill.color];
-                        return (
-                          <span
-                            key={skill.name}
-                            className={`px-3 py-1.5 rounded-lg text-sm border ${
-                              isDark
-                                ? `${colors.bg} ${colors.text} ${colors.border}`
-                                : 'bg-black/5 text-gray-300 border-transparent'
-                            }`}
-                          >
-                            {skill.name}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    id="contact-section"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 sm:gap-4 pt-2"
-                  >
-                    <a
-                      href="https://github.com/eladser"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub profile"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        gh
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                      <span className="sr-only">(opens in new tab)</span>
-                    </a>
-                    <a
-                      href="https://linkedin.com/in/eladser"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn profile"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                        <rect x="2" y="9" width="4" height="12" />
-                        <circle cx="4" cy="4" r="2" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        in
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                      <span className="sr-only">(opens in new tab)</span>
-                    </a>
-                    <a
-                      href="mailto:elad.ser@gmail.com"
-                      aria-label="Email me at elad.ser@gmail.com"
-                      className={`group flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                        isDark
-                          ? 'text-zinc-300 hover:text-white hover:bg-white/5'
-                          : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                      }`}
-                    >
-                      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                      </svg>
-                      <span className="text-sm font-mono relative">
-                        @
-                        <span className={`absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-900'}`} />
-                      </span>
-                    </a>
-                  </m.div>
+                    elad.ser@gmail.com
+                  </a>
+                  <span aria-hidden="true">&middot;</span>
+                  <span>react + vite + r3f</span>
                 </div>
-              </div>
-            </div>
-
-            <footer role="contentinfo" className="absolute bottom-0 left-0 right-0 p-4 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 text-xs text-gray-300">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-                <span>Available for work</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
-                <span className="font-mono text-gray-400">react + vite + tailwind</span>
-                <span className="font-mono text-gray-300">Israel</span>
-              </div>
-            </footer>
+              </footer>
           </m.div>
         )}
 
@@ -818,178 +599,13 @@ const Portfolio = () => {
                   </p>
                 </m.div>
 
-                <div className="space-y-6 mb-12">
-                  {/* AeroLens - Featured Project */}
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10 border-l-sky-500'
-                        : 'bg-black/[0.02] border-black/10 border-l-sky-500'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
-                      <div className="flex items-center gap-3">
-                        <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                          AeroLens
-                        </h3>
-                        <span className={`text-xs px-2 py-0.5 rounded ${
-                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
-                        }`}>
-                          Live
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <a
-                          href="https://aerolens.eladser.dev"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                            isDark
-                              ? 'bg-sky-950 text-sky-400 hover:bg-sky-900'
-                              : 'bg-sky-950 text-sky-600 hover:bg-sky-100'
-                          }`}
-                        >
-                          Try it
-                          <span className="sr-only">(opens in new tab)</span>
-                        </a>
-                        <a
-                          href="https://github.com/eladser/AeroLens"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                            isDark
-                              ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                              : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                          }`}
-                        >
-                          <Github size={14} />
-                          Source
-                          <span className="sr-only">(opens in new tab)</span>
-                        </a>
-                      </div>
-                    </div>
-                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Real-time flight tracking with AI-powered delay predictions. Track thousands of aircraft worldwide,
-                      get weather-based disruption alerts, and manage your trips. Built with React 19, ASP.NET Core 8,
-                      SignalR, and multi-provider AI (Groq, Mistral, Gemini).
-                    </p>
-                    <a
-                      href="https://aerolens.eladser.dev"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block mb-4 rounded-lg overflow-hidden border border-white/10 hover:border-sky-500/50 transition-colors"
-                    >
-                      <video
-                        src={`${import.meta.env.BASE_URL}aerolens-demo.webm`}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-auto max-w-xl mx-auto"
-                      />
-                    </a>
-                    <div className="flex flex-wrap gap-2">
-                      {['React', 'TypeScript', 'ASP.NET Core', 'SignalR', 'AI/ML'].map((tag) => (
-                        <span key={tag} className={`text-xs px-2 py-1 rounded ${
-                          isDark ? 'bg-sky-950 text-sky-400' : 'bg-sky-950 text-sky-600'
-                        }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 }}
-                    className={`p-4 sm:p-6 rounded-xl border-l-2 border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10 border-l-purple-800'
-                        : 'bg-black/[0.02] border-black/10 border-l-purple-800'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-2 sm:gap-0 mb-3">
-                      <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                        Debug Dashboard
-                      </h3>
-                      <a
-                        href="https://github.com/eladser/AspNetDebugDashboard"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                          isDark
-                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                        }`}
-                      >
-                        <Github size={14} />
-                        Source
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                    <p className={`mb-4 ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                      Got tired of adding Console.WriteLine everywhere to figure out what's happening.
-                      Built a middleware that shows me all HTTP traffic in real-time through a web dashboard.
-                      Uses SignalR to push updates as they happen. Now I actually know why things break.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {['C#', '.NET Core', 'SignalR'].map((tag) => (
-                        <span key={tag} className={`text-xs px-2 py-1 rounded ${
-                          isDark ? 'bg-purple-950 text-purple-400' : 'bg-purple-950 text-purple-600'
-                        }`}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </m.div>
-
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className={`p-4 sm:p-6 rounded-xl border ${
-                      isDark
-                        ? 'bg-zinc-900 border-white/10'
-                        : 'bg-black/[0.02] border-black/10'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className={`text-lg sm:text-xl font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                            .NET Tools
-                          </h3>
-                          <span className={`text-xs px-2 py-0.5 rounded ${
-                            isDark ? 'bg-emerald-950 text-emerald-400' : 'bg-emerald-950 text-emerald-600'
-                          }`}>
-                            NuGet
-                          </span>
-                        </div>
-                        <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                          Utility functions I kept copying between projects — JSON formatting, string helpers.
-                          Packaged it properly, now on NuGet.
-                        </p>
-                      </div>
-                      <a
-                        href="https://github.com/eladser/.net-tools"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md transition-colors ${
-                          isDark
-                            ? 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                            : 'text-zinc-300 hover:text-zinc-900 hover:bg-black/5'
-                        }`}
-                      >
-                        <Github size={14} />
-                        Source
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                  </m.div>
+                <div className="mb-12">
+                  <FeaturedProjectCard project={PROJECTS[0]} />
+                  <div className="grid md:grid-cols-2 gap-5">
+                    {PROJECTS.slice(1).map((p, i) => (
+                      <ProjectCard key={p.id} project={p} index={i} />
+                    ))}
+                  </div>
                 </div>
 
                 <m.div
@@ -1092,7 +708,11 @@ app.Run();`
                     Interactive terminal with commands about me
                   </p>
 
-                  <TerminalComponent isDark={isDark} />
+                  <TerminalComponent
+                    isDark={isDark}
+                    commands={terminalCommands}
+                    injectedLine={injectedTerminalLine}
+                  />
                 </m.div>
 
                 <m.div
@@ -1102,7 +722,7 @@ app.Run();`
                   className={`text-center pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Interested in working together?{' '}
+                    If any of this looks useful, email me.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${
@@ -1146,14 +766,13 @@ app.Run();`
                   className="space-y-6"
                 >
                   <p className={`text-base sm:text-lg leading-relaxed ${isDark ? 'text-zinc-300' : 'text-zinc-700'}`}>
-                    Most of my work is in C# and .NET. I like building things that help developers
-                    work faster — middleware, debugging tools, utilities. The boring stuff that
-                    nobody notices until it's missing.
+                    Most of my work is C# and .NET. The stuff I find interesting is the invisible plumbing.
+                    Middleware, debug tools, internal libraries that everyone uses but nobody talks about.
                   </p>
                   <p className={`leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-300'}`}>
-                    I've worked on enterprise backends, real-time systems with SignalR, and enough
-                    frontend to get by. Currently interested in developer experience tooling —
-                    the kind of thing that saves you 30 seconds a hundred times a day.
+                    Career-wise, mostly enterprise backends and real-time stuff with SignalR. Enough frontend
+                    to be useful when I need to be. Lately I keep coming back to DX tooling. The kind that
+                    saves you two seconds, a few hundred times a day.
                   </p>
                 </m.div>
 
@@ -1209,7 +828,7 @@ app.Run();`
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <TechStackViz isDark={isDark} />
+                    <StackUsageViz />
                   </m.div>
 
                   <m.div
@@ -1228,7 +847,7 @@ app.Run();`
                   className={`mt-10 pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/10'}`}
                 >
                   <p className={`text-sm ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Best way to reach me:{' '}
+                    Email's the easiest way to reach me.{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
                       className={`underline underline-offset-2 ${
@@ -1266,6 +885,10 @@ app.Run();`
           </m.div>
         )}
       </AnimatePresence>
+
+      {/* M5b easter eggs */}
+      <ManifestoOverlay open={showManifesto} onClose={() => setShowManifesto(false)} />
+      <VerboseOverlay open={showVerbose} onClose={() => setShowVerbose(false)} scroller={homeScrollRef} />
     </div>
   );
 };

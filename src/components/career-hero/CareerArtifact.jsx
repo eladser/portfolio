@@ -1,0 +1,198 @@
+// One GLB driven by scroll. As scroll progresses through the pinned hero, each artifact
+// slides in from the right, holds centred, then slides out to the left while rotating —
+// not just fading. Per-artifact phase windows give clean handoffs without overlap reads.
+
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
+
+const smoothstep = (t) => t * t * (3 - 2 * t);
+
+// Visibility phase windows: [enterStart, settledStart, settledEnd, exitEnd]
+// Crossfade windows are the gaps where two artifacts swap. First and last have a zero-length
+// entry/exit so they're "anchored" at the boundary.
+const WINDOWS = [
+  { es: 0.00, ss: 0.00, se: 0.30, ee: 0.50 },  // Elbit  — visible from start, exits 0.30→0.50
+  { es: 0.30, ss: 0.50, se: 0.65, ee: 0.85 },  // KLA    — enters 0.30→0.50, holds, exits 0.65→0.85
+  { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM    — enters 0.65→0.85, anchored at end
+];
+
+// Per-artifact natural-size fit + base rotation (tuned via ?debug=rot panel)
+const BASE = [
+  { fitHeight: 2.6, rx: 0.03, ry: -0.81, rz: -0.14 },  // elbit
+  { fitHeight: 2.4, rx: 0.10, ry: -1.32, rz: -0.07 },  // kla
+  { fitHeight: 2.6, rx: 0.14, ry: -1.75, rz:  0.07 },  // wem
+];
+
+// Cinematic transition: a "depth tunnel" where outgoing artifact rushes toward the camera
+// and out, while incoming artifact emerges from deep space, scaling + rotating into place.
+// Side-slide is small; the drama lives on the Z axis and in the rotation arc.
+const X_DRIFT       = 1.6;   // small horizontal drift, just enough to feel direction
+const Z_ENTRY_BACK  = -7.5;  // entering artifact starts this far behind the camera plane
+const Z_EXIT_FWD    =  4.0;  // exiting artifact comes this far toward the camera
+const SCALE_FROM    =  0.35; // entering starts this fraction of full size
+const SCALE_EXIT    =  1.35; // exiting grows slightly as it passes the camera
+const RY_TRAVEL     =  1.2;  // ~69° rotation arc — heavier than before
+const RX_TUMBLE     =  0.15; // small forward/back nod through the transition
+
+function poseFor(index, p) {
+  const w = WINDOWS[index];
+  if (p < w.es || p > w.ee) return { o: 0, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
+
+  // WEM tail fade: at the end of the hero, WEM dollies out + fades fully by p=0.95
+  // so the FuturePrompt below it is unobstructed
+  if (index === 2 && p > 0.90) {
+    const t = smoothstep(Math.min(1, (p - 0.90) / 0.05));
+    return {
+      o:        1 - t,
+      x:       -t * X_DRIFT * 0.5,
+      z:        t * Z_EXIT_FWD * 0.5,
+      ry:      -t * RY_TRAVEL * 0.4,
+      rx:       t * RX_TUMBLE * 0.4,
+      scaleMul: 1 + (SCALE_EXIT - 1) * t * 0.4,
+    };
+  }
+
+  if (p >= w.ss && p <= w.se) return { o: 1, x: 0, z: 0, ry: 0, rx: 0, scaleMul: 1 };
+
+  // Entering: from deep back + right, scaling up, rotating in
+  if (p < w.ss) {
+    const t = (w.ss - w.es) === 0 ? 1 : smoothstep((p - w.es) / (w.ss - w.es));
+    const k = 1 - t;
+    return {
+      o:        t,
+      x:        k * X_DRIFT,
+      z:        k * Z_ENTRY_BACK,
+      ry:       k * RY_TRAVEL,
+      rx:      -k * RX_TUMBLE,                // slight chin-up while rising from depth
+      scaleMul: SCALE_FROM + (1 - SCALE_FROM) * t,
+    };
+  }
+
+  // Exiting: dolly toward camera, growing + rotating + fading
+  const t = (w.ee - w.se) === 0 ? 1 : smoothstep((p - w.se) / (w.ee - w.se));
+  return {
+    o:        1 - t,
+    x:       -t * X_DRIFT,
+    z:        t * Z_EXIT_FWD,
+    ry:      -t * RY_TRAVEL,
+    rx:       t * RX_TUMBLE,
+    scaleMul: 1 + (SCALE_EXIT - 1) * t,
+  };
+}
+
+export function CareerArtifact({ index, modelUrl, progress }) {
+  const groupRef = useRef();
+  const innerRef = useRef();
+  const { scene } = useGLTF(modelUrl, true, true);
+
+  // Live rotation overrides from ?debug=rot panel (no-op when not in debug)
+  const [liveBase, setLiveBase] = useState(null);
+  useEffect(() => {
+    const read = () => setLiveBase((window.__hero_base && window.__hero_base[index]) || null);
+    read();
+    window.addEventListener('hero-base-changed', read);
+    return () => window.removeEventListener('hero-base-changed', read);
+  }, [index]);
+
+  // Clone + recenter + fit-scale to consistent height across artifacts
+  const { content, scaleFactor } = useMemo(() => {
+    const cloned = scene.clone(true);
+    const box = new THREE.Box3().setFromObject(cloned);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    cloned.position.sub(center);
+    const base = BASE[index];
+    const factor = base.fitHeight / size.y;
+    // Boost texture quality on the compressed GLBs: max anisotropy + trilinear filter,
+    // bumps env reflections so reflective surfaces (monitors, metal) read better.
+    const applyToTex = (t) => {
+      if (!t) return;
+      t.anisotropy = 16;                              // most GPUs cap here; safe default
+      t.magFilter = THREE.LinearFilter;
+      t.minFilter = THREE.LinearMipmapLinearFilter;
+      t.generateMipmaps = true;
+      t.needsUpdate = true;
+    };
+    const TEX_SLOTS = ['map', 'normalMap', 'metalnessMap', 'roughnessMap', 'aoMap', 'emissiveMap'];
+    const applyToMat = (m) => {
+      if (!m) return;
+      m.envMapIntensity = 1.45;
+      m.transparent = true;
+      TEX_SLOTS.forEach((slot) => applyToTex(m[slot]));
+    };
+    cloned.traverse((n) => {
+      if (n.isMesh) {
+        n.castShadow = false;
+        n.receiveShadow = false;
+        Array.isArray(n.material) ? n.material.forEach(applyToMat) : applyToMat(n.material);
+      }
+    });
+    return { content: cloned, scaleFactor: factor };
+  }, [scene, index]);
+
+  useFrame((state) => {
+    const pose = poseFor(index, progress);
+    const group = groupRef.current;
+    if (!group) return;
+
+    // Debug mode: lay all 3 artifacts side-by-side, fully visible, no scroll motion,
+    // so the slider value the user tunes maps 1:1 to the baked BASE[i] value.
+    if (liveBase) {
+      group.visible = true;
+      group.position.set((index - 1) * 3.2, 0, 0);
+      group.rotation.y = 0;
+      content.traverse((n) => {
+        if (!n.isMesh) return;
+        if (Array.isArray(n.material)) n.material.forEach((m) => { if (m) m.opacity = 1; });
+        else if (n.material) n.material.opacity = 1;
+      });
+      if (innerRef.current) {
+        innerRef.current.rotation.x = liveBase.rx;
+        innerRef.current.rotation.y = liveBase.ry;
+        innerRef.current.rotation.z = liveBase.rz;
+      }
+      return;
+    }
+
+    group.visible = pose.o > 0.01;
+    if (!group.visible) return;
+
+    // Material opacity (handle material arrays)
+    content.traverse((n) => {
+      if (!n.isMesh) return;
+      if (Array.isArray(n.material)) n.material.forEach((m) => { if (m) m.opacity = pose.o; });
+      else if (n.material) n.material.opacity = pose.o;
+    });
+
+    // Outer group carries the scroll-driven travel only — no ambient idle motion. The
+    // bob/sway was reading as "the page is bouncing" rather than "the object feels alive".
+    group.position.set(pose.x, 0, pose.z);
+    group.rotation.x = pose.rx;
+    group.rotation.y = pose.ry;
+    const sm = pose.scaleMul ?? 1;
+    group.scale.setScalar(sm);
+
+    // Inner group holds the base "facing" rotation (tuned via the debug panel)
+    if (innerRef.current) {
+      const base = BASE[index];
+      innerRef.current.rotation.x = base.rx;
+      innerRef.current.rotation.y = base.ry;
+      innerRef.current.rotation.z = base.rz;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      <group ref={innerRef} scale={scaleFactor}>
+        <primitive object={content} />
+      </group>
+    </group>
+  );
+}
+
+// Preload all 3 so the hero never shows a flash of nothing on first scroll
+useGLTF.preload('/assets/models/elbit-station.glb', true, true);
+useGLTF.preload('/assets/models/kla-tool.glb', true, true);
+useGLTF.preload('/assets/models/wem-bess.glb', true, true);
