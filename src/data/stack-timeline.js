@@ -37,6 +37,7 @@ export const STACK_TIMELINE = [
   { name: 'Docker',      category: 'devops',   usage: [0,0,0,0,0,1,2,2,2,2,2,3,3] },
   { name: 'Kubernetes',  category: 'devops',   usage: [0,0,0,0,0,0,0,1,1,1,1,2,2] },
   { name: 'Terraform',   category: 'devops',   usage: [0,0,0,0,0,0,0,0,0,0,1,3,3] },
+  { name: 'OpenTelemetry',category: 'devops',  usage: [0,0,0,0,0,0,0,0,0,0,0,1,3] },
 
   // AI / LLM — started solo in 2024, became day-job at WEM in 2025
   { name: 'Claude',      category: 'ai',       usage: [0,0,0,0,0,0,0,0,0,0,1,3,3] },
