@@ -78,16 +78,23 @@ public/
 - Scroll past the hero in under 1.2s → terminal gets a `WARN: you blinked through 10 years of work in X seconds` line
 - Old ones still in place: Konami code, Ctrl+Shift+D debug console, click name 5×
 
-## Things to know
+## Notes to future me
 
-- The 3D code is lazy-loaded — mobile + `prefers-reduced-motion` users skip it entirely
-  and see the text fallback. Saves ~1 MB of three/r3f/gsap.
-- The pinned hero uses GSAP ScrollTrigger with a custom scroller (the home view's
-  overflow container, not window). `pinType: 'transform'` + `anticipatePin: 1` are
-  required for that to not jitter.
-- Don't add `vite.config.js` `manualChunks` for `three`/`r3f`/`gsap`. The greedy
-  `id.includes('react')` match pulls R3F internals into the React chunk and crashes
-  module init with `Cannot read properties of undefined (reading 'useLayoutEffect')`.
-  Vite's auto-chunking handles it correctly.
-- Year-by-tech matrix in `data/stack-timeline.js` is hand-curated from the actual CV.
-  Not invented numbers.
+The hero scroll uses GSAP ScrollTrigger with a custom scroller (the home view's
+overflow container, not `window`). If you remove `pinType: 'transform'` or
+`anticipatePin: 1` from `useScrollProgress`, it jitters on first scroll. Leave
+them in.
+
+Don't try to split `three` / `r3f` / `gsap` via Vite `manualChunks`. The
+`id.includes('react')` match is greedy and grabs R3F internals at paths like
+`@react-three/fiber/dist/...`. They end up in the React chunk and run before
+React's actually initialized — you get `Cannot read properties of undefined
+(reading 'useLayoutEffect')` in prod (dev works fine, fun bug). Auto-chunking is
+already doing the right thing.
+
+Mobile + `prefers-reduced-motion` skip the 3D hero via React.lazy. They render
+`CareerHeroStatic` instead. If you touch the gate, that's in
+`hooks/useEnable3D.js`.
+
+If the stack timeline (`data/stack-timeline.js`) goes stale, update the
+intensities by hand. Whole grid is keyed off the years constant up top.
