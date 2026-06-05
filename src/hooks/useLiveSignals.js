@@ -49,9 +49,9 @@ export function useLiveSignals() {
         const recent = events.filter((e) => (now - new Date(e.created_at).getTime()) < WEEK_MS);
         const pushes = recent.filter((e) => e.type === 'PushEvent');
         // payload.size used to give commit counts but the public events API stopped
-        // returning it. Count pushes as the activity unit instead — each one is real work.
+        // returning it. Count pushes as the activity unit instead, each one is real work.
         const pushCount = pushes.length;
-        const repos = new Set(recent.map((e) => e.repo?.name).filter(Boolean));
+        const repos = new Set(pushes.map((e) => e.repo?.name).filter(Boolean));
         const latestPush = pushes[0]?.created_at || events[0]?.created_at || null;
         const data = {
           pushesThisWeek: pushCount,
