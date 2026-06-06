@@ -5,18 +5,18 @@ export const PROJECTS = [
     id: 'seerlens',
     name: 'Seerlens',
     tagline: 'local devtools for AI calls',
-    status: { label: 'On NuGet', tone: 'teal' },
+    status: { label: 'v1.0', tone: 'teal' },
     featured: true,
     description:
-      "Think of it as the browser Network tab pointed at your AI calls. One line of setup and a local dashboard shows every LLM call your app makes: the prompt, what it cost, how many tokens, how long it took, and which tools it called. Built around OpenTelemetry so it works from .NET, Python, or JS. Runs on your machine, no signup.",
-    tags: ['C#', '.NET', 'OpenTelemetry', 'LLM observability'],
+      "Local devtools for AI calls. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. v1.0 added model comparison side by side, cost budgets with alerts, agent and MCP step-tree views, and an eval CLI that fails CI when answer quality drops. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard.",
+    tags: ['C#', '.NET', 'OpenTelemetry', 'evals', 'LLM observability'],
     links: {
       source: 'https://github.com/eladser/seerlens',
       nuget: 'https://www.nuget.org/packages/Seerlens',
     },
     githubRepo: 'eladser/seerlens',
     fallbackStars: 0,
-    media: { type: 'gif', src: 'seerlens-demo.gif' },
+    media: { type: 'image', src: 'seerlens-demo.png' },
     accent: 'teal',
   },
   {
