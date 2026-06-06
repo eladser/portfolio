@@ -8,7 +8,7 @@ export const PROJECTS = [
     status: { label: 'v1.0', tone: 'teal' },
     featured: true,
     description:
-      "Local devtools for AI calls. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. v1.0 added model comparison side by side, cost budgets with alerts, agent and MCP step-tree views, and an eval CLI that fails CI when answer quality drops. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard.",
+      "Local devtools for AI calls. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. Compare models side by side, set cost budgets with alerts, watch agent and MCP step traces, and gate CI on an eval score. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard.",
     tags: ['C#', '.NET', 'OpenTelemetry', 'evals', 'LLM observability'],
     links: {
       source: 'https://github.com/eladser/seerlens',
@@ -16,7 +16,7 @@ export const PROJECTS = [
     },
     githubRepo: 'eladser/seerlens',
     fallbackStars: 0,
-    media: { type: 'image', src: 'seerlens-demo.png' },
+    media: { type: 'gif', src: 'seerlens-demo.gif' },
     accent: 'teal',
   },
   {
