@@ -105,7 +105,9 @@ export function StackUsageViz() {
                         <button
                           key={y}
                           type="button"
-                          aria-label={`${tech.name} in ${y}: ${intensityWord(intensity) || 'not used'}`}
+                          tabIndex={intensity > 0 ? 0 : -1}
+                          aria-hidden={intensity === 0 || undefined}
+                          aria-label={intensity > 0 ? `${tech.name} in ${y}: ${intensityWord(intensity)} use, ${job}` : undefined}
                           className="flex-1 min-w-0 h-5 mx-px relative outline-none focus-visible:ring-1 focus-visible:ring-[#4ECDC4]"
                           onMouseEnter={() => intensity > 0 && setHover({ tech, year: y, intensity, job })}
                           onMouseLeave={() => setHover(null)}

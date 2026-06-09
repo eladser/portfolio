@@ -225,7 +225,7 @@ const TerminalDemo = ({ isDark }) => {
       <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-white/5">
         <div className="flex items-center gap-2">
           <Terminal size={14} className="text-zinc-300" />
-          <span className="text-xs font-mono text-zinc-300">AspNetDebugDashboard — localhost:5000</span>
+          <span className="text-xs font-mono text-zinc-300">AspNetDebugDashboard · localhost:5000</span>
         </div>
         <button
           onClick={startDemo}
@@ -327,7 +327,7 @@ const Portfolio = () => {
       description: 'Show who you are talking to',
       execute: () => {
         setShowManifesto(true);
-        return 'elad-sertshuk — see panel ↗';
+        return 'elad-sertshuk · see panel ↗';
       },
     },
   };
@@ -609,9 +609,9 @@ const Portfolio = () => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-8 sm:mb-12"
                 >
-                  <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                  <h1 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     Showcase
-                  </h2>
+                  </h1>
                   <p className={`text-base ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Some things I've built over the years
                   </p>
@@ -772,9 +772,9 @@ app.Run();`
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 sm:mb-8"
                 >
-                  <h2 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                  <h1 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
                     About
-                  </h2>
+                  </h1>
                 </m.div>
 
                 <m.div

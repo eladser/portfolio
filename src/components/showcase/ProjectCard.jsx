@@ -1,15 +1,16 @@
-// Standard project card (non-featured). Uses the teal motion tokens for hover lift.
-// Featured project (AeroLens) uses FeaturedProjectCard with the video embed.
+// Non-featured cards. No side-stripe accents, no border-l-2. Variants by index so
+// three cards in a row don't read as "identical card × 3". The accent color shows
+// only on the project name underline + tag chip text.
 
 import { m } from 'framer-motion';
 import { Github } from 'lucide-react';
 import { useGitHubStars } from '../../hooks/useGitHubStars';
 
 const ACCENTS = {
-  sky:     { border: 'border-l-sky-500',     tag: 'bg-sky-950 text-sky-400',         badge: 'bg-sky-950 text-sky-400' },
-  purple:  { border: 'border-l-purple-500',  tag: 'bg-purple-950 text-purple-300',   badge: 'bg-purple-950 text-purple-300' },
-  emerald: { border: 'border-l-emerald-500', tag: 'bg-emerald-950 text-emerald-400', badge: 'bg-emerald-950 text-emerald-400' },
-  teal:    { border: 'border-l-[#4ECDC4]',   tag: 'bg-[#4ECDC4]/10 text-[#4ECDC4]',  badge: 'bg-[#4ECDC4]/10 text-[#4ECDC4]' },
+  sky:     { underline: 'bg-sky-400',     chip: 'text-sky-300',      chipBg: 'bg-sky-500/10',     status: 'text-sky-300' },
+  purple:  { underline: 'bg-purple-400',  chip: 'text-purple-300',   chipBg: 'bg-purple-500/10',  status: 'text-purple-300' },
+  emerald: { underline: 'bg-emerald-400', chip: 'text-emerald-300',  chipBg: 'bg-emerald-500/10', status: 'text-emerald-300' },
+  teal:    { underline: 'bg-[#4ECDC4]',   chip: 'text-[#4ECDC4]',    chipBg: 'bg-[#4ECDC4]/10',   status: 'text-[#4ECDC4]' },
 };
 
 function StarBadge({ count }) {
@@ -28,47 +29,56 @@ export function ProjectCard({ project, index = 0 }) {
   const stars = useGitHubStars(project.githubRepo, project.fallbackStars ?? 0);
   const accent = ACCENTS[project.accent] || ACCENTS.teal;
 
+  // Visual variants so a row of cards doesn't read identical. Variant 0 = boxed,
+  // 1 = bare with hairline divider, 2 = compact one-line-style.
+  const variant = index % 3;
+  const wrapper =
+    variant === 0
+      ? 'group relative rounded-md border border-white/10 bg-zinc-900/40 p-5 sm:p-6 transition-colors hover:border-white/20 hover:bg-zinc-900/60'
+      : variant === 1
+      ? 'group relative p-5 sm:p-6 border-t border-white/10 transition-colors'
+      : 'group relative p-5 sm:p-6 transition-colors';
+
   return (
-    <m.div
-      initial={{ opacity: 0, y: 24 }}
+    <m.article
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.23, 1, 0.32, 1] }}
-      whileHover={{ transform: 'translateY(-4px)' }}
-      className={`group relative rounded-xl border border-white/10 ${accent.border} border-l-2 bg-zinc-900/60 p-5 sm:p-6 transition-shadow duration-200 hover:shadow-[0_12px_28px_-12px_rgba(78,205,196,0.20)]`}
+      className={wrapper}
     >
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="text-lg sm:text-xl font-semibold text-white">{project.name}</h3>
-          <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded ${accent.badge}`}>
-            {project.status.label}
-          </span>
-        </div>
+      <div className="flex items-baseline gap-3 flex-wrap mb-1.5">
+        <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+          {project.name}
+        </h3>
+        <span className={`text-[10px] font-mono uppercase tracking-[0.18em] ${accent.status}`}>
+          {project.status.label}
+        </span>
         <StarBadge count={stars} />
       </div>
-
+      <div className={`h-px w-8 ${accent.underline} mb-3`} aria-hidden="true" />
       <p className="text-xs font-mono text-zinc-500 mb-3">{project.tagline}</p>
 
       <p className="text-sm text-zinc-300 leading-relaxed mb-4">{project.description}</p>
 
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {project.tags.map((t) => (
-          <span key={t} className={`text-[11px] font-mono px-2 py-0.5 rounded ${accent.tag}`}>
-            {t}
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mb-4 text-[11px] font-mono text-zinc-500">
+        {project.tags.map((t, i) => (
+          <span key={t}>
+            {i > 0 && <span className="text-zinc-700 mr-3" aria-hidden="true">·</span>}
+            <span className={accent.chip}>{t}</span>
           </span>
         ))}
       </div>
 
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-4 flex-wrap text-xs font-mono">
         {project.links.live && (
           <a
             href={project.links.live}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-xs px-3 py-1.5 rounded font-medium transition-transform active:scale-[0.97] ${accent.badge} hover:brightness-125`}
+            className={`${accent.chip} hover:underline underline-offset-4`}
           >
-            Try it
-            <span className="sr-only"> (opens in new tab)</span>
+            live ↗
           </a>
         )}
         {project.links.source && (
@@ -76,11 +86,10 @@ export function ProjectCard({ project, index = 0 }) {
             href={project.links.source}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded text-zinc-300 hover:text-white hover:bg-white/5 transition-colors active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-white"
           >
-            <Github size={13} />
-            Source
-            <span className="sr-only">(opens in new tab)</span>
+            <Github size={12} />
+            source
           </a>
         )}
         {project.links.nuget && (
@@ -88,13 +97,12 @@ export function ProjectCard({ project, index = 0 }) {
             href={project.links.nuget}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs px-3 py-1.5 rounded font-mono text-zinc-400 hover:text-white hover:bg-white/5 transition-colors active:scale-[0.97]"
+            className="text-zinc-400 hover:text-white"
           >
             nuget
-            <span className="sr-only"> (opens in new tab)</span>
           </a>
         )}
       </div>
-    </m.div>
+    </m.article>
   );
 }
