@@ -98,3 +98,6 @@ temp/
 # Legacy docs folder (if exists)
 docs/
 _ref-artifacts/
+
+# Raw GLB sources kept locally for re-encoding, not committed
+models-source/

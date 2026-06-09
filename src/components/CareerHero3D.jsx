@@ -5,6 +5,8 @@
 import { useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { CAREER } from '../data/career';
 import { CareerArtifact } from './career-hero/CareerArtifact';
@@ -43,13 +45,18 @@ export function CareerHero3D({ scroller }) {
             dpr={[1, 2]}
             onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping;
-              gl.toneMappingExposure = 0.95;
+              gl.toneMappingExposure = 1.05;
               gl.outputColorSpace = THREE.SRGBColorSpace;
               gl.setClearColor(0x000000, 0);
             }}
           >
-            <ambientLight intensity={0.35} />
-            <directionalLight intensity={1.1} position={[-4, 5, 6]} />
+            {/* 3-point lighting: ambient base + key from front-left + softer fill from
+                front-right + warm rim from behind. Gives the artifacts a sculpted look
+                instead of the flat "HDRI-only" reading they had before. */}
+            <ambientLight intensity={0.28} />
+            <directionalLight intensity={1.0} position={[-4, 5, 6]} color="#ffffff" />
+            <directionalLight intensity={0.45} position={[5, 3, 4]} color="#cfe6ff" />
+            <directionalLight intensity={0.55} position={[2, 2, -6]} color="#ffd9a8" />
             <Suspense fallback={null}>
               <Environment files="/assets/hdri/studio.hdr" background={false} />
               {CAREER.map((chap, i) => (
@@ -61,6 +68,19 @@ export function CareerHero3D({ scroller }) {
                 />
               ))}
             </Suspense>
+            <EffectComposer multisampling={0} disableNormalPass>
+              <Bloom
+                intensity={0.45}
+                luminanceThreshold={0.85}
+                luminanceSmoothing={0.2}
+                mipmapBlur
+              />
+              <Vignette
+                offset={0.35}
+                darkness={0.6}
+                blendFunction={BlendFunction.NORMAL}
+              />
+            </EffectComposer>
           </Canvas>
         </div>
       )}
