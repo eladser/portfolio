@@ -4,8 +4,20 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { KTX2Loader } from 'three/examples/jsm/loaders/KTX2Loader.js';
+
+// Single shared KTX2Loader, lazily created the first time a CareerArtifact mounts.
+// All three GLBs use the same transcoder so we don't allocate one per model.
+let _ktx2Loader = null;
+function getKtx2Loader(gl) {
+  if (_ktx2Loader) return _ktx2Loader;
+  _ktx2Loader = new KTX2Loader()
+    .setTranscoderPath('/basis/')
+    .detectSupport(gl);
+  return _ktx2Loader;
+}
 
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
@@ -85,7 +97,10 @@ function poseFor(index, p) {
 export function CareerArtifact({ index, modelUrl, progress }) {
   const groupRef = useRef();
   const innerRef = useRef();
-  const { scene } = useGLTF(modelUrl, true, true);
+  const { gl } = useThree();
+  const { scene } = useGLTF(modelUrl, true, true, (loader) => {
+    loader.setKTX2Loader(getKtx2Loader(gl));
+  });
 
   // Live rotation overrides from ?debug=rot panel (no-op when not in debug)
   const [liveBase, setLiveBase] = useState(null);
