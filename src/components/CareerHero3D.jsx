@@ -5,7 +5,7 @@
 import { useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import { EffectComposer, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { CAREER } from '../data/career';
@@ -45,7 +45,7 @@ export function CareerHero3D({ scroller }) {
             dpr={[1, 2]}
             onCreated={({ gl }) => {
               gl.toneMapping = THREE.ACESFilmicToneMapping;
-              gl.toneMappingExposure = 1.05;
+              gl.toneMappingExposure = 0.95;
               gl.outputColorSpace = THREE.SRGBColorSpace;
               gl.setClearColor(0x000000, 0);
             }}
@@ -69,15 +69,14 @@ export function CareerHero3D({ scroller }) {
               ))}
             </Suspense>
             <EffectComposer multisampling={0} disableNormalPass>
-              <Bloom
-                intensity={0.45}
-                luminanceThreshold={0.85}
-                luminanceSmoothing={0.2}
-                mipmapBlur
-              />
+              {/* Bloom dropped: the KLA cleanroom panel + WEM cabinet are mostly
+                  white, which blew out under any bloom setting that read on the
+                  Elbit station. Without emissive masks in the textures there's
+                  nothing to selectively glow, so the 3-point lighting + HDRI
+                  reflections carry the premium-render look on their own. */}
               <Vignette
                 offset={0.35}
-                darkness={0.6}
+                darkness={0.55}
                 blendFunction={BlendFunction.NORMAL}
               />
             </EffectComposer>
