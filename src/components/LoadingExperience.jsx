@@ -107,7 +107,7 @@ const LoadingExperience = ({ onComplete }) => {
               </div>
               <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
                 <m.div
-                  className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                  className="h-full bg-[#4ECDC4] rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.3, ease: 'easeOut' }}

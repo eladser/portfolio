@@ -1,14 +1,13 @@
-// Featured project. Wider card, two-column on desktop with the demo media on the
-// right (video or gif), stacks on mobile. Themed by accent (teal default, sky for
-// AeroLens).
+// Featured project. No card chrome, no side stripe. Section-style layout: huge name
+// with accent underline, content beside the demo media, hairline divider below.
 
 import { m } from 'framer-motion';
 import { Github } from 'lucide-react';
 import { useGitHubStars } from '../../hooks/useGitHubStars';
 
 const ACCENTS = {
-  teal: { border: 'border-l-[#4ECDC4]', tag: 'bg-[#4ECDC4]/10 text-[#4ECDC4]', hover: 'hover:border-[#4ECDC4]/50' },
-  sky:  { border: 'border-l-sky-500',   tag: 'bg-sky-950 text-sky-400',         hover: 'hover:border-sky-500/50' },
+  teal: { underline: 'bg-[#4ECDC4]',   chip: 'text-[#4ECDC4]', chipBg: 'bg-[#4ECDC4]/10', hoverName: 'hover:text-[#4ECDC4]' },
+  sky:  { underline: 'bg-sky-400',     chip: 'text-sky-300',   chipBg: 'bg-sky-500/10',   hoverName: 'hover:text-sky-300' },
 };
 
 function StarBadge({ count }) {
@@ -30,45 +29,44 @@ export function FeaturedProjectCard({ project }) {
   const mediaLink = project.links.live || project.links.source;
 
   return (
-    <m.div
+    <m.section
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-      className={`relative rounded-xl border border-white/10 border-l-2 ${accent.border} bg-zinc-900/60 p-5 sm:p-7 mb-6 transition-shadow hover:shadow-[0_18px_40px_-16px_rgba(78,205,196,0.18)]`}
+      className="relative pb-10 mb-10 border-b border-white/10"
     >
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="text-xl sm:text-2xl font-semibold text-white">{project.name}</h3>
-          <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded ${accent.tag}`}>
-            {project.status.label}
-          </span>
-        </div>
-        <StarBadge count={stars} />
-      </div>
-
-      <p className="text-xs font-mono text-zinc-500 mb-4">{project.tagline}</p>
-
-      <div className="grid md:grid-cols-[1fr_1.2fr] gap-5 items-start">
+      <div className="grid md:grid-cols-[1fr_1.3fr] gap-8 items-start">
         <div>
-          <p className="text-sm text-zinc-300 leading-relaxed mb-4">{project.description}</p>
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {project.tags.map((t) => (
-              <span key={t} className={`text-[11px] font-mono px-2 py-0.5 rounded ${accent.tag}`}>
-                {t}
+          <div className="flex items-baseline gap-3 flex-wrap mb-2">
+            <h3 className={`text-3xl sm:text-4xl font-semibold text-white tracking-tight transition-colors ${accent.hoverName}`}>
+              {project.name}
+            </h3>
+            <span className={`text-[10px] font-mono uppercase tracking-[0.18em] ${accent.chip}`}>
+              {project.status.label}
+            </span>
+            <StarBadge count={stars} />
+          </div>
+          <div className={`h-px w-12 ${accent.underline} mb-4`} aria-hidden="true" />
+          <p className="text-xs font-mono text-zinc-500 mb-5">{project.tagline}</p>
+          <p className="text-sm sm:text-base text-zinc-300 leading-relaxed mb-5">{project.description}</p>
+          <div className="flex flex-wrap gap-x-3 gap-y-1.5 mb-6 text-[11px] font-mono text-zinc-500">
+            {project.tags.map((t, i) => (
+              <span key={t}>
+                {i > 0 && <span className="text-zinc-700 mr-3" aria-hidden="true">·</span>}
+                <span className={accent.chip}>{t}</span>
               </span>
             ))}
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-4 flex-wrap text-xs font-mono">
             {project.links.live && (
               <a
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`text-xs px-3 py-1.5 rounded font-medium ${accent.tag} hover:brightness-125 transition-transform active:scale-[0.97]`}
+                className={`${accent.chip} hover:underline underline-offset-4`}
               >
-                Try it
-                <span className="sr-only"> (opens in new tab)</span>
+                live ↗
               </a>
             )}
             {project.links.source && (
@@ -76,11 +74,10 @@ export function FeaturedProjectCard({ project }) {
                 href={project.links.source}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded text-zinc-300 hover:text-white hover:bg-white/5 transition-colors active:scale-[0.97]"
+                className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-white"
               >
-                <Github size={13} />
-                Source
-                <span className="sr-only">(opens in new tab)</span>
+                <Github size={12} />
+                source
               </a>
             )}
             {project.links.nuget && (
@@ -88,10 +85,9 @@ export function FeaturedProjectCard({ project }) {
                 href={project.links.nuget}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs px-3 py-1.5 rounded font-mono text-zinc-400 hover:text-white hover:bg-white/5 transition-colors active:scale-[0.97]"
+                className="text-zinc-400 hover:text-white"
               >
                 nuget
-                <span className="sr-only"> (opens in new tab)</span>
               </a>
             )}
           </div>
@@ -102,28 +98,16 @@ export function FeaturedProjectCard({ project }) {
             href={mediaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={`block rounded-lg overflow-hidden border border-white/10 ${accent.hover} transition-colors`}
+            className="block rounded-md overflow-hidden ring-1 ring-white/5 hover:ring-white/15 transition"
           >
             {project.media.type === 'video' ? (
-              <video
-                src={mediaSrc}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-auto"
-              />
+              <video src={mediaSrc} autoPlay loop muted playsInline className="w-full h-auto" />
             ) : (
-              <img
-                src={mediaSrc}
-                alt={`${project.name} demo`}
-                loading="lazy"
-                className="w-full h-auto"
-              />
+              <img src={mediaSrc} alt={`${project.name} demo`} loading="lazy" className="w-full h-auto" />
             )}
           </a>
         )}
       </div>
-    </m.div>
+    </m.section>
   );
 }
