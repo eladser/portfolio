@@ -3,7 +3,7 @@
 // Mobile + prefers-reduced-motion: canvas hidden, static frame shown instead.
 
 import { useRef, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import { EffectComposer, Vignette } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
@@ -23,6 +23,56 @@ import { useScrollProgress } from './career-hero/useScrollProgress';
 // 3D is always enabled. Kept the variable name for the few code paths that still
 // reference it inside the JSX.
 const enabled3D = true;
+
+// Per-chapter fill + rim light colors. Each chapter gets its own room: Elbit a warm
+// amber fill, KLA a clean cool blue, WEM a teal-leaning fill. The rim stays warm-ish
+// to keep the silhouette readable against the dark page. Colors lerp across scroll so
+// the "rooms" cross-fade instead of snapping.
+const CHAPTER_FILL = [
+  new THREE.Color('#ffe0b8'),  // elbit warm
+  new THREE.Color('#cfe6ff'),  // kla cool
+  new THREE.Color('#bfeee4'),  // wem teal-ish
+];
+const CHAPTER_RIM = [
+  new THREE.Color('#ffcf9a'),  // elbit warm
+  new THREE.Color('#d6e4ff'),  // kla cool-ish
+  new THREE.Color('#a8f0dd'),  // wem teal
+];
+
+// Maps scroll progress to a continuous chapter index in [0, 2].
+function chapterFloat(p) {
+  if (p < 0.30) return 0;
+  if (p < 0.50) return (p - 0.30) / 0.20;            // 0 → 1
+  if (p < 0.65) return 1;
+  if (p < 0.85) return 1 + (p - 0.65) / 0.20;        // 1 → 2
+  return 2;
+}
+
+function sampleChapterColor(palette, cf) {
+  const i0 = Math.floor(cf);
+  const i1 = Math.min(palette.length - 1, i0 + 1);
+  const t = cf - i0;
+  return palette[i0].clone().lerp(palette[i1], t);
+}
+
+// Lives inside the Canvas. Drives the fill + rim light colors from scroll progress.
+function ChapterLights({ progress }) {
+  const fillRef = useRef();
+  const rimRef = useRef();
+  useFrame(() => {
+    const cf = chapterFloat(progress);
+    if (fillRef.current) fillRef.current.color.copy(sampleChapterColor(CHAPTER_FILL, cf));
+    if (rimRef.current) rimRef.current.color.copy(sampleChapterColor(CHAPTER_RIM, cf));
+  });
+  return (
+    <>
+      <ambientLight intensity={0.28} />
+      <directionalLight intensity={1.0} position={[-4, 5, 6]} color="#ffffff" />
+      <directionalLight ref={fillRef} intensity={0.45} position={[5, 3, 4]} />
+      <directionalLight ref={rimRef} intensity={0.55} position={[2, 2, -6]} />
+    </>
+  );
+}
 
 export function CareerHero3D({ scroller }) {
   const containerRef = useRef(null);
@@ -50,13 +100,11 @@ export function CareerHero3D({ scroller }) {
               gl.setClearColor(0x000000, 0);
             }}
           >
-            {/* 3-point lighting: ambient base + key from front-left + softer fill from
-                front-right + warm rim from behind. Gives the artifacts a sculpted look
-                instead of the flat "HDRI-only" reading they had before. */}
-            <ambientLight intensity={0.28} />
-            <directionalLight intensity={1.0} position={[-4, 5, 6]} color="#ffffff" />
-            <directionalLight intensity={0.45} position={[5, 3, 4]} color="#cfe6ff" />
-            <directionalLight intensity={0.55} position={[2, 2, -6]} color="#ffd9a8" />
+            {/* 3-point lighting with per-chapter fill + rim tint (see ChapterLights):
+                white key from front-left stays constant, the fill + rim shift warm →
+                cool → teal as you scroll Elbit → KLA → WEM, so each chapter reads as
+                its own room. */}
+            <ChapterLights progress={progress} />
             <Suspense fallback={null}>
               <Environment files="/assets/hdri/studio.hdr" background={false} />
               {CAREER.map((chap, i) => (
