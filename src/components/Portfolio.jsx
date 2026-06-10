@@ -8,6 +8,7 @@ import { PROJECTS } from '../data/projects';
 import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
 import { ProjectCard } from './showcase/ProjectCard';
 import GitHubActivity from './GitHubActivity';
+import GitHubHeatmap from './GitHubHeatmap';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
 import { StackUsageViz } from './StackUsageViz';
@@ -867,6 +868,14 @@ app.Run();`
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.35 }}
+                  >
+                    <GitHubHeatmap isDark={isDark} username="eladser" />
+                  </m.div>
+
+                  <m.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
                   >
                     <GitHubActivity isDark={isDark} username="eladser" useRealData={true} />
                   </m.div>

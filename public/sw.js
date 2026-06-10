@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v4';
+const CACHE_NAME = 'portfolio-v5';
 const STATIC_ASSETS = [
   '/profile.jpg',
   '/favicon-16.png',
@@ -30,6 +30,10 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
 
   const url = new URL(e.request.url);
+
+  // Never cache cross-origin requests (e.g. GitHub API) — they go straight to
+  // network so live data isn't frozen in the cache between deploys.
+  if (url.origin !== self.location.origin) return;
 
   // Network-first for HTML and JS (always get fresh versions)
   if (url.pathname === '/' || url.pathname.endsWith('.html') || url.pathname.endsWith('.js')) {

@@ -1,136 +1,68 @@
 import { useState, useEffect } from 'react';
-import { m } from 'framer-motion';
-import { GitCommit, TrendingUp } from 'lucide-react';
+import { GitCommit } from 'lucide-react';
 
-/**
- * GitHubHeatmap - GitHub contribution heatmap visualization
- *
- * Features:
- * - Fetches real contribution data from GitHub
- * - Color-coded activity levels
- * - Hover tooltips with details
- * - Responsive grid layout
- *
- * Usage:
- * <GitHubHeatmap isDark={true} username="eladser" />
- */
+// Contribution heatmap fed by jogruber's tokenless GitHub contributions API.
+// GitHub's own graph needs an auth token (GraphQL contributionsCollection), so
+// for a static site this proxy is the only way to get the real per-day grid.
+const API = (user) => `https://github-contributions-api.jogruber.de/v4/${user}?y=last`;
+
+const TEAL = [78, 205, 196]; // brand #4ECDC4
+const cellColor = (level, isDark) => {
+  if (level === 0) return isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
+  const alpha = [0, 0.25, 0.45, 0.7, 1][level];
+  return `rgba(${TEAL[0]},${TEAL[1]},${TEAL[2]},${alpha})`;
+};
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
-  const [contributions, setContributions] = useState([]);
+  const [weeks, setWeeks] = useState([]);
   const [stats, setStats] = useState({ total: 0, max: 0, average: 0 });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [state, setState] = useState('loading'); // loading | ok | error
 
   useEffect(() => {
-    const fetchContributions = async () => {
-      setLoading(true);
-      setError(null);
-
+    let alive = true;
+    (async () => {
+      setState('loading');
       try {
-        // Generate mock data for demonstration
-        // In production, you'd fetch from GitHub GraphQL API
-        const mockData = generateMockContributions();
-        setContributions(mockData.contributions);
-        setStats(mockData.stats);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+        const res = await fetch(API(username));
+        if (!res.ok) throw new Error(`${res.status}`);
+        const json = await res.json();
+        const days = json.contributions || [];
+        if (!days.length) throw new Error('no data');
 
-    fetchContributions();
+        // Pad the front so each column is a Sun–Sat week, GitHub-style
+        const pad = new Date(days[0].date).getDay();
+        const cells = [...Array(pad).fill(null), ...days];
+        const w = [];
+        for (let i = 0; i < cells.length; i += 7) w.push(cells.slice(i, i + 7));
+
+        const counts = days.map((d) => d.count);
+        const total = json.total?.lastYear ?? counts.reduce((a, b) => a + b, 0);
+        const max = Math.max(...counts);
+
+        if (!alive) return;
+        setWeeks(w);
+        setStats({ total, max, average: Math.round((total / days.length) * 10) / 10 });
+        setState('ok');
+      } catch {
+        if (alive) setState('error');
+      }
+    })();
+    return () => { alive = false; };
   }, [username]);
 
-  // Generate mock contribution data (52 weeks)
-  const generateMockContributions = () => {
-    const contributions = [];
-    const weeksToShow = 52;
-    const now = new Date();
-    let total = 0;
-    let max = 0;
+  const shell = `rounded-xl border overflow-hidden ${
+    isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
+  }`;
 
-    for (let week = weeksToShow - 1; week >= 0; week--) {
-      for (let day = 0; day < 7; day++) {
-        const date = new Date(now);
-        date.setDate(date.getDate() - (week * 7 + (6 - day)));
-
-        // Generate random contribution count (weighted towards weekdays)
-        const isWeekend = day === 0 || day === 6;
-        const baseChance = isWeekend ? 0.3 : 0.7;
-        const count = Math.random() < baseChance ? Math.floor(Math.random() * 15) : 0;
-
-        total += count;
-        max = Math.max(max, count);
-
-        contributions.push({
-          date: date.toISOString().split('T')[0],
-          count,
-          level: getLevel(count),
-        });
-      }
-    }
-
-    return {
-      contributions,
-      stats: {
-        total,
-        max,
-        average: Math.round(total / contributions.length * 10) / 10,
-      },
-    };
-  };
-
-  const getLevel = (count) => {
-    if (count === 0) return 0;
-    if (count < 3) return 1;
-    if (count < 6) return 2;
-    if (count < 10) return 3;
-    return 4;
-  };
-
-  const getLevelColor = (level) => {
-    if (isDark) {
-      const colors = [
-        'bg-zinc-800',
-        'bg-purple-900',
-        'bg-purple-700',
-        'bg-purple-600',
-        'bg-purple-500',
-      ];
-      return colors[level];
-    } else {
-      const colors = [
-        'bg-black/[0.05]',
-        'bg-purple-200',
-        'bg-purple-300',
-        'bg-purple-400',
-        'bg-purple-500',
-      ];
-      return colors[level];
-    }
-  };
-
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-  // Group contributions by week
-  const weeks = [];
-  for (let i = 0; i < contributions.length; i += 7) {
-    weeks.push(contributions.slice(i, i + 7));
-  }
-
-  if (loading) {
+  if (state === 'loading') {
     return (
-      <div
-        className={`rounded-xl border p-6 ${
-          isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
-        }`}
-      >
+      <div className={shell}>
         <div className="flex items-center justify-center py-12">
           <div className="flex items-center gap-3">
-            <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
-            <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+            <div className="w-4 h-4 border-2 border-[#4ECDC4]/30 border-t-[#4ECDC4] rounded-full animate-spin" />
+            <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
               Loading contributions...
             </span>
           </div>
@@ -139,134 +71,89 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
     );
   }
 
+  if (state === 'error') {
+    return (
+      <div className={shell}>
+        <div className="px-6 py-8 text-sm text-gray-500">
+          Couldn't reach GitHub right now.{' '}
+          <a
+            href={`https://github.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#4ECDC4] hover:underline"
+          >
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`rounded-xl border overflow-hidden ${
-        isDark ? 'bg-zinc-900 border-white/10' : 'bg-black/[0.02] border-black/10'
-      }`}
-    >
-      {/* Header */}
+    <div className={shell}>
       <div className={`px-6 py-4 border-b ${isDark ? 'border-white/10' : 'border-black/10'}`}>
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <GitCommit className={isDark ? 'text-gray-300' : 'text-gray-400'} size={20} aria-hidden="true" />
-              <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                Contribution Activity
-              </h3>
-            </div>
-            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-              {stats.total} contributions in the last year
-            </p>
-          </div>
+        <div className="flex items-center gap-3 mb-2">
+          <GitCommit className={isDark ? 'text-gray-300' : 'text-gray-500'} size={20} aria-hidden="true" />
+          <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+            Contribution Activity
+          </h3>
         </div>
+        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          {stats.total.toLocaleString()} contributions in the last year
+        </p>
       </div>
 
-      {/* Stats */}
       <div className={`grid grid-cols-3 gap-4 px-6 py-4 border-b ${isDark ? 'border-white/10' : 'border-black/10'}`}>
-        <div>
-          <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-            {stats.total}
-          </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-            Total
-          </div>
-        </div>
-        <div>
-          <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-            {stats.max}
-          </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-            Best Day
-          </div>
-        </div>
-        <div>
-          <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-            {stats.average}
-          </div>
-          <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-            Daily Avg
-          </div>
-        </div>
+        {[['Total', stats.total.toLocaleString()], ['Best day', stats.max], ['Daily avg', stats.average]].map(
+          ([label, val]) => (
+            <div key={label}>
+              <div className={`text-2xl font-bold font-mono ${isDark ? 'text-white' : 'text-zinc-900'}`}>{val}</div>
+              <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{label}</div>
+            </div>
+          )
+        )}
       </div>
 
-      {/* Heatmap */}
       <div className="p-6 overflow-x-auto">
-        <div className="inline-flex gap-1">
-          {/* Day labels */}
-          <div className="flex flex-col gap-1 pr-2">
-            <div className="h-3" /> {/* Spacer for month labels */}
-            {days.map((day, i) => (
-              i % 2 === 1 && (
-                <div
-                  key={day}
-                  className={`text-xs h-3 flex items-center ${isDark ? 'text-gray-400' : 'text-gray-400'}`}
-                >
-                  {day}
+        <div>
+          {/* Month labels */}
+          <div className="flex gap-1 mb-1 h-3 ml-0">
+            {weeks.map((week, wi) => {
+              const d = week.find(Boolean);
+              const show = d && new Date(d.date).getDate() <= 7;
+              return (
+                <div key={wi} className="w-3">
+                  {show && (
+                    <span className={`text-[10px] ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {months[new Date(d.date).getMonth()]}
+                    </span>
+                  )}
                 </div>
-              )
+              );
+            })}
+          </div>
+
+          <div className="flex gap-1">
+            {weeks.map((week, wi) => (
+              <div key={wi} className="flex flex-col gap-1">
+                {week.map((day, di) => (
+                  <div
+                    key={di}
+                    className="w-3 h-3 rounded-sm"
+                    style={{ backgroundColor: day ? cellColor(day.level, isDark) : 'transparent' }}
+                    title={day ? `${day.count} on ${day.date}` : undefined}
+                  />
+                ))}
+              </div>
             ))}
           </div>
-
-          {/* Contribution grid */}
-          <div>
-            {/* Month labels */}
-            <div className="flex gap-1 mb-1 h-3">
-              {weeks.map((week, weekIndex) => {
-                const firstDay = week[0];
-                const date = new Date(firstDay.date);
-                const showMonth = date.getDate() <= 7;
-                return (
-                  <div key={weekIndex} className="w-3">
-                    {showMonth && (
-                      <div className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
-                        {months[date.getMonth()]}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Grid */}
-            <div className="flex gap-1">
-              {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-1">
-                  {week.map((day, dayIndex) => (
-                    <m.div
-                      key={dayIndex}
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: (weekIndex * 7 + dayIndex) * 0.001 }}
-                      whileHover={{ scale: 1.5, zIndex: 10 }}
-                      className={`w-3 h-3 rounded-sm ${getLevelColor(day.level)} cursor-pointer group relative`}
-                      title={`${day.count} contributions on ${day.date}`}
-                    >
-                      {/* Tooltip */}
-                      <div
-                        className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 ${
-                          isDark ? 'bg-zinc-800 text-white' : 'bg-zinc-700 text-white'
-                        }`}
-                      >
-                        {day.count} on {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                      </div>
-                    </m.div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
-        {/* Legend */}
-        <div className={`flex items-center gap-2 mt-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
+        <div className={`flex items-center gap-2 mt-4 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
           <span>Less</span>
           <div className="flex gap-1">
             {[0, 1, 2, 3, 4].map((level) => (
-              <div
-                key={level}
-                className={`w-3 h-3 rounded-sm ${getLevelColor(level)}`}
-              />
+              <div key={level} className="w-3 h-3 rounded-sm" style={{ backgroundColor: cellColor(level, isDark) }} />
             ))}
           </div>
           <span>More</span>
