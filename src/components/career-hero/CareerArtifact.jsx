@@ -207,7 +207,9 @@ export function CareerArtifact({ index, modelUrl, progress }) {
   );
 }
 
-// Preload all 3 so the hero never shows a flash of nothing on first scroll
-useGLTF.preload('/assets/models/elbit-station.glb', true, true);
-useGLTF.preload('/assets/models/kla-tool.glb', true, true);
-useGLTF.preload('/assets/models/wem-bess.glb', true, true);
+// No module-level useGLTF.preload here on purpose. preload() runs at import,
+// before any WebGL renderer exists, so it can't attach the KTX2 loader — and
+// because drei keys its loader cache by URL, a preload that wins the race leaves
+// every later load stuck with a KTX2-less GLTFLoader ("setKTX2Loader must be
+// called before loading KTX2 textures"). All 3 artifacts mount together anyway
+// and load through the KTX2-aware useGLTF above, so preloading buys nothing.
