@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v5';
+const CACHE_NAME = 'portfolio-v6';
 const STATIC_ASSETS = [
   '/profile.jpg',
   '/favicon-16.png',
