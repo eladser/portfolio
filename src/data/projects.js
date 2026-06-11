@@ -20,6 +20,21 @@ export const PROJECTS = [
     accent: 'teal',
   },
   {
+    id: 'mtop',
+    name: 'mtop',
+    tagline: 'htop for your local AI',
+    status: { label: 'On Homebrew', tone: 'emerald' },
+    description:
+      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Loaded models and their VRAM, the GPU, and live requests with tok/s, all in one terminal window. It evicts models that won't unload on their own, and a small pass-through proxy reads the per-request numbers off the wire (also exposed as Prometheus /metrics). `mtop compare` benchmarks a prompt across models.",
+    tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
+    links: {
+      source: 'https://github.com/eladser/mtop',
+    },
+    githubRepo: 'eladser/mtop',
+    fallbackStars: 0,
+    accent: 'emerald',
+  },
+  {
     id: 'aerolens',
     name: 'AeroLens',
     tagline: 'real-time flight tracking',
@@ -38,18 +53,34 @@ export const PROJECTS = [
   {
     id: 'debug-dashboard',
     name: 'Debug Dashboard',
-    tagline: 'live HTTP traffic for ASP.NET Core',
-    status: { label: 'On NuGet', tone: 'purple' },
+    tagline: 'Telescope-style debug panel for .NET',
+    status: { label: 'v2.0', tone: 'purple' },
     description:
-      "Got tired of adding Console.WriteLine everywhere to figure out what's happening. Built a middleware that shows me all HTTP traffic in real-time through a web dashboard. Uses SignalR to push updates as they happen. Now I actually know why things break.",
-    tags: ['C#', '.NET Core', 'SignalR'],
+      "Started as a way to stop sprinkling Console.WriteLine everywhere. It's a Telescope-style panel for ASP.NET Core now: every request with the EF Core queries it ran, plus logs and exceptions, at /_debug. N+1 queries get flagged, there's copy-as-cURL and Ctrl+K search. Stores to a local LiteDB file and the whole UI ships as one offline page inside the package.",
+    tags: ['C#', '.NET', 'EF Core', 'LiteDB'],
     links: {
       source: 'https://github.com/eladser/AspNetDebugDashboard',
-      nuget: 'https://www.nuget.org/packages/AspNetCore.DebugDashboard',
+      nuget: 'https://www.nuget.org/packages/AspNetDebugDashboard',
     },
     githubRepo: 'eladser/AspNetDebugDashboard',
     fallbackStars: 0,
     accent: 'purple',
+  },
+  {
+    id: 'simpleconfigdiff',
+    name: 'SimpleConfigDiff',
+    tagline: 'diff configs by structure, not lines',
+    status: { label: 'Live', tone: 'teal' },
+    description:
+      "Diffs config files by structure instead of by line, so a reordered YAML key or \"true\" vs true doesn't show up as noise. Ten formats and cross-format diffs, runs in the browser, installs as a PWA, and there's a CLI for CI that exits non-zero when something changed. Nothing leaves your machine.",
+    tags: ['React 19', 'TypeScript', 'PWA', 'CLI'],
+    links: {
+      live: 'https://eladser.github.io/SimpleConfigDiff/',
+      source: 'https://github.com/eladser/SimpleConfigDiff',
+    },
+    githubRepo: 'eladser/SimpleConfigDiff',
+    fallbackStars: 0,
+    accent: 'teal',
   },
   {
     id: 'dotnet-tools',

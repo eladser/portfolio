@@ -643,24 +643,22 @@ const Portfolio = () => {
                   <CodeShowcase
                     isDark={isDark}
                     title="Debug Dashboard Setup"
-                    description="Add real-time HTTP monitoring to your .NET app"
+                    description="Capture requests, EF Core queries, logs, and exceptions at /_debug"
                     files={[
                       {
                         name: 'Program.cs',
                         language: 'csharp',
-                        code: `var builder = WebApplication.CreateBuilder(args);
+                        code: `using AspNetDebugDashboard.Extensions;
 
-// Add SignalR for real-time updates
-builder.Services.AddSignalR();
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDebugDashboard();   // register services
 
 var app = builder.Build();
 
-// Add Debug Dashboard middleware
-app.UseMiddleware<DebugDashboardMiddleware>();
+app.UseDebugDashboard();                // middleware (no-op outside Development)
 
-// Map the SignalR hub
-app.MapHub<DebugHub>("/debug-hub");
-
+app.MapControllers();
 app.Run();`
                       },
                       {
@@ -668,16 +666,14 @@ app.Run();`
                         language: 'json',
                         code: `{
   "DebugDashboard": {
-    "Enabled": true,
-    "Port": 5000,
-    "EnableHttpLogging": true,
-    "EnableDatabaseLogging": true,
-    "EnableCacheLogging": true
+    "MaxEntries": 2000,
+    "LogResponseBodies": true,
+    "SlowQueryThresholdMs": 500
   }
 }`
                       }
                     ]}
-                    highlightLines={[7, 10]}
+                    highlightLines={[5, 9]}
                     demoUrl="https://github.com/eladser/AspNetDebugDashboard"
                   />
                 </m.div>
@@ -692,7 +688,7 @@ app.Run();`
                     What it looks like
                   </h3>
                   <p className={`text-sm mb-4 ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
-                    Live HTTP traffic from the debug middleware
+                    A sample of the request and query stream it captures
                   </p>
 
                   <TerminalDemo isDark={isDark} />
