@@ -85,12 +85,13 @@ export const PROJECTS = [
   {
     id: 'dotnet-tools',
     name: '.NET Tools',
-    tagline: 'utility helpers I kept rewriting',
-    status: { label: 'On NuGet', tone: 'emerald' },
+    tagline: '25 browser tools for .NET work',
+    status: { label: 'Live', tone: 'emerald' },
     description:
-      "Utility functions I kept copy-pasting between projects. JSON formatting, string helpers, a few other things. Packaged it up and put it on NuGet so I'd stop doing that.",
-    tags: ['C#', '.NET'],
+      "Twenty-five small browser tools for the stuff that comes up in .NET work — JSON to C# classes, GUID v4/v7, a cron builder, JWT decoder, connection strings, a .NET version reference, plus the usual encoders and hashes. All client-side, nothing you paste leaves the page. Started as things I kept rewriting; now it's the tab I leave open.",
+    tags: ['React 19', 'TypeScript', 'PWA'],
     links: {
+      live: 'https://eladser.github.io/.net-tools/',
       source: 'https://github.com/eladser/.net-tools',
     },
     githubRepo: 'eladser/.net-tools',
