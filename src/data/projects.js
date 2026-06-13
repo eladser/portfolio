@@ -98,4 +98,20 @@ export const PROJECTS = [
     fallbackStars: 0,
     accent: 'emerald',
   },
+  {
+    id: 'wow-tools',
+    name: 'WoW Tools',
+    tagline: 'M+ / raid / PvP tools for WoW',
+    status: { label: 'Live', tone: 'purple' },
+    description:
+      "A side thing for World of Warcraft. A Mythic+ score planner that reads your raider.io runs and picks the cheapest keys toward a target, a Great Vault planner, character compare, title cutoff, affix schedule, raid buff matrix. Live character data comes from raider.io; everything else is computed in the browser.",
+    tags: ['React 19', 'TypeScript', 'raider.io'],
+    links: {
+      live: 'https://eladser.github.io/wow-tools/',
+      source: 'https://github.com/eladser/wow-tools',
+    },
+    githubRepo: 'eladser/wow-tools',
+    fallbackStars: 0,
+    accent: 'purple',
+  },
 ];
