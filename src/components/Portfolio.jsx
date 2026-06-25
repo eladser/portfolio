@@ -99,7 +99,7 @@ const TypingGame = ({ isDark }) => {
           </span>
         )}
         {gameState === 'finished' && (
-          <span className="text-xs font-mono text-purple-400">{wpm} WPM</span>
+          <span className="text-xs font-mono text-[#4ECDC4]">{wpm} WPM</span>
         )}
       </div>
 
@@ -113,7 +113,7 @@ const TypingGame = ({ isDark }) => {
             <p className="text-zinc-300 text-sm mb-3">Test your .NET typing speed</p>
             <button
               onClick={startGame}
-              className="px-4 py-2 rounded-lg bg-purple-950 text-purple-400 hover:bg-purple-900 text-sm font-medium transition-colors"
+              className="px-4 py-2 rounded-lg bg-[#4ECDC4]/10 text-[#4ECDC4] hover:bg-[#4ECDC4]/20 text-sm font-medium transition-colors"
             >
               Start
             </button>
@@ -138,7 +138,7 @@ const TypingGame = ({ isDark }) => {
               type="text"
               value={userInput}
               onChange={handleInput}
-              className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-purple-500/50"
+              className="w-full bg-white/5 border border-white/10 rounded px-3 py-2 font-mono text-sm text-white focus:outline-none focus:border-[#4ECDC4]/50"
               placeholder="Start typing..."
               autoComplete="off"
               spellCheck="false"
@@ -152,7 +152,7 @@ const TypingGame = ({ isDark }) => {
             <div className="text-zinc-300 text-sm mb-4">{accuracy}% accuracy</div>
             <button
               onClick={startGame}
-              className="px-4 py-2 rounded-lg bg-purple-950 text-purple-400 hover:bg-purple-900 text-sm font-medium transition-colors"
+              className="px-4 py-2 rounded-lg bg-[#4ECDC4]/10 text-[#4ECDC4] hover:bg-[#4ECDC4]/20 text-sm font-medium transition-colors"
             >
               Try Again
             </button>
@@ -264,7 +264,7 @@ const TerminalDemo = ({ isDark }) => {
             )}
             {log.type === 'db' && (
               <>
-                <span className="text-purple-400 w-12">SQL</span>
+                <span className="text-[#4ECDC4] w-12">SQL</span>
                 <span className="text-zinc-300 w-8">{log.rows}r</span>
                 <span className="text-gray-300 flex-1 truncate">{log.query}</span>
               </>
@@ -811,7 +811,7 @@ app.Run();`
                   transition={{ delay: 0.15 }}
                   className="mt-8"
                 >
-                  <pre className="font-mono text-xs text-purple-400/60 leading-tight select-none overflow-x-auto">
+                  <pre className="font-mono text-xs text-[#4ECDC4]/60 leading-tight select-none overflow-x-auto">
                     {asciiArt}
                   </pre>
                 </m.div>

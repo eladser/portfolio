@@ -257,8 +257,8 @@ Status: ☕ Ready for coffee and code!
               className={`mb-1 whitespace-pre-wrap ${
                 entry.type === 'command'
                   ? isDark
-                    ? 'text-purple-400'
-                    : 'text-purple-600'
+                    ? 'text-[#4ECDC4]'
+                    : 'text-[#0d9488]'
                   : entry.type === 'error'
                   ? isDark
                     ? 'text-red-400'
@@ -272,7 +272,7 @@ Status: ☕ Ready for coffee and code!
         </AnimatePresence>
 
         {/* Input Line */}
-        <div className={`flex items-center gap-2 ${isDark ? 'text-purple-400' : 'text-purple-600'}`}>
+        <div className={`flex items-center gap-2 ${isDark ? 'text-[#4ECDC4]' : 'text-[#0d9488]'}`}>
           <span>{prompt}</span>
           <input
             ref={inputRef}
