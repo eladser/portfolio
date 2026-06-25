@@ -214,7 +214,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
               {loading ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="flex items-center gap-3">
-                    <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-[#4ECDC4]/30 border-t-[#4ECDC4] rounded-full animate-spin" />
                     <span className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-400'}`}>
                       Fetching activity...
                     </span>
@@ -312,7 +312,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                               target="_blank"
                               rel="noopener noreferrer"
                               className={`font-medium text-sm hover:underline ${
-                                isDark ? 'text-purple-400' : 'text-purple-600'
+                                isDark ? 'text-[#4ECDC4]' : 'text-[#0d9488]'
                               }`}
                             >
                               {repo.name}

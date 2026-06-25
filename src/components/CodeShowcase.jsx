@@ -95,8 +95,8 @@ const CodeShowcase = ({
                 rel="noopener noreferrer"
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                   isDark
-                    ? 'bg-purple-500/10 text-purple-400 hover:bg-purple-500/20'
-                    : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
+                    ? 'bg-[#4ECDC4]/10 text-[#4ECDC4] hover:bg-[#4ECDC4]/20'
+                    : 'bg-[#4ECDC4]/15 text-[#0d9488] hover:bg-[#4ECDC4]/25'
                 }`}
               >
                 <Play size={14} aria-hidden="true" />

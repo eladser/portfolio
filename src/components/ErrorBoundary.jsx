@@ -126,7 +126,7 @@ class ErrorBoundary extends Component {
                 <div className="flex flex-wrap gap-3 pt-2">
                   <button
                     onClick={this.handleReset}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-500/50 rounded-lg text-purple-300 font-medium transition-all duration-200 group"
+                    className="flex items-center gap-2 px-4 py-2.5 bg-[#4ECDC4]/10 hover:bg-[#4ECDC4]/20 border border-[#4ECDC4]/30 hover:border-[#4ECDC4]/50 rounded-lg text-[#4ECDC4] font-medium transition-all duration-200 group"
                   >
                     <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
                     Try Again
@@ -154,7 +154,7 @@ class ErrorBoundary extends Component {
                     If this problem persists, please contact{' '}
                     <a
                       href="mailto:elad.ser@gmail.com"
-                      className="text-purple-400 hover:text-purple-300 underline decoration-dotted transition-colors"
+                      className="text-[#4ECDC4] hover:text-[#4ECDC4]/80 underline decoration-dotted transition-colors"
                     >
                       elad.ser@gmail.com
                     </a>

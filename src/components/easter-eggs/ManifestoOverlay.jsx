@@ -62,7 +62,7 @@ export function ManifestoOverlay({ open, onClose }) {
               Now at <span className="text-[#4ECDC4]">WEM</span>, leading the software
               side of grid-scale battery storage. C# microservices behind, React in
               front, PostgreSQL in the back. Some LLM integration work mixed in lately
-              <span className="text-violet-400/90"> (Claude / Gemini / MCP)</span>.
+              <span className="text-[#FF6B6B]/90"> (Claude / Gemini / MCP)</span>.
             </p>
 
             <p className="text-white/55 italic">
