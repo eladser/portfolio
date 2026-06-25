@@ -107,7 +107,7 @@ Tools:       Git, Vite, Visual Studio, VS Code
 📧 Email:    elad.ser@gmail.com
 🐙 GitHub:   github.com/eladser
 💼 LinkedIn: linkedin.com/in/eladser
-🌐 Website:  eladser.github.io/portfolio
+🌐 Website:  eladser.dev
 `,
     },
     coffee: {
