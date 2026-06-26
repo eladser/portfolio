@@ -59,7 +59,7 @@ export function ProjectCard({ project, index = 0 }) {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:hidden"
-        style={{ background: 'radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(78,205,196,0.10), transparent 70%)' }}
+        style={{ background: 'radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(78,205,196,0.14), transparent 70%)' }}
       />
       <div className="relative z-10">
       <div className="flex items-baseline gap-3 flex-wrap mb-1.5">
