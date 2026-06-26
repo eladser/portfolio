@@ -25,6 +25,14 @@ function StarBadge({ count }) {
   );
 }
 
+// Cursor-tracking spotlight: write the mouse position to CSS vars on the card so
+// the overlay's radial-gradient follows it. Vars over React state to skip re-renders.
+function handleSpotlight(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+}
+
 export function ProjectCard({ project, index = 0 }) {
   const stars = useGitHubStars(project.githubRepo, project.fallbackStars ?? 0);
   const accent = ACCENTS[project.accent] || ACCENTS.teal;
@@ -45,8 +53,15 @@ export function ProjectCard({ project, index = 0 }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.4, delay: index * 0.06, ease: [0.23, 1, 0.32, 1] }}
-      className={wrapper}
+      onMouseMove={handleSpotlight}
+      className={`${wrapper} overflow-hidden`}
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:hidden"
+        style={{ background: 'radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(78,205,196,0.10), transparent 70%)' }}
+      />
+      <div className="relative z-10">
       <div className="flex items-baseline gap-3 flex-wrap mb-1.5">
         <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
           {project.name}
@@ -102,6 +117,7 @@ export function ProjectCard({ project, index = 0 }) {
             nuget
           </a>
         )}
+      </div>
       </div>
     </m.article>
   );
