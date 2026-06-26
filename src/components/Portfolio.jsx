@@ -9,6 +9,7 @@ import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
 import { ProjectCard } from './showcase/ProjectCard';
 import GitHubActivity from './GitHubActivity';
 import GitHubHeatmap from './GitHubHeatmap';
+import { ScrambleText } from './textfx';
 import CodeShowcase from './CodeShowcase';
 import TerminalComponent from './Terminal';
 import { StackUsageViz } from './StackUsageViz';
@@ -611,7 +612,7 @@ const Portfolio = () => {
                   className="mb-8 sm:mb-12"
                 >
                   <h1 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                    Showcase
+                    <ScrambleText text="Showcase" />
                   </h1>
                   <p className={`text-base ${isDark ? 'text-zinc-300' : 'text-zinc-300'}`}>
                     Some things I've built over the years
@@ -770,7 +771,7 @@ app.Run();`
                   className="mb-6 sm:mb-8"
                 >
                   <h1 className={`text-2xl sm:text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                    About
+                    <ScrambleText text="About" />
                   </h1>
                 </m.div>
 

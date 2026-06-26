@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GitCommit } from 'lucide-react';
+import { CountUp } from './textfx';
 
 // Contribution heatmap fed by jogruber's tokenless GitHub contributions API.
 // GitHub's own graph needs an auth token (GraphQL contributionsCollection), so
@@ -104,14 +105,18 @@ const GitHubHeatmap = ({ isDark = true, username = 'eladser' }) => {
       </div>
 
       <div className={`grid grid-cols-3 gap-4 px-6 py-4 border-b ${isDark ? 'border-white/10' : 'border-black/10'}`}>
-        {[['Total', stats.total.toLocaleString()], ['Best day', stats.max], ['Daily avg', stats.average]].map(
-          ([label, val]) => (
-            <div key={label}>
-              <div className={`text-2xl font-bold font-mono ${isDark ? 'text-white' : 'text-zinc-900'}`}>{val}</div>
-              <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{label}</div>
+        {[
+          { label: 'Total', value: stats.total },
+          { label: 'Best day', value: stats.max },
+          { label: 'Daily avg', value: stats.average, plain: true },
+        ].map(({ label, value, plain }) => (
+          <div key={label}>
+            <div className={`text-2xl font-bold font-mono ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+              {plain ? value : <CountUp value={value} />}
             </div>
-          )
-        )}
+            <div className={`text-xs mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{label}</div>
+          </div>
+        ))}
       </div>
 
       <div className="p-6 overflow-x-auto">
