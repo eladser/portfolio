@@ -1,0 +1,133 @@
+<body>
+<template>
+<style>
+  #root{position:absolute;inset:0;width:1920px;height:1080px;background:#0a0a0a;overflow:hidden;font-family:'Inter',sans-serif;color:#e5e7eb;}
+  #root .mono{font-family:'JetBrains Mono',monospace;}
+  #root .label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:#8b8f96;}
+  #root .teal{color:#4ECDC4;}
+  #root .coral{color:#FF6B6B;}
+  #root .muted{color:#8b8f96;}
+
+  /* scene 1 */
+  #root .s1{position:absolute;left:96px;top:300px;}
+  #root .prompt{font-family:'JetBrains Mono',monospace;font-size:34px;color:#8b8f96;}
+  #root .prompt .cmd{color:#e5e7eb;}
+  #root .cursor{display:inline-block;width:16px;height:32px;background:#4ECDC4;margin-left:4px;transform:translateY(5px);}
+  #root .name{font-family:'Inter',sans-serif;font-weight:800;font-size:140px;line-height:1.02;letter-spacing:-.02em;margin-top:28px;}
+  #root .name .ch{display:inline-block;opacity:0;}
+  #root .sub1{font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:.04em;margin-top:36px;}
+  #root .sub2{font-family:'JetBrains Mono',monospace;font-size:18px;letter-spacing:.04em;margin-top:10px;}
+
+  /* scene 2 chapters */
+  #root .chap{position:absolute;left:96px;top:360px;opacity:0;}
+  #root .chap .yr{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:210px;line-height:1;letter-spacing:-.03em;color:#4ECDC4;}
+  #root .chap .clab{font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:.04em;color:#e5e7eb;margin-top:24px;}
+  #root .chap .org{color:#8b8f96;}
+  #root .chap .note{font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:.06em;margin-top:18px;color:#FF6B6B;}
+
+  /* scene 3 ship */
+  #root .ship-h{position:absolute;left:96px;top:200px;opacity:0;}
+  #root .shiplist{position:absolute;left:96px;top:300px;width:1500px;display:grid;grid-template-columns:1fr 1fr;column-gap:120px;row-gap:26px;}
+  #root .shiplist .it{font-family:'JetBrains Mono',monospace;font-size:46px;color:#4ECDC4;opacity:0;letter-spacing:-.01em;}
+  #root .shiplist .it::before{content:"›";color:#8b8f96;margin-right:18px;font-size:38px;}
+
+  /* scene 4 url */
+  #root .url-wrap{position:absolute;left:96px;top:430px;opacity:0;}
+  #root .url{font-family:'Inter',sans-serif;font-weight:800;font-size:160px;letter-spacing:-.03em;}
+  #root .url .dev{color:#4ECDC4;}
+  #root .uline{height:8px;width:980px;background:#4ECDC4;margin-top:24px;transform:scaleX(0);transform-origin:left center;}
+</style>
+
+<div id="root" data-composition-id="teaser" data-width="1920" data-height="1080">
+
+  <!-- SCENE 1 -->
+  <div class="s1">
+    <div class="prompt clip" data-start="0" data-duration="18" data-track-index="0">
+      <span class="muted">~ $</span> <span class="cmd">whoami</span><span class="cursor clip" id="cur" data-start="0" data-duration="2" data-track-index="1"></span>
+    </div>
+
+    <div class="name clip" data-start="0.9" data-duration="3.5" data-track-index="2">
+      <span class="ch">E</span><span class="ch">l</span><span class="ch">a</span><span class="ch">d</span><span class="ch">&nbsp;</span><span class="ch">S</span><span class="ch">e</span><span class="ch">r</span><span class="ch">t</span><span class="ch">s</span><span class="ch">h</span><span class="ch">u</span><span class="ch">k</span>
+    </div>
+
+    <div class="sub1 teal clip" data-start="2.2" data-duration="2" data-track-index="3">BACKEND / FULL-STACK ENGINEER · HAIFA, IL</div>
+    <div class="sub2 muted clip" data-start="2.45" data-duration="2" data-track-index="17">10 years of C#</div>
+  </div>
+
+  <!-- SCENE 2 -->
+  <div class="chap clip" id="c1" data-start="4" data-duration="2.6" data-track-index="4">
+    <div class="yr">2014</div>
+    <div class="clab"><span class="org">ELBIT</span> — defense simulators</div>
+  </div>
+  <div class="chap clip" id="c2" data-start="6.3" data-duration="2.6" data-track-index="5">
+    <div class="yr">2019</div>
+    <div class="clab"><span class="org">KLA</span> — semiconductor fab tools</div>
+  </div>
+  <div class="chap clip" id="c3" data-start="8.6" data-duration="2.6" data-track-index="6">
+    <div class="yr">2025</div>
+    <div class="clab"><span class="org">WEM</span> — grid-scale energy</div>
+    <div class="note">+ LLM integration</div>
+  </div>
+
+  <!-- SCENE 3 -->
+  <div class="ship-h label clip" id="shiph" data-start="11" data-duration="5" data-track-index="7">WHAT I SHIP</div>
+  <div class="shiplist">
+    <div class="it clip" data-start="11.4" data-duration="4.6" data-track-index="8">Seerlens</div>
+    <div class="it clip" data-start="11.55" data-duration="4.6" data-track-index="9">mtop</div>
+    <div class="it clip" data-start="11.7" data-duration="4.6" data-track-index="10">AeroLens</div>
+    <div class="it clip" data-start="11.85" data-duration="4.6" data-track-index="11">Debug Dashboard</div>
+    <div class="it clip" data-start="12.0" data-duration="4.6" data-track-index="12">SimpleConfigDiff</div>
+    <div class="it clip" data-start="12.15" data-duration="4.6" data-track-index="13">.NET Tools</div>
+    <div class="it clip" data-start="12.3" data-duration="4.6" data-track-index="14">WoW Tools</div>
+  </div>
+
+  <!-- SCENE 4 -->
+  <div class="url-wrap clip" id="urlw" data-start="16" data-duration="2" data-track-index="15">
+    <div class="url">eladser<span class="dev">.dev</span></div>
+    <div class="uline clip" id="uline" data-start="16.3" data-duration="1.7" data-track-index="16"></div>
+  </div>
+
+</div>
+
+<script>
+window.__timelines=window.__timelines||{};
+const tl=gsap.timeline({paused:true});
+
+// blinking cursor (scene 1, ~2s of blinks)
+tl.fromTo("#cur",{autoAlpha:1},{autoAlpha:0,duration:0.5,ease:"steps(1)",repeat:3,yoyo:true},0);
+tl.fromTo("#cur",{autoAlpha:1},{autoAlpha:0,duration:0.25,ease:"power1.out"},1.9);
+
+// name decode: per-char opacity + tiny y jitter, staggered
+tl.fromTo(".name .ch",
+  {autoAlpha:0,y:-12},
+  {autoAlpha:1,y:0,duration:0.5,ease:"power2.out",stagger:0.05},
+  1.0);
+
+// subtitles
+tl.fromTo(".sub1",{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:0.6,ease:"power2.out"},2.2);
+tl.fromTo(".sub2",{autoAlpha:0,y:14},{autoAlpha:1,y:0,duration:0.6,ease:"power2.out"},2.45);
+// fade scene 1 out before chapters
+tl.fromTo(".s1",{autoAlpha:1},{autoAlpha:0,duration:0.5,ease:"power1.in"},3.6);
+
+// chapters (sequential in/out, one per track)
+function chap(sel,t){
+  tl.fromTo(sel,{autoAlpha:0,x:-40},{autoAlpha:1,x:0,duration:0.6,ease:"power2.out"},t);
+  tl.fromTo(sel,{autoAlpha:1},{autoAlpha:0,duration:0.5,ease:"power1.in"},t+2.0);
+}
+chap("#c1",4.0);
+chap("#c2",6.3);
+chap("#c3",8.6);
+
+// scene 3
+tl.fromTo("#shiph",{autoAlpha:0,y:16},{autoAlpha:1,y:0,duration:0.6,ease:"power2.out"},11.0);
+tl.fromTo(".shiplist .it",{autoAlpha:0,y:24},{autoAlpha:1,y:0,duration:0.6,ease:"power2.out",stagger:0.15},11.4);
+tl.fromTo(["#shiph",".shiplist .it"],{autoAlpha:1},{autoAlpha:0,duration:0.5,ease:"power1.in"},15.6);
+
+// scene 4
+tl.fromTo("#urlw",{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:0.7,ease:"power2.out"},16.0);
+tl.fromTo("#uline",{scaleX:0},{scaleX:1,duration:1.0,ease:"power3.out"},16.3);
+
+window.__timelines["teaser"]=tl;
+</script>
+</template>
+</body>

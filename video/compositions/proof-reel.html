@@ -1,0 +1,185 @@
+<body>
+<template>
+<style>
+  #root{position:absolute;inset:0;width:1920px;height:1080px;background:#0a0a0a;overflow:hidden;font-family:'Inter',sans-serif;color:#e5e7eb;}
+
+  .pad{position:absolute;inset:96px;}
+
+  .label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:#8b8f96;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* intro */
+  .tag{position:absolute;top:96px;left:96px;}
+  .headline{position:absolute;top:430px;left:96px;width:1500px;font-weight:700;font-size:96px;line-height:1.05;letter-spacing:-.02em;color:#e5e7eb;}
+  .headline .accent{color:#4ECDC4;}
+
+  /* stats */
+  .stats{position:absolute;top:380px;left:96px;right:96px;display:flex;justify-content:space-between;}
+  .stat{width:380px;}
+  .stat .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:140px;line-height:1;color:#4ECDC4;letter-spacing:-.03em;}
+  .stat .cap{margin-top:18px;font-size:22px;color:#8b8f96;line-height:1.4;}
+
+  /* project cards */
+  .card{position:absolute;top:300px;left:96px;width:1500px;}
+  .card .kicker{margin-bottom:28px;}
+  .card .pname{font-weight:700;font-size:104px;line-height:1;letter-spacing:-.025em;color:#4ECDC4;}
+  .card .pdesc{margin-top:34px;font-size:34px;line-height:1.4;color:#e5e7eb;max-width:1300px;font-weight:400;}
+  .card .prow{margin-top:54px;display:flex;align-items:center;gap:24px;}
+  .card .pstack{font-family:'JetBrains Mono',monospace;font-size:18px;color:#8b8f96;letter-spacing:.02em;}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:#0a0a0a;background:#4ECDC4;padding:9px 18px;border-radius:3px;font-weight:700;}
+  .chip.live{background:#4ECDC4;}
+  .chip.ver{background:#1c1f22;color:#4ECDC4;border:1px solid #2a2e33;}
+
+  .counter{position:absolute;top:300px;right:96px;font-family:'JetBrains Mono',monospace;font-size:18px;color:#2a2e33;letter-spacing:.1em;}
+
+  /* outro */
+  .outro{position:absolute;top:440px;left:96px;}
+  .outro .gh{font-family:'JetBrains Mono',monospace;font-size:84px;font-weight:700;color:#4ECDC4;letter-spacing:-.02em;}
+  .outro .site{margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:34px;color:#8b8f96;letter-spacing:.02em;}
+</style>
+
+<div id="root" data-composition-id="proof-reel" data-width="1920" data-height="1080">
+
+  <!-- 0-3s intro -->
+  <div class="tag clip" data-start="0" data-duration="3" data-track-index="0">
+    <div class="label">What I've shipped</div>
+  </div>
+  <div class="headline clip" data-start="0.4" data-duration="2.6" data-track-index="1">
+    Real things,<br><span class="accent">running in prod.</span>
+  </div>
+
+  <!-- 3-10s stats -->
+  <div class="stats">
+    <div class="stat clip" data-start="3.0" data-duration="7.0" data-track-index="2">
+      <div class="num" id="n_years">0</div>
+      <div class="cap">years writing C#</div>
+    </div>
+    <div class="stat clip" data-start="3.4" data-duration="6.6" data-track-index="3">
+      <div class="num" id="n_domains">0</div>
+      <div class="cap">high-stakes domains<br>defense · semiconductor · energy</div>
+    </div>
+    <div class="stat clip" data-start="3.8" data-duration="6.2" data-track-index="4">
+      <div class="num" id="n_projects">0</div>
+      <div class="cap">shipped projects</div>
+    </div>
+    <div class="stat clip" data-start="4.2" data-duration="5.8" data-track-index="5">
+      <div class="num" id="n_contrib">0</div>
+      <div class="cap">contributions / yr</div>
+    </div>
+  </div>
+
+  <div class="counter clip" data-start="10" data-duration="16" data-track-index="6">SHIPPED // PROD</div>
+
+  <!-- 10-26s project montage -->
+  <div class="card clip" data-start="10.0" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">01 / 07</div>
+    <div class="pname">Seerlens</div>
+    <div class="pdesc">Local devtools for AI calls — inspect every model request on your machine.</div>
+    <div class="prow"><span class="chip ver">v1.0</span><span class="pstack">C# / .NET / OpenTelemetry</span></div>
+  </div>
+
+  <div class="card clip" data-start="12.2" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">02 / 07</div>
+    <div class="pname">mtop</div>
+    <div class="pdesc">htop for your local AI — Ollama, llama.cpp, LM Studio, vLLM in one TUI.</div>
+    <div class="prow"><span class="chip ver">On Homebrew</span><span class="pstack">Go</span></div>
+  </div>
+
+  <div class="card clip" data-start="14.4" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">03 / 07</div>
+    <div class="pname">AeroLens</div>
+    <div class="pdesc">Real-time flight tracker with AI delay predictions.</div>
+    <div class="prow"><span class="chip live">Live</span><span class="pstack">React 19 / ASP.NET Core 8 / SignalR</span></div>
+  </div>
+
+  <div class="card clip" data-start="16.6" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">04 / 07</div>
+    <div class="pname">Debug Dashboard</div>
+    <div class="pdesc">Telescope-style debug panel for .NET — requests, EF Core SQL, logs and exceptions at /_debug.</div>
+    <div class="prow"><span class="chip ver">v2.0</span><span class="pstack">C# / .NET / EF Core / LiteDB</span></div>
+  </div>
+
+  <div class="card clip" data-start="18.8" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">05 / 07</div>
+    <div class="pname">SimpleConfigDiff</div>
+    <div class="pdesc">Diff configs by structure, not lines.</div>
+    <div class="prow"><span class="chip live">Live</span><span class="pstack">React 19 / TS / PWA / CLI</span></div>
+  </div>
+
+  <div class="card clip" data-start="21.0" data-duration="2.2" data-track-index="7">
+    <div class="label kicker">06 / 07</div>
+    <div class="pname">.NET Tools</div>
+    <div class="pdesc">25 browser tools for everyday .NET work.</div>
+    <div class="prow"><span class="chip live">Live</span><span class="pstack">React 19 / TS / PWA</span></div>
+  </div>
+
+  <div class="card clip" data-start="23.2" data-duration="2.6" data-track-index="7">
+    <div class="label kicker">07 / 07</div>
+    <div class="pname">WoW Tools</div>
+    <div class="pdesc">M+, raid and PvP tools, powered by raider.io.</div>
+    <div class="prow"><span class="chip live">Live</span><span class="pstack">React 19 / TS</span></div>
+  </div>
+
+  <!-- 26-30s outro -->
+  <div class="outro">
+    <div class="gh clip" data-start="26.0" data-duration="4.0" data-track-index="8">github.com/eladser</div>
+    <div class="site clip" data-start="26.3" data-duration="3.7" data-track-index="9">eladser.dev</div>
+  </div>
+
+</div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+// intro
+tl.fromTo('.tag', {autoAlpha:0, y:20}, {autoAlpha:1, y:0, duration:0.6, ease:'power2.out'}, 0);
+tl.fromTo('.headline', {autoAlpha:0, y:40}, {autoAlpha:1, y:0, duration:0.8, ease:'power3.out'}, 0.4);
+tl.fromTo('.headline', {autoAlpha:1}, {autoAlpha:0, duration:0.4, ease:'power1.in'}, 2.7);
+tl.fromTo('.tag', {autoAlpha:1}, {autoAlpha:0, duration:0.4, ease:'power1.in'}, 2.7);
+
+// stats fade in staggered
+const stats = gsap.utils.toArray('.stat');
+stats.forEach((s, i) => {
+  const st = 3.0 + i * 0.4;
+  tl.fromTo(s, {autoAlpha:0, y:30}, {autoAlpha:1, y:0, duration:0.6, ease:'power2.out'}, st);
+});
+// stats fade out before montage
+tl.fromTo('.stats', {autoAlpha:1}, {autoAlpha:0, duration:0.5, ease:'power1.in'}, 9.5);
+tl.set('.stats', {autoAlpha:0}, 10.0);
+
+// seek-safe count-ups
+const yrs = {v:0};
+tl.to(yrs, {v:10, duration:1.2, ease:'power2.out', onUpdate:()=>{document.querySelector('#n_years').textContent=Math.round(yrs.v).toLocaleString()}}, 3.2);
+
+const dom = {v:0};
+tl.to(dom, {v:3, duration:1.2, ease:'power2.out', onUpdate:()=>{document.querySelector('#n_domains').textContent=Math.round(dom.v).toLocaleString()}}, 3.6);
+
+const prj = {v:0};
+tl.to(prj, {v:7, duration:1.2, ease:'power2.out', onUpdate:()=>{document.querySelector('#n_projects').textContent=Math.round(prj.v).toLocaleString()}}, 4.0);
+
+const con = {v:0};
+tl.to(con, {v:1733, duration:1.4, ease:'power2.out', onUpdate:()=>{document.querySelector('#n_contrib').textContent=Math.round(con.v).toLocaleString()}}, 4.4);
+
+// project cards: slide in, hold, slide out
+const cards = gsap.utils.toArray('.card');
+cards.forEach((c) => {
+  const ds = parseFloat(c.getAttribute('data-start'));
+  const dd = parseFloat(c.getAttribute('data-duration'));
+  tl.fromTo(c, {autoAlpha:0, x:80}, {autoAlpha:1, x:0, duration:0.55, ease:'power3.out'}, ds);
+  // no manual exit — the clip's data-duration window hides it (hard cut between cards)
+});
+
+// counter label
+tl.fromTo('.counter', {autoAlpha:0}, {autoAlpha:1, duration:0.6, ease:'power1.out'}, 10.0);
+tl.fromTo('.counter', {autoAlpha:1}, {autoAlpha:0, duration:0.5, ease:'power1.in'}, 25.5);
+tl.set('.counter', {autoAlpha:0}, 26.0);
+
+// outro
+tl.fromTo('.outro .gh', {opacity:0, y:30}, {opacity:1, y:0, duration:0.8, ease:'power3.out'}, 26.0);
+tl.fromTo('.outro .site', {opacity:0, y:20}, {opacity:1, y:0, duration:0.7, ease:'power2.out'}, 26.3);
+
+window.__timelines['proof-reel'] = tl;
+</script>
+</template>
+</body>

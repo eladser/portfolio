@@ -1,0 +1,194 @@
+<body>
+<template>
+<style>
+  #root{position:absolute;inset:0;width:1920px;height:1080px;background:#0a0a0a;overflow:hidden;font-family:'Inter',sans-serif;color:#e5e7eb;}
+
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.22em;font-size:15px;color:#8b8f96;}
+  .center{position:absolute;left:90px;right:90px;text-align:center;}
+
+  /* scene 1 — problem */
+  .p1{top:430px;font-size:78px;font-weight:600;letter-spacing:-.02em;color:#e5e7eb;}
+  .p2{top:540px;font-size:78px;font-weight:600;letter-spacing:-.02em;color:#e5e7eb;}
+  .p2 .u{position:relative;}
+  .p2 .u::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:5px;border-radius:3px;background:#FF6B6B;}
+
+  /* scene 2 — reveal */
+  .wm{top:360px;font-size:118px;font-weight:700;letter-spacing:-.04em;color:#fff;}
+  .tag{top:520px;font-size:38px;font-weight:500;color:#4ECDC4;letter-spacing:.01em;}
+  .chip{position:absolute;top:610px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:20px 30px;font-family:'JetBrains Mono',monospace;font-size:26px;}
+  .chip .k{color:#4ECDC4;}
+  .chip .cmt{color:#8b8f96;}
+
+  /* scene 3 — dashboard */
+  .dash{position:absolute;top:150px;left:90px;width:1740px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:34px 44px;}
+  .dash-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px;}
+  .dash-title{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.22em;font-size:20px;color:#e5e7eb;}
+  .spent{font-family:'JetBrains Mono',monospace;font-size:24px;color:#4ECDC4;}
+  .spent .sl{color:#8b8f96;font-size:15px;letter-spacing:.18em;text-transform:uppercase;margin-right:14px;}
+  .row{display:grid;grid-template-columns:230px 1fr 190px 170px 180px 120px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:25px;padding:18px 8px;border-top:1px solid rgba(255,255,255,0.06);}
+  .row.head{border-top:none;color:#8b8f96;font-size:16px;letter-spacing:.2em;text-transform:uppercase;padding-bottom:14px;}
+  .row .m{color:#4ECDC4;}
+  .row .pr{color:#8b8f96;}
+  .row .co{color:#e5e7eb;}
+  .row .lt{color:#e5e7eb;}
+  .row .tl{color:#e5e7eb;text-align:right;padding-right:30px;}
+
+  /* scene 4 — compare */
+  .cmp-cap{top:150px;}
+  .cmp{position:absolute;top:240px;display:flex;gap:40px;left:90px;right:90px;}
+  .panel{flex:1;border-radius:10px;padding:40px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);}
+  .panel.teal{border-color:rgba(78,205,196,0.45);box-shadow:inset 0 0 0 1px rgba(78,205,196,0.12);}
+  .panel.coral{border-color:rgba(255,107,107,0.45);box-shadow:inset 0 0 0 1px rgba(255,107,107,0.12);}
+  .pname{font-family:'JetBrains Mono',monospace;font-size:34px;margin-bottom:6px;}
+  .panel.teal .pname{color:#4ECDC4;}
+  .panel.coral .pname{color:#FF6B6B;}
+  .psub{font-size:18px;color:#8b8f96;margin-bottom:30px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;}
+  .crow{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:28px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.07);}
+  .crow .ck{color:#8b8f96;text-transform:uppercase;letter-spacing:.16em;font-size:18px;align-self:center;}
+  .crow .cv{color:#e5e7eb;}
+  .panel.teal .crow.evalr .cv{color:#4ECDC4;}
+  .panel.coral .crow.evalr .cv{color:#FF6B6B;}
+
+  /* scene 5 — eval gates */
+  .eg-cap{top:790px;font-size:34px;color:#8b8f96;font-weight:500;}
+  .gate{position:absolute;left:50%;transform:translateX(-50%);width:980px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:38px 46px;display:flex;align-items:center;justify-content:space-between;}
+  .g-pass{top:300px;border-color:rgba(78,205,196,0.4);}
+  .g-fail{top:470px;border-color:rgba(255,107,107,0.4);}
+  .g-left{display:flex;align-items:baseline;gap:26px;}
+  .g-score{font-family:'JetBrains Mono',monospace;font-size:52px;}
+  .g-name{font-family:'JetBrains Mono',monospace;font-size:22px;color:#8b8f96;letter-spacing:.1em;}
+  .g-stat{font-family:'JetBrains Mono',monospace;font-size:30px;letter-spacing:.08em;display:flex;align-items:center;gap:16px;}
+  .g-pass .g-score,.g-pass .g-stat{color:#4ECDC4;}
+  .g-fail .g-score,.g-fail .g-stat{color:#FF6B6B;}
+  .g-mark{font-size:40px;}
+
+  /* scene 6 — one dashboard */
+  .od-cap{top:840px;font-size:34px;color:#e5e7eb;font-weight:500;}
+  .od-cap b{color:#4ECDC4;font-weight:600;}
+  .langchip{position:absolute;top:330px;width:240px;text-align:center;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:34px 0;font-family:'JetBrains Mono',monospace;font-size:40px;color:#e5e7eb;}
+  .ln1{left:200px;}
+  .ln2{left:840px;}
+  .ln3{left:1480px;}
+  .otel{position:absolute;top:520px;left:50%;transform:translateX(-50%);border-radius:10px;border:1px solid rgba(78,205,196,0.5);background:rgba(78,205,196,0.06);padding:30px 56px;font-family:'JetBrains Mono',monospace;font-size:38px;color:#4ECDC4;letter-spacing:.04em;}
+
+  /* scene 7 — outro */
+  .out1{top:470px;font-family:'JetBrains Mono',monospace;font-size:58px;color:#4ECDC4;letter-spacing:.01em;}
+  .out2{top:580px;font-family:'JetBrains Mono',monospace;font-size:30px;color:#8b8f96;letter-spacing:.18em;}
+</style>
+
+<div id="root" data-composition-id="seerlens" data-width="1920" data-height="1080">
+
+  <!-- scene 1 -->
+  <div class="center p1 clip" data-start="0.3" data-duration="4.7" data-track-index="0">Your app makes LLM calls.</div>
+  <div class="center p2 clip" data-start="1.6" data-duration="3.4" data-track-index="1">You <span class="u">can't see</span> what they do.</div>
+
+  <!-- scene 2 -->
+  <div class="center wm clip" data-start="5" data-duration="5" data-track-index="0">Seerlens</div>
+  <div class="center tag clip" data-start="5.5" data-duration="4.5" data-track-index="1">local devtools for AI calls</div>
+  <div class="chip mono clip" data-start="6.2" data-duration="3.8" data-track-index="2"><span class="k">builder</span>.Services.<span class="k">AddSeerlens</span>();&nbsp;&nbsp;<span class="cmt">// one line</span></div>
+
+  <!-- scene 3 — dashboard -->
+  <div class="dash clip" data-start="10" data-duration="11.6" data-track-index="0">
+    <div class="dash-top">
+      <div class="dash-title">LLM Calls</div>
+      <div class="spent"><span class="sl">$ spent</span><span id="spent">$0.000</span></div>
+    </div>
+    <div class="row head">
+      <span>Model</span><span>Prompt</span><span>Tokens</span><span>Cost</span><span>Latency</span><span class="tl">Tools</span>
+    </div>
+  </div>
+  <div class="dash clip" data-start="10.6" data-duration="11" data-track-index="1" style="top:262px;padding:0 44px;border:none;background:none;">
+    <div class="row"><span class="m">gpt-4o</span><span class="pr">"summarize ticket…"</span><span class="co">1,204</span><span class="co">$0.011</span><span class="lt">840ms</span><span class="tl">2</span></div>
+  </div>
+  <div class="dash clip" data-start="11.1" data-duration="10.5" data-track-index="2" style="top:330px;padding:0 44px;border:none;background:none;">
+    <div class="row"><span class="m">claude-3.5</span><span class="pr">"classify intent…"</span><span class="co">512</span><span class="co">$0.004</span><span class="lt">410ms</span><span class="tl">0</span></div>
+  </div>
+  <div class="dash clip" data-start="11.6" data-duration="10" data-track-index="3" style="top:398px;padding:0 44px;border:none;background:none;">
+    <div class="row"><span class="m">gpt-4o-mini</span><span class="pr">"extract fields…"</span><span class="co">320</span><span class="co">$0.001</span><span class="lt">190ms</span><span class="tl">1</span></div>
+  </div>
+  <div class="dash clip" data-start="12.1" data-duration="9.5" data-track-index="4" style="top:466px;padding:0 44px;border:none;background:none;">
+    <div class="row"><span class="m">claude-3.5</span><span class="pr">"draft reply…"</span><span class="co">2,048</span><span class="co">$0.018</span><span class="lt">1,120ms</span><span class="tl">3</span></div>
+  </div>
+  <div class="dash clip" data-start="12.6" data-duration="9" data-track-index="5" style="top:534px;padding:0 44px;border:none;background:none;">
+    <div class="row"><span class="m">gpt-4o</span><span class="pr">"tool: search_db…"</span><span class="co">896</span><span class="co">$0.008</span><span class="lt">620ms</span><span class="tl">4</span></div>
+  </div>
+
+  <!-- scene 4 — compare -->
+  <div class="center label cmp-cap clip" data-start="22" data-duration="8" data-track-index="0">Compare models · same prompt</div>
+  <div class="cmp clip" data-start="22.5" data-duration="7.5" data-track-index="1">
+    <div class="panel teal">
+      <div class="pname">gpt-4o</div>
+      <div class="psub">"summarize this support thread"</div>
+      <div class="crow"><span class="ck">Cost</span><span class="cv">$0.011</span></div>
+      <div class="crow"><span class="ck">Latency</span><span class="cv">840ms</span></div>
+      <div class="crow"><span class="ck">Tokens</span><span class="cv">1,204</span></div>
+      <div class="crow evalr"><span class="ck">Eval score</span><span class="cv">0.91</span></div>
+    </div>
+    <div class="panel coral">
+      <div class="pname">gpt-4o-mini</div>
+      <div class="psub">"summarize this support thread"</div>
+      <div class="crow"><span class="ck">Cost</span><span class="cv">$0.001</span></div>
+      <div class="crow"><span class="ck">Latency</span><span class="cv">190ms</span></div>
+      <div class="crow"><span class="ck">Tokens</span><span class="cv">1,180</span></div>
+      <div class="crow evalr"><span class="ck">Eval score</span><span class="cv">0.79</span></div>
+    </div>
+  </div>
+
+  <!-- scene 5 — eval gates -->
+  <div class="gate g-pass clip" data-start="30" data-duration="8" data-track-index="0">
+    <div class="g-left"><span class="g-score">0.91</span><span class="g-name">summarizer.eval</span></div>
+    <div class="g-stat"><span class="g-mark">✓</span> PASS</div>
+  </div>
+  <div class="gate g-fail clip" data-start="31.5" data-duration="6.5" data-track-index="1">
+    <div class="g-left"><span class="g-score">0.78</span><span class="g-name">summarizer.eval</span></div>
+    <div class="g-stat"><span class="g-mark">✗</span> FAIL — build blocked</div>
+  </div>
+  <div class="center label eg-cap clip" data-start="30.6" data-duration="7.4" data-track-index="2">gate CI on an eval score</div>
+
+  <!-- scene 6 — one dashboard -->
+  <div class="langchip ln1 clip" data-start="38" data-duration="4" data-track-index="0">.NET</div>
+  <div class="langchip ln2 clip" data-start="38.2" data-duration="3.8" data-track-index="1">Python</div>
+  <div class="langchip ln3 clip" data-start="38.4" data-duration="3.6" data-track-index="2">JS</div>
+  <div class="otel clip" data-start="38.8" data-duration="3.2" data-track-index="3">OpenTelemetry</div>
+  <div class="center od-cap clip" data-start="39.2" data-duration="2.8" data-track-index="4">speaks <b>OpenTelemetry</b> — every language, one dashboard</div>
+
+  <!-- scene 7 — outro -->
+  <div class="center out1 clip" data-start="42" data-duration="3" data-track-index="0">github.com/eladser/seerlens</div>
+  <div class="center out2 clip" data-start="42.4" data-duration="2.6" data-track-index="1">nuget · pypi · npm</div>
+
+</div>
+
+<script>
+window.__timelines=window.__timelines||{};
+const tl=gsap.timeline({paused:true});
+const root=document.getElementById('root');
+const $=s=>root.querySelector(s);
+const all=s=>root.querySelectorAll(s);
+
+function inout(el){
+  const s=parseFloat(el.dataset.start), d=parseFloat(el.dataset.duration);
+  const fade=Math.min(0.6, d/3);
+  tl.fromTo(el,{opacity:0,y:24},{opacity:1,y:0,duration:fade,ease:'power2.out'},s);
+  tl.to(el,{opacity:0,y:-16,duration:0.45,ease:'power2.in'},s+d-0.45);
+}
+
+// generic in/out for most clips, with a few custom motions handled after
+all('.clip').forEach(inout);
+
+// scene 6 — slide chips toward the otel node (override the default y on top of fade)
+tl.fromTo($('.ln1'),{x:-120},{x:120,duration:3.4,ease:'power2.inOut'},38);
+tl.fromTo($('.ln2'),{x:0},{x:0,duration:3.4,ease:'none'},38);
+tl.fromTo($('.ln3'),{x:120},{x:-120,duration:3.4,ease:'power2.inOut'},38);
+tl.fromTo($('.otel'),{scale:0.92},{scale:1,duration:0.7,ease:'back.out(1.6)'},38.8);
+
+// scene 3 — live $ spent counter
+const spent=$('#spent');
+const o={v:0};
+tl.fromTo(o,{v:0},{v:0.042,duration:9,ease:'power1.out',
+  onUpdate:()=>{spent.textContent='$'+o.v.toFixed(3);}},11);
+
+window.__timelines["seerlens"]=tl;
+</script>
+</template>
+</body>
