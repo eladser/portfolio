@@ -62,11 +62,16 @@ export function YearTicker({ chapters, progress }) {
   const [r, g, b] = rgb;
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
+    <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+      {/* The span fills the whole layer and centres the digits inside itself, rather
+          than being a shrink-wrapped box centred by the parent. At 540px the advance
+          widths differ enough between the fallback mono and JetBrains Mono that a
+          shrink-wrapped box jumped on font swap — 0.259 of CLS from this element alone.
+          A box that is always the full container simply cannot move. */}
       <span
         aria-hidden="true"
         role="presentation"
-        className="font-mono font-bold leading-none"
+        className="font-mono font-bold leading-none absolute inset-0 flex items-center justify-center"
         style={{
           fontSize: 'clamp(280px, 38vw, 540px)',
           letterSpacing: '-0.05em',

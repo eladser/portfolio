@@ -14,11 +14,14 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
   useEffect(() => {
     if (!ref.current) return;
     const scrollerEl = (scroller && scroller.current) || undefined;
-    // Defer creation past the wrapper's 300ms mount animation. If ScrollTrigger measures
-    // while the parent motion.div is still transforming, the first scroll bounces every
-    // tick as ScrollTrigger auto-corrects against the stale layout.
+    // Create on the next frame, not after 400ms. The old defer existed because the home
+    // wrapper animated a transform on mount and ScrollTrigger measured against stale
+    // layout (first scroll bounced every tick). That wrapper animates opacity only now,
+    // so the wait is obsolete — and it was actively harmful: `pin` restructures the DOM
+    // (pin-spacer + transform), so firing it 400ms in landed inside the CLS window and
+    // shifted the hero by ~0.3 on any run where it beat the measurement cutoff.
     let st;
-    const initTimer = setTimeout(() => {
+    const initTimer = requestAnimationFrame(() => {
       st = ScrollTrigger.create({
         trigger: ref.current,
         scroller: scrollerEl,               // tie to the SPA's home-view scroll container
@@ -36,14 +39,14 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
         },
       });
       stRef.current = st;
-    }, 400);
+    });
     // WEM lesson: layout shifts after fonts/images load → ScrollTrigger caches wrong start.
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener('load', onLoad);
     const t = setTimeout(() => ScrollTrigger.refresh(), 1200);
     return () => {
       window.removeEventListener('load', onLoad);
-      clearTimeout(initTimer);
+      cancelAnimationFrame(initTimer);
       clearTimeout(t);
       if (st) st.kill();
     };
