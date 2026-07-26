@@ -1,4 +1,4 @@
-// Three career chapters — used by the 3D hero. Numbers/dates/stacks are real (see CV).
+// Three career chapters — used by the scroll hero. Numbers/dates/stacks are real (see CV).
 // Code snippets are the *kind of code* he actually wrote in each chapter, not invented.
 
 export const CAREER = [
@@ -10,7 +10,8 @@ export const CAREER = [
     role: 'simulator instructor stations',
     detail: 'instructor consoles, WPF apps',
     stack: ['C#', 'C++', 'Java', 'WPF', 'WCF'],
-    model: '/assets/models/elbit-station.glb',
+    image: '/assets/hero/elbit.webp',
+    imageAlt: 'Simulator instructor console with three telemetry displays, joystick and throttle quadrant',
     snippet: [
       'public static readonly DependencyProperty',
       '    StateProperty = DependencyProperty.Register(',
@@ -28,7 +29,8 @@ export const CAREER = [
     role: 'cleanroom fab tools',
     detail: 'worldwide field support',
     stack: ['C#', '.NET', 'Blazor', 'Angular', 'Python', 'SQL Server', 'Mongo'],
-    model: '/assets/models/kla-tool.glb',
+    image: '/assets/hero/kla.webp',
+    imageAlt: 'Semiconductor cleanroom wafer-inspection tool with glass viewing port and robotic handler',
     snippet: [
       '@inject IHubContext<ToolHub> hub',
       '',
@@ -42,10 +44,11 @@ export const CAREER = [
     org: 'WEM ENERGY',
     years: '2025–present',
     yearStart: 2025,
-    role: 'Lead Software Engineer',
+    role: 'VP R&D',
     detail: 'leads 2 engineers · LLM integration work',
     stack: ['C# microservices', 'React/TS', 'PostgreSQL', 'Terraform', 'AWS', 'Claude/Gemini'],
-    model: '/assets/models/wem-bess.glb',
+    image: '/assets/hero/wem.webp',
+    imageAlt: 'Grid-scale battery storage cabinet with ventilation grilles and monitoring display',
     snippet: [
       'await using var tx = await db.Database.BeginTransactionAsync(ct);',
       '',

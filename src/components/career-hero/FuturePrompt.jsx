@@ -2,8 +2,10 @@
 // One question, one address. No marketing.
 
 export function FuturePrompt({ progress }) {
-  if (progress < 0.90) return null;
-  const o = Math.min(1, (progress - 0.90) / 0.08);   // 0 at 0.90, 1 at 0.98+
+  // Starts only after the chapter HUD has fully faded (it's gone by 0.93), so the
+  // two never render on top of each other.
+  if (progress < 0.93) return null;
+  const o = Math.min(1, (progress - 0.93) / 0.06);   // 0 at 0.93, 1 at 0.99+
 
   return (
     <div

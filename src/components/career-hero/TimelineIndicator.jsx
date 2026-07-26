@@ -34,7 +34,10 @@ export function TimelineIndicator({ chapters, progress }) {
   ];
 
   return (
-    <div className="absolute top-12 right-12 max-w-[24rem] pointer-events-none select-none">
+    // Fixed width, not max-w: an absolutely-positioned box shrink-wraps to its widest
+    // child, so the dot spacing (and the year labels under them) used to collapse
+    // whenever the caption below got shorter. Deterministic width keeps them apart.
+    <div className="absolute top-12 right-12 w-[19rem] pointer-events-none select-none">
       <div className="font-mono text-[10px] tracking-[0.32em] text-white/45 mb-4 text-right">
         TIMELINE
       </div>

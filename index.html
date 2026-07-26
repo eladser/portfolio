@@ -57,9 +57,8 @@
 
     <!-- Preload critical image for LCP -->
     <link rel="preload" as="image" href="./profile.jpg" fetchpriority="high" />
-    <!-- Preload hero HDRI + first GLB so the 3D scene can render as soon as the JS lands -->
-    <link rel="preload" as="fetch" type="application/octet-stream" href="./assets/hdri/studio.hdr" crossorigin />
-    <link rel="preload" as="fetch" type="model/gltf-binary" href="./assets/models/elbit-station.glb" crossorigin />
+    <!-- Preload the first hero artifact so chapter 01 paints with the JS, not after it -->
+    <link rel="preload" as="image" type="image/webp" href="./assets/hero/elbit.webp" fetchpriority="high" />
     <link rel="dns-prefetch" href="https://api.github.com" />
 
     <!-- Fonts -->

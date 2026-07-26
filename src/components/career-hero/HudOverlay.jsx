@@ -9,6 +9,10 @@ function opacityFor(index, p) {
   const T1A = 0.30, T1B = 0.50;
   const T2A = 0.65, T2B = 0.85;
   if (index === 0) {
+    // Fade in only after the intro header has cleared (it's gone by ~0.14). Both used
+    // to sit at full opacity on landing, stacking the intro copy over "CHAPTER 01".
+    if (p < 0.10) return 0;
+    if (p < 0.18) return smoothstep((p - 0.10) / 0.08);
     if (p < T1A) return 1;
     if (p > T1B) return 0;
     return 1 - smoothstep((p - T1A) / (T1B - T1A));
@@ -22,9 +26,10 @@ function opacityFor(index, p) {
   }
   if (p < T2A) return 0;
   if (p < T2B) return smoothstep((p - T2A) / (T2B - T2A));
-  if (p < 0.90) return 1;
-  // tail fade to hand off to the FuturePrompt (fully gone by p=0.95)
-  return 1 - smoothstep(Math.min(1, (p - 0.90) / 0.05));
+  if (p < 0.88) return 1;
+  // Tail fade hands off to the FuturePrompt. Must finish BEFORE the prompt starts
+  // (0.93) or both render at partial opacity and the text stacks unreadably.
+  return 1 - smoothstep(Math.min(1, (p - 0.88) / 0.05));
 }
 
 export function HudOverlay({ chapter, index, progress }) {
