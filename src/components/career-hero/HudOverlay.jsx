@@ -35,28 +35,28 @@ function opacityFor(index, p) {
 export function HudOverlay({ chapter, index, progress }) {
   const o = useMemo(() => opacityFor(index, progress), [index, progress]);
   const yPx = (1 - o) * 14;
+  // Mobile: sit low in the frame so the artifact owns the upper half instead of being
+  // covered by the chapter text. Desktop keeps the centred left column.
   return (
     <div
-      className="absolute left-12 top-1/2 -translate-y-1/2 max-w-lg font-mono pointer-events-none select-none"
-      style={{
-        opacity: o,
-        transform: `translate(0, calc(-50% + ${yPx}px))`,
-        willChange: 'opacity, transform',
-      }}
+      className="absolute left-5 right-5 bottom-28 sm:left-12 sm:right-auto sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 max-w-lg font-mono pointer-events-none select-none"
       aria-hidden={o < 0.01}
     >
+      {/* Positioning lives on the wrapper (incl. the responsive -50% centring); the
+          animated offset lives here, so an inline transform can't clobber it. */}
+      <div style={{ opacity: o, transform: `translateY(${yPx}px)`, willChange: 'opacity, transform' }}>
       {/* Accent rail */}
       <div className="flex items-start gap-5">
-        <div className="w-px self-stretch min-h-[180px] bg-gradient-to-b from-[#4ECDC4] via-[#4ECDC4]/40 to-transparent mt-2" aria-hidden="true" />
+        <div className="w-px self-stretch min-h-[110px] sm:min-h-[180px] bg-gradient-to-b from-[#4ECDC4] via-[#4ECDC4]/40 to-transparent mt-2" aria-hidden="true" />
         <div>
-          <div className="text-[#4ECDC4] text-[10px] tracking-[0.32em] mb-3">CHAPTER {String(index + 1).padStart(2, '0')}</div>
-          <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] mb-4">
+          <div className="text-[#4ECDC4] text-[10px] tracking-[0.32em] mb-2 sm:mb-3">CHAPTER {String(index + 1).padStart(2, '0')}</div>
+          <h2 className="text-white text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] mb-2 sm:mb-4">
             {chapter.org}
           </h2>
-          <div className="text-white/85 text-base md:text-lg mb-1 tracking-wide">{chapter.years}</div>
-          <div className="text-white/90 text-lg md:text-xl mb-2">{chapter.role}</div>
-          <div className="text-white/55 text-sm mb-6 italic">{chapter.detail}</div>
-          <div className="flex flex-wrap gap-x-2 gap-y-1.5 text-white/75 text-xs">
+          <div className="text-white/85 text-sm sm:text-base md:text-lg mb-1 tracking-wide">{chapter.years}</div>
+          <div className="text-white/90 text-base sm:text-lg md:text-xl mb-1 sm:mb-2">{chapter.role}</div>
+          <div className="text-white/55 text-xs sm:text-sm mb-3 sm:mb-6 italic">{chapter.detail}</div>
+          <div className="flex flex-wrap gap-x-2 gap-y-1.5 text-white/75 text-[10px] sm:text-xs">
             {chapter.stack.map((s) => (
               <span key={s} className="px-2 py-0.5 rounded-sm bg-white/[0.04] border border-white/[0.10]">
                 {s}
@@ -64,6 +64,7 @@ export function HudOverlay({ chapter, index, progress }) {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

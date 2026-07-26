@@ -66,10 +66,10 @@ export function CareerHero3D({ scroller }) {
         {/* Framing — sets the context before the visitor sees an artifact + 2014 and is
             confused. Fades out as scroll progresses; the chapter HUD takes over. */}
         <header
-          className="absolute top-12 left-12 max-w-2xl"
+          className="absolute top-16 left-5 right-5 sm:top-12 sm:left-12 sm:right-auto max-w-2xl"
           style={{ opacity: Math.max(0, 1 - progress * 7) }}
         >
-          <div className="flex items-center gap-5 mb-5">
+          <div className="flex items-center gap-4 sm:gap-5 mb-4 sm:mb-5">
             <picture>
               <source
                 type="image/webp"
@@ -87,22 +87,22 @@ export function CareerHero3D({ scroller }) {
               />
             </picture>
             <div>
-              <div className="font-mono text-[10px] tracking-[0.32em] text-[#4ECDC4] mb-2">
+              <div className="font-mono text-[9px] sm:text-[10px] tracking-[0.28em] sm:tracking-[0.32em] text-[#4ECDC4] mb-2">
                 BACKEND / FULL-STACK ENGINEER · HAIFA, IL
               </div>
-              <h1 className="text-white text-4xl md:text-6xl font-bold tracking-tight leading-[1.02]">
+              <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-[1.02]">
                 Elad Sertshuk
               </h1>
             </div>
           </div>
-          <p className="text-white/70 text-base md:text-xl leading-relaxed mb-6">
+          <p className="text-white/70 text-sm sm:text-base md:text-xl leading-relaxed mb-5 sm:mb-6">
             Backend C# for about ten years now. Three jobs so far:
             {' '}<span className="text-[#4ECDC4]/90">Elbit</span> on defense simulators,
             {' '}<span className="text-[#4ECDC4]/90">KLA</span> on semiconductor fab tools (five years),
             {' '}and now <span className="text-[#4ECDC4]/90">WEM</span> on grid-scale energy,
             with a fair bit of <span className="text-[#FF6B6B]/90">LLM integration</span> mixed in lately. Also shipping <a href="https://github.com/eladser/seerlens" target="_blank" rel="noopener noreferrer" className="text-[#FF6B6B]/90 underline decoration-[#FF6B6B]/30 underline-offset-4 hover:decoration-[#FF6B6B] transition-colors pointer-events-auto">Seerlens</a> on the side, local devtools for those AI calls.
           </p>
-          <div className="font-mono text-xs tracking-[0.24em] text-white/55 flex items-center gap-5 pointer-events-auto">
+          <div className="font-mono text-[10px] sm:text-xs tracking-[0.18em] sm:tracking-[0.24em] text-white/55 flex flex-wrap items-center gap-x-4 gap-y-2 sm:gap-5 pointer-events-auto">
             <div className="flex items-center gap-3">
               <span className="text-[#4ECDC4]">↓</span>
               <span>SCROLL</span>

@@ -38,7 +38,7 @@ export function TerminalStream({ chapters, progress }) {
 
   return (
     <div
-      className="absolute bottom-10 right-10 max-w-lg font-mono text-xs leading-relaxed text-white/75 pointer-events-none select-none whitespace-pre"
+      className="hidden lg:block absolute bottom-10 right-10 max-w-lg font-mono text-xs leading-relaxed text-white/75 pointer-events-none select-none whitespace-pre"
       style={{ minHeight: '6rem', opacity: tailFade }}
     >
       <span className="text-[#4ECDC4]/70">{'>'} </span>

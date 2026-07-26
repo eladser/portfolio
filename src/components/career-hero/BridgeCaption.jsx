@@ -28,7 +28,7 @@ export function BridgeCaption({ progress }) {
 
   return (
     <div
-      className="absolute bottom-32 left-1/2 -translate-x-1/2 max-w-2xl text-center pointer-events-none"
+      className="absolute bottom-[60%] sm:bottom-32 left-1/2 -translate-x-1/2 w-[88%] max-w-2xl text-center pointer-events-none"
       style={{ opacity: bridge.opacity }}
       aria-hidden="true"
     >
