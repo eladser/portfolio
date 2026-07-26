@@ -29,7 +29,7 @@
 
   body {
     @apply antialiased bg-[#0a0a0a] text-white;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow: hidden;
   }
 

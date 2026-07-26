@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        // 'Inter Fallback' is a metric-matched Arial (see src/fonts.css) so the swap
+        // from fallback to Inter doesn't reflow text.
+        sans: ['Inter', 'Inter Fallback', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         mono: ['JetBrains Mono', 'SF Mono', 'monospace'],
       },
     },
