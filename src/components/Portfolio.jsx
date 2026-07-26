@@ -552,7 +552,12 @@ const Portfolio = () => {
               className="relative h-full w-full overflow-y-auto overflow-x-hidden"
             >
               {enable3D ? (
-                <Suspense fallback={<CareerHeroStatic />}>
+                /* The fallback must reserve exactly the hero's footprint. It used to be
+                   <CareerHeroStatic/> — a tall text list — so whenever the lazy chunk
+                   landed after first paint the swap shifted the whole page (a
+                   reproducible 0.267 CLS). The static version is still the real
+                   reduced-motion experience below. */
+                <Suspense fallback={<div className="w-full bg-[#0a0a0a]" style={{ minHeight: '100dvh' }} aria-hidden="true" />}>
                   <CareerHero3D scroller={homeScrollRef} />
                 </Suspense>
               ) : (

@@ -47,13 +47,8 @@
     <link rel="alternate" type="application/rss+xml" title="Elad Sertshuk - Developer Updates" href="./rss.xml" />
 
     <!-- DNS Prefetch for performance -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <link rel="dns-prefetch" href="https://api.fontshare.com" />
 
     <!-- Preconnect for critical origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Preload critical image for LCP -->
     <link rel="preload" as="image" href="./profile.jpg" fetchpriority="high" />
@@ -62,8 +57,12 @@
     <link rel="dns-prefetch" href="https://api.github.com" />
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" />
+    <!-- Fonts are self-hosted (see src/fonts.css). Preload the two faces that paint the
+         hero so the type is present at first paint — the Google-hosted swap was
+         reflowing the hero and driving CLS as high as 0.267. -->
+    <link rel="preload" as="font" type="font/woff2" href="./fonts/inter-700-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="./fonts/jetbrains-mono-400-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="./fonts/jetbrains-mono-700-latin.woff2" crossorigin />
 
     <!-- Structured Data - Person Schema -->
     <script type="application/ld+json">
