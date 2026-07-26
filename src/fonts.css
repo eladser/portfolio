@@ -127,3 +127,16 @@
   src: url(/fonts/jetbrains-mono-600-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* Metric-matched fallbacks. Preloading gets the real faces in before paint on a fast
+   link, but on a slow one the fallback still paints first — and Arial's metrics differ
+   enough from Inter that the swap reflowed the hero copy. These overrides make the
+   fallback occupy the same space, so the swap is invisible to layout. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.12%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
