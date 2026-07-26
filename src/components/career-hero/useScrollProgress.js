@@ -28,7 +28,9 @@ export function useScrollProgress(ref, { distance = 2400, scroller } = {}) {
         start: 'top top',
         end: `+=${distance}`,
         pin: true,
-        pinSpacing: true,
+        // The hero shell already reserves `distance` of page height, so ScrollTrigger
+        // must NOT add its own spacer — inserting one after first paint is a layout shift.
+        pinSpacing: false,
         pinType: 'transform',               // explicit — required for non-window scrollers
         anticipatePin: 1,                   // avoid the engagement jump on first pin
         invalidateOnRefresh: true,          // re-measure on refresh, not just on first init

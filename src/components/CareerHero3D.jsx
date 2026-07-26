@@ -18,19 +18,28 @@ import { BridgeCaption } from './career-hero/BridgeCaption';
 import { FuturePrompt } from './career-hero/FuturePrompt';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
+// How far you scroll through the pinned hero. Also reserved as real page height below,
+// so ScrollTrigger's pin doesn't have to insert a spacer after first paint.
+const PIN_DISTANCE = 2400;
+
 export function CareerHero3D({ scroller }) {
   const containerRef = useRef(null);
-  const progress = useScrollProgress(containerRef, { distance: 2400, scroller });
+  const progress = useScrollProgress(containerRef, { distance: PIN_DISTANCE, scroller });
   // The first artifact is the only one that gates the "ready" state — the other two
   // are far enough down the scroll that they stream in long before they're needed.
   const [ready, setReady] = useState(false);
   const onFirstLoad = useCallback(() => setReady(true), []);
 
   return (
+    // Outer shell reserves the pin's scroll distance from first paint. With
+    // pinSpacing:false, ScrollTrigger then only switches the section to fixed/transform
+    // and never touches document flow — on a real network the hero chunk mounts after
+    // first paint, so a spacer inserted at that moment registered as a ~0.3 CLS.
+    <div style={{ height: `calc(100dvh + ${PIN_DISTANCE}px)` }}>
     <section
       ref={containerRef}
       className="relative w-full overflow-hidden bg-[#0a0a0a]"
-      style={{ minHeight: '100dvh' }}
+      style={{ height: '100dvh' }}
       aria-label="Three career chapters: defense, semiconductor, energy"
     >
       {/* Artwork layer (z:1) — behind the HUD */}
@@ -150,6 +159,7 @@ export function CareerHero3D({ scroller }) {
         </div>
       </div>
     </section>
+    </div>
   );
 }
 
