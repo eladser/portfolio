@@ -589,7 +589,7 @@ const Portfolio = () => {
                     elad.ser@gmail.com
                   </a>
                   <span aria-hidden="true">&middot;</span>
-                  <span>react + vite + r3f</span>
+                  <span>react + vite + gsap</span>
                 </div>
               </footer>
           </m.div>
@@ -604,7 +604,7 @@ const Portfolio = () => {
             transition={{ duration: 0.3 }}
             className="relative h-full w-full overflow-auto"
           >
-            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 py-12 sm:py-24">
+            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 pt-12 sm:pt-24 pb-32 sm:pb-40">
               <div className="max-w-5xl w-full">
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
@@ -763,7 +763,7 @@ app.Run();`
             transition={{ duration: 0.3 }}
             className="relative h-full w-full overflow-auto"
           >
-            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 py-12 sm:py-24">
+            <div className="min-h-full flex items-center justify-center px-4 sm:px-8 pt-12 sm:pt-24 pb-32 sm:pb-40">
               <div className="max-w-2xl w-full">
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
