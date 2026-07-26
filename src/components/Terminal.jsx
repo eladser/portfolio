@@ -59,11 +59,11 @@ const Terminal = ({ isDark = true, commands = {}, prompt = 'elad@portfolio:~$', 
 ║         ELAD SERTSHUK - .NET DEVELOPER     ║
 ╚════════════════════════════════════════════╝
 
-Full-stack developer specializing in:
-  • .NET 8 / ASP.NET Core
-  • SignalR (Real-time applications)
+Backend C# for about ten years:
+  • .NET 8 / ASP.NET Core / EF Core
+  • LLM integration (Claude, Gemini, MCP)
   • React / TypeScript
-  • Azure / AWS / Docker
+  • PostgreSQL / Terraform / AWS
 
 Location: Israel
 Status:   Available for hire
@@ -87,16 +87,16 @@ Tools:       Git, Vite, Visual Studio, VS Code
 ┌─────────────────────────────────────────────┐
 │ DEBUG DASHBOARD                              │
 ├─────────────────────────────────────────────┤
-│ Real-time HTTP traffic monitoring for .NET  │
-│ Technologies: C#, SignalR, ASP.NET Core     │
+│ Telescope-style debug panel for .NET        │
+│ Technologies: C#, EF Core, LiteDB           │
 │ GitHub: github.com/eladser/AspNetDebugDashboard │
 └─────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────┐
 │ .NET TOOLS                                   │
 ├─────────────────────────────────────────────┤
-│ Utility functions for .NET development      │
-│ Technologies: C#, NuGet                     │
+│ 25 browser tools for .NET work              │
+│ Technologies: React, TypeScript             │
 │ GitHub: github.com/eladser/.net-tools       │
 └─────────────────────────────────────────────┘
 `,

@@ -833,8 +833,8 @@ app.Run();`
                       Currently
                     </h3>
                     <p className="leading-relaxed text-gray-300 text-sm">
-                      Working on SignalR-based tooling. Maintaining debug middleware.
-                      Open to new opportunities.
+                      Leading R&amp;D at WEM on grid-scale battery dispatch. Building Seerlens
+                      on the side, local devtools for AI calls. Open to new opportunities.
                     </p>
                   </m.div>
 
