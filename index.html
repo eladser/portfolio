@@ -260,19 +260,8 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q92S02RPVS"></script>
-    <script src="./analytics.js"></script>
-
-    <!-- Plausible Analytics - Alternative privacy-friendly option -->
-    <!--
-      To use Plausible instead of Google Analytics:
-      1. Comment out Google Analytics above
-      2. Sign up at https://plausible.io
-      3. Add your site: eladser.github.io
-      4. Uncomment the script below
-      5. Replace 'yourdomain.com' with 'eladser.github.io'
-    -->
-    <!-- <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script> -->
+    <!-- Google Analytics — analytics.js injects gtag.js itself once the page is idle,
+         so the 163 KB bundle stays out of the initial load. -->
+    <script defer src="./analytics.js"></script>
   </body>
 </html>

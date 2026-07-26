@@ -12,7 +12,6 @@ const WINDOWS = [
   { es: 0.65, ss: 0.85, se: 1.00, ee: 1.00 },  // WEM — anchored at the end
 ];
 
-const BASE_X     = 6;     // vw — sit right of centre so the left HUD column stays clear
 const X_DRIFT    = 13;    // % of viewport width — small lateral drift, depth carries the move
 const SCALE_FROM = 0.42;  // entering starts this fraction of full size (far away)
 const SCALE_EXIT = 1.32;  // exiting grows as it passes the camera
@@ -49,7 +48,7 @@ export function CareerArtifact2D({ index, src, alt, progress, onLoad }) {
 
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      className="absolute inset-x-0 top-[34%] bottom-auto sm:inset-0 sm:top-0 flex items-center justify-center pointer-events-none sm:translate-x-[6vw]"
       style={{ perspective: '1400px' }}
       aria-hidden="true"
     >
@@ -62,10 +61,10 @@ export function CareerArtifact2D({ index, src, alt, progress, onLoad }) {
         fetchPriority={index === 0 ? 'high' : 'low'}
         loading="eager"
         onLoad={onLoad}
-        className="h-[86vh] max-h-[760px] w-auto select-none"
+        className="h-[34vh] sm:h-[86vh] max-h-[300px] sm:max-h-[760px] w-auto select-none"
         style={{
           opacity: pose.o,
-          transform: `translate3d(${BASE_X + pose.x}vw, 0, 0) rotateY(${pose.ry}deg) rotateX(${pose.rx}deg) scale(${pose.s})`,
+          transform: `translate3d(${pose.x}vw, 0, 0) rotateY(${pose.ry}deg) rotateX(${pose.rx}deg) scale(${pose.s})`,
           // Feather the square frame into the page so no image edge is visible
           maskImage: 'radial-gradient(ellipse 62% 62% at 50% 50%, #000 58%, transparent 92%)',
           WebkitMaskImage: 'radial-gradient(ellipse 62% 62% at 50% 50%, #000 58%, transparent 92%)',
