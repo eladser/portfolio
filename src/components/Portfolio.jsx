@@ -7,6 +7,7 @@ const CareerHero3D = lazy(() => import('./CareerHero3D'));
 import { PROJECTS } from '../data/projects';
 import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
 import { ProjectCard } from './showcase/ProjectCard';
+import { useHideOnScroll } from '../hooks/useHideOnScroll';
 import GitHubActivity from './GitHubActivity';
 import GitHubHeatmap from './GitHubHeatmap';
 import { ScrambleText } from './textfx';
@@ -19,17 +20,6 @@ import { useHoldKey } from '../hooks/useHoldKey';
 import { useFastScrollDetector } from '../hooks/useFastScrollDetector';
 import { ManifestoOverlay } from './easter-eggs/ManifestoOverlay';
 import { VerboseOverlay } from './easter-eggs/VerboseOverlay';
-
-const asciiArt = `+----------------------------------+
-|  public class Developer          |
-|  {                               |
-|      string Name = "Elad";       |
-|      string Focus = ".NET";      |
-|                                  |
-|      void Build() =>             |
-|          Tools.ThatHelp();       |
-|  }                               |
-+----------------------------------+`;
 
 const TypingGame = ({ isDark }) => {
   const [gameState, setGameState] = useState('idle');
@@ -309,6 +299,7 @@ const Portfolio = () => {
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
   const homeScrollRef = useRef(null);
+  const navShown = useHideOnScroll();
   const consoleRef = useRef(null);
   const consoleCloseButtonRef = useRef(null);
   const consoleTriggerRef = useRef(null);
@@ -500,13 +491,24 @@ const Portfolio = () => {
         )}
       </AnimatePresence>
 
-      <nav id="main-nav" role="navigation" aria-label="Main navigation" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+      {/* Hides on scroll-down. It's fixed over three scrolling views, so no amount of
+          bottom padding stops content passing under it — it was smearing the stack
+          chart and the project cards. Also opaque now instead of bg-white/10, which
+          let text read straight through the pill. */}
+      <nav
+        id="main-nav"
+        role="navigation"
+        aria-label="Main navigation"
+        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-[opacity,transform] duration-300 ease-out ${
+          navShown ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+        }`}
+      >
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className={`flex items-center gap-1 p-1.5 rounded-2xl backdrop-blur-xl ${
-            isDark ? 'bg-white/10 border border-white/10' : 'bg-black/10 border border-black/10'
+            isDark ? 'bg-[#111]/90 border border-white/10' : 'bg-white/90 border border-black/10'
           }`}
         >
           {navItems.map((item) => (
@@ -813,51 +815,41 @@ app.Run();`
                   </p>
                 </m.div>
 
+                {/* Hairlines and a labelled column, same as the showcase. These were two
+                    rounded cards above an ASCII-art class declaration, which read like a
+                    2015 GitHub README next to everything else on the site. */}
                 <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15 }}
-                  className="mt-8"
+                  transition={{ delay: 0.2 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mt-10 pt-8 border-t border-white/10"
                 >
-                  <pre className="font-mono text-xs text-[#4ECDC4]/60 leading-tight select-none overflow-x-auto">
-                    {asciiArt}
-                  </pre>
-                </m.div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 sm:mt-10">
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="p-4 sm:p-6 rounded-xl border bg-zinc-900 border-white/10"
-                  >
-                    <h3 className="text-sm font-medium mb-3 sm:mb-4 text-zinc-300">
+                  <div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#4ECDC4] mb-3">
                       Currently
-                    </h3>
+                    </div>
                     <p className="leading-relaxed text-gray-300 text-sm">
                       Leading R&amp;D at WEM on grid-scale battery dispatch. Building Seerlens
                       on the side, local devtools for AI calls. Open to new opportunities.
                     </p>
-                  </m.div>
+                  </div>
 
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.25 }}
-                    className="p-4 sm:p-6 rounded-xl border bg-zinc-900 border-white/10"
-                  >
-                    <h3 className="text-sm font-medium mb-3 sm:mb-4 text-zinc-300">
+                  <div className="sm:border-l sm:border-white/10 sm:pl-12">
+                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#4ECDC4] mb-3">
                       Tools
-                    </h3>
-                    <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-300">
-                      <span className="px-2 py-1 rounded bg-white/5">Rider</span>
-                      <span className="px-2 py-1 rounded bg-white/5">VS Code</span>
-                      <span className="px-2 py-1 rounded bg-white/5">DataGrip</span>
-                      <span className="px-2 py-1 rounded bg-white/5">Windows Terminal</span>
-                      <span className="px-2 py-1 rounded bg-white/5">Git</span>
                     </div>
-                  </m.div>
-                </div>
+                    {/* Separator trails the word rather than leading the next one, so a
+                        wrap can't start a line with a stray dot. */}
+                    <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs font-mono text-zinc-400">
+                      {['Rider', 'VS Code', 'DataGrip', 'Windows Terminal', 'Git'].map((t, i, all) => (
+                        <span key={t}>
+                          {t}
+                          {i < all.length - 1 && <span className="text-zinc-700 ml-3" aria-hidden="true">·</span>}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </m.div>
 
                 <div className="space-y-6 mt-10">
                   <m.div

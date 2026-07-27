@@ -21,7 +21,9 @@ export const PROJECTS = [
     },
     githubRepo: 'eladser/seerlens',
     fallbackStars: 0,
-    media: { type: 'gif', src: 'seerlens-demo.gif' },
+    // Was a capture of the evals tab with nothing in it ("No runs yet for this set").
+    // This one is the trace view with real traffic: agent trace, MCP tool spans, costs.
+    media: { type: 'image', src: 'seerlens-trace.webp' },
     accent: 'teal',
   },
   {
