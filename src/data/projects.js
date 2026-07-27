@@ -21,9 +21,10 @@ export const PROJECTS = [
     },
     githubRepo: 'eladser/seerlens',
     fallbackStars: 0,
-    // Was a capture of the evals tab with nothing in it ("No runs yet for this set").
-    // This one is the trace view with real traffic: agent trace, MCP tool spans, costs.
-    media: { type: 'image', src: 'seerlens-trace.webp' },
+    // Was a still of the evals tab with nothing in it ("No runs yet for this set"), then
+    // a still of the trace view. A waterfall's whole point is what happened when, which a
+    // still can't show — so it replays instead.
+    media: { type: 'trace', caption: 'one real trace, replayed at its actual timings' },
     accent: 'teal',
   },
   {
@@ -40,7 +41,7 @@ export const PROJECTS = [
     },
     githubRepo: 'eladser/mtop',
     fallbackStars: 0,
-    media: { type: 'replay' },
+    media: { type: 'replay', caption: 'a session from my machine, replayed. not a video' },
     accent: 'emerald',
   },
   {

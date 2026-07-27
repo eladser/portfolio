@@ -1,7 +1,7 @@
 // Closing beat. After WEM settles, the 4th "chapter" — what's next — fades up.
 // One question, one address. No marketing.
 
-export function FuturePrompt({ progress }) {
+export function FuturePrompt({ progress, onNext }) {
   // Starts only after the chapter HUD has fully faded (it's gone by 0.93), so the
   // two never render on top of each other.
   if (progress < 0.93) return null;
@@ -28,6 +28,19 @@ export function FuturePrompt({ progress }) {
       >
         elad.ser@gmail.com
       </a>
+
+      {/* The hero used to stop dead here, at the point a visitor is most engaged and
+          has seen none of the actual work. */}
+      {onNext && (
+        <button
+          type="button"
+          onClick={onNext}
+          className="group mt-12 flex flex-col items-center gap-2 font-mono text-xs tracking-[0.24em] text-white/45 hover:text-[#4ECDC4] pointer-events-auto transition-colors"
+        >
+          <span>OR SEE WHAT I'VE BUILT</span>
+          <span className="text-base transition-transform group-hover:translate-y-0.5" aria-hidden="true">↓</span>
+        </button>
+      )}
       <div className="mt-6 flex items-center gap-5 font-mono text-xs text-white/45 tracking-wider">
         <a
           href="https://github.com/eladser"

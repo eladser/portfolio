@@ -44,7 +44,7 @@
     <link rel="manifest" href="./manifest.json" />
 
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title="Elad Sertshuk - Developer Updates" href="./rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Elad Sertshuk — Writing" href="./rss.xml" />
 
     <!-- DNS Prefetch for performance -->
 
@@ -229,6 +229,26 @@
     }
     </script>
 
+    <!-- Structured Data - the writing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "LiteDB will let you put [BsonId] on the wrong property",
+      "description": "LiteDB doesn't warn you when [BsonId] lands on a property that isn't the id. It builds a phantom unique index instead, every document indexes as null, and the second insert dies on a key you never wrote.",
+      "datePublished": "2026-07-27",
+      "url": "https://eladser.dev/#writing",
+      "mainEntityOfPage": "https://eladser.dev/#writing",
+      "author": {
+        "@type": "Person",
+        "name": "Elad Sertshuk",
+        "url": "https://eladser.dev/"
+      },
+      "keywords": "LiteDB, BsonId, ObjectId, C#, .NET, unique index, NoSQL",
+      "articleSection": ".NET"
+    }
+    </script>
+
     <!-- Structured Data - BreadcrumbList Schema for SPA Navigation -->
     <script type="application/ld+json">
     {
@@ -250,6 +270,12 @@
         {
           "@type": "ListItem",
           "position": 3,
+          "name": "Writing",
+          "item": "https://eladser.dev/#writing"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
           "name": "About",
           "item": "https://eladser.dev/#about"
         }

@@ -8,7 +8,7 @@
 // ~100 KB each, choreographed with the same depth-tunnel motion. 296 KB total.
 
 import { useRef, useState, useCallback } from 'react';
-import { CAREER } from '../data/career';
+import { CAREER, HERO_PIN_DISTANCE } from '../data/career';
 import { CareerArtifact2D } from './career-hero/CareerArtifact2D';
 import { HudOverlay } from './career-hero/HudOverlay';
 import { TerminalStream } from './career-hero/TerminalStream';
@@ -18,11 +18,11 @@ import { BridgeCaption } from './career-hero/BridgeCaption';
 import { FuturePrompt } from './career-hero/FuturePrompt';
 import { useScrollProgress } from './career-hero/useScrollProgress';
 
-// How far you scroll through the pinned hero. Also reserved as real page height below,
-// so ScrollTrigger's pin doesn't have to insert a spacer after first paint.
-const PIN_DISTANCE = 2400;
+// Also reserved as real page height below, so ScrollTrigger's pin doesn't have to
+// insert a spacer after first paint.
+const PIN_DISTANCE = HERO_PIN_DISTANCE;
 
-export function CareerHero3D({ scroller }) {
+export function CareerHero3D({ scroller, onNext }) {
   const containerRef = useRef(null);
   const progress = useScrollProgress(containerRef, { distance: PIN_DISTANCE, scroller });
   // The first artifact is the only one that gates the "ready" state — the other two
@@ -148,7 +148,7 @@ export function CareerHero3D({ scroller }) {
         ))}
         <TerminalStream chapters={CAREER} progress={progress} />
         <BridgeCaption progress={progress} />
-        <FuturePrompt progress={progress} />
+        <FuturePrompt progress={progress} onNext={onNext} />
 
         {/* Scroll hint, fades out after a bit of scroll */}
         <div
