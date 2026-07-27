@@ -8,6 +8,8 @@ import { PROJECTS } from '../data/projects';
 import { FeaturedProjectCard } from './showcase/FeaturedProjectCard';
 import { ProjectCard } from './showcase/ProjectCard';
 import { useHideOnScroll } from '../hooks/useHideOnScroll';
+import { HERO_PIN_DISTANCE } from '../data/career';
+import { WritingView } from './writing/WritingView';
 import GitHubActivity from './GitHubActivity';
 import GitHubHeatmap from './GitHubHeatmap';
 import { ScrambleText } from './textfx';
@@ -291,11 +293,34 @@ const debugMessages = [
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'projects', label: 'Showcase' },
+  { id: 'writing', label: 'Writing' },
   { id: 'about', label: 'About' },
 ];
 
+const VIEW_IDS = navItems.map((n) => n.id);
+
+// Every view used to be a dead end, and none of them had a URL. Reading the hash on
+// load makes a post shareable; writing it back means back/forward work.
+const viewFromHash = () => {
+  const h = window.location.hash.replace('#', '');
+  return VIEW_IDS.includes(h) ? h : 'home';
+};
+
+// Hands one view off to the next instead of stopping.
+const NextUp = ({ label, onGo }) => (
+  <button
+    type="button"
+    onClick={onGo}
+    className="group mt-10 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 transition-colors hover:text-[#4ECDC4]"
+  >
+    <span className="text-zinc-700 transition-colors group-hover:text-[#4ECDC4]/50">next</span>
+    <span>{label}</span>
+    <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+  </button>
+);
+
 const Portfolio = () => {
-  const [view, setView] = useState('home');
+  const [view, setView] = useState(viewFromHash);
   const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
   const homeScrollRef = useRef(null);
@@ -325,7 +350,7 @@ const Portfolio = () => {
     },
   };
   useHoldKey('Backquote', 3000, useCallback(() => setShowVerbose((v) => !v), []));
-  useFastScrollDetector(homeScrollRef, { heroDistance: 2400, thresholdMs: 1200 },
+  useFastScrollDetector(homeScrollRef, { heroDistance: HERO_PIN_DISTANCE, thresholdMs: 1200 },
     useCallback((elapsedMs) => {
       const secs = (elapsedMs / 1000).toFixed(1);
       setInjectedTerminalLine({ type: 'error', content: `WARN: you blinked through 10 years of work in ${secs} seconds` });
@@ -335,6 +360,15 @@ const Portfolio = () => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (viewFromHash() !== view) {
+      window.history.replaceState(null, '', view === 'home' ? ' ' : `#${view}`);
+    }
+    const onHash = () => setView(viewFromHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, [view]);
 
   useEffect(() => {
     if (!showConsole) return;
@@ -394,9 +428,8 @@ const Portfolio = () => {
         return;
       }
 
-      if (e.key === '1') setView('home');
-      if (e.key === '2') setView('projects');
-      if (e.key === '3') setView('about');
+      const n = Number(e.key);
+      if (n >= 1 && n <= VIEW_IDS.length) setView(VIEW_IDS[n - 1]);
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -560,7 +593,7 @@ const Portfolio = () => {
                    reproducible 0.267 CLS). The static version is still the real
                    reduced-motion experience below. */
                 <Suspense fallback={<div className="w-full bg-[#0a0a0a]" style={{ minHeight: '100dvh' }} aria-hidden="true" />}>
-                  <CareerHero3D scroller={homeScrollRef} />
+                  <CareerHero3D scroller={homeScrollRef} onNext={() => setView('projects')} />
                 </Suspense>
               ) : (
                 <CareerHeroStatic />
@@ -757,8 +790,24 @@ app.Run();`
                       Send me an email
                     </a>
                   </p>
+                  <NextUp label="how I think about this" onGo={() => setView('writing')} />
                 </m.div>
               </div>
+            </div>
+          </m.div>
+        )}
+
+        {view === 'writing' && (
+          <m.div
+            key="writing"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="relative h-full w-full overflow-auto"
+          >
+            <div className="min-h-full flex items-start justify-center px-4 sm:px-8 pt-12 sm:pt-24 pb-32 sm:pb-40">
+              <WritingView onNext={<NextUp label="a bit about me" onGo={() => setView('about')} />} />
             </div>
           </m.div>
         )}
@@ -894,6 +943,7 @@ app.Run();`
                       elad.ser@gmail.com
                     </a>
                   </p>
+                  <NextUp label="back to the top" onGo={() => setView('home')} />
                 </m.div>
               </div>
             </div>

@@ -5,6 +5,9 @@ import { m } from 'framer-motion';
 import { Github } from 'lucide-react';
 import { useGitHubStars } from '../../hooks/useGitHubStars';
 import { MtopReplay } from './MtopReplay';
+import { SeerlensReplay } from './SeerlensReplay';
+
+const REPLAYS = { replay: MtopReplay, trace: SeerlensReplay };
 
 const ACCENTS = {
   teal:    { underline: 'bg-[#4ECDC4]',  chip: 'text-[#4ECDC4]', chipBg: 'bg-[#4ECDC4]/10', hoverName: 'hover:text-[#4ECDC4]' },
@@ -29,6 +32,8 @@ export function FeaturedProjectCard({ project }) {
   const mediaSrc = `${import.meta.env.BASE_URL}${project.media?.src || ''}`;
   const accent = ACCENTS[project.accent] || ACCENTS.teal;
   const mediaLink = project.links.live || project.links.source;
+  const Replay = REPLAYS[project.media?.type];
+  // mtop's terminal needs the full width; the Seerlens waterfall is happy beside the copy.
   const isReplay = project.media?.type === 'replay';
 
   return (
@@ -98,16 +103,16 @@ export function FeaturedProjectCard({ project }) {
           </div>
         </div>
 
-        {isReplay && (
+        {Replay && (
           <div className="min-w-0">
-            <MtopReplay />
+            <Replay />
             <p className="mt-2 text-[11px] font-mono text-zinc-500">
-              a session from my machine, replayed. not a video
+              {project.media.caption}
             </p>
           </div>
         )}
 
-        {!isReplay && project.media && mediaLink && (
+        {!Replay && project.media && mediaLink && (
           <a
             href={mediaLink}
             target="_blank"

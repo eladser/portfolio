@@ -1,6 +1,15 @@
 // Three career chapters — used by the scroll hero. Numbers/dates/stacks are real (see CV).
 // Code snippets are the *kind of code* he actually wrote in each chapter, not invented.
 
+// How far you scroll through the pinned hero. Lives here because Portfolio needs the
+// same number for its fast-scroll detector and the hero itself is lazy-loaded.
+//
+// Was 2400. Three chapters of "org, years, role, stack" is about a paragraph of
+// information, and 2400px of pinned scroll is the most expensive interaction on the
+// site to spend on it — the Showcase, which is the strongest section, sat behind all
+// of it. Halved. The chapter windows are fractions of progress so they scale with it.
+export const HERO_PIN_DISTANCE = 1200;
+
 export const CAREER = [
   {
     id: 'elbit',
