@@ -625,9 +625,11 @@ const Portfolio = () => {
                 </m.div>
 
                 <div className="mb-12">
-                  <FeaturedProjectCard project={PROJECTS[0]} />
+                  {PROJECTS.filter((p) => p.featured).map((p) => (
+                    <FeaturedProjectCard key={p.id} project={p} />
+                  ))}
                   <div className="grid md:grid-cols-2 gap-5">
-                    {PROJECTS.slice(1).map((p, i) => (
+                    {PROJECTS.filter((p) => !p.featured).map((p, i) => (
                       <ProjectCard key={p.id} project={p} index={i} />
                     ))}
                   </div>

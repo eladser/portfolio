@@ -29,14 +29,16 @@ export const PROJECTS = [
     name: 'mtop',
     tagline: 'htop for your local AI',
     status: { label: 'On Homebrew', tone: 'emerald' },
+    featured: true,
     description:
-      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often `ollama ps` shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and `-idle-unload 15m` clears the stragglers. 205 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
+      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. 205 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
     tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
     links: {
       source: 'https://github.com/eladser/mtop',
     },
     githubRepo: 'eladser/mtop',
     fallbackStars: 0,
+    media: { type: 'replay' },
     accent: 'emerald',
   },
   {
