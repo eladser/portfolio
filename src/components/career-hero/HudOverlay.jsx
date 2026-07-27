@@ -5,31 +5,30 @@ import { useMemo } from 'react';
 
 const smoothstep = (t) => t * t * (3 - 2 * t);
 
+// [fade-in start, fully in, fade-out start, fully out] per chapter.
+//
+// These do NOT overlap, and that's the whole point. The artifacts can crossfade —
+// they're photos moving through depth, so blending them reads as one passing the
+// other. Two blocks of text pinned to the same box do not blend, they stack, and
+// both stay legible: "WEM ENERGY" printed through "KLA CPG DIVISION". The windows
+// used to overlap by 0.20 each, which left ~500px of the 2400px pin unreadable.
+// Now the outgoing chapter is gone before the incoming one starts, with a short
+// gap where the artifact swap carries the moment on its own.
+//
+// Chapter 01 waits for the intro header to clear (gone by ~0.14). Chapter 03's tail
+// must finish by 0.93, where FuturePrompt takes over.
+const WINDOWS = [
+  { in: 0.10, full: 0.18, out: 0.30, gone: 0.38 },
+  { in: 0.42, full: 0.50, out: 0.65, gone: 0.73 },
+  { in: 0.77, full: 0.85, out: 0.88, gone: 0.93 },
+];
+
 function opacityFor(index, p) {
-  const T1A = 0.30, T1B = 0.50;
-  const T2A = 0.65, T2B = 0.85;
-  if (index === 0) {
-    // Fade in only after the intro header has cleared (it's gone by ~0.14). Both used
-    // to sit at full opacity on landing, stacking the intro copy over "CHAPTER 01".
-    if (p < 0.10) return 0;
-    if (p < 0.18) return smoothstep((p - 0.10) / 0.08);
-    if (p < T1A) return 1;
-    if (p > T1B) return 0;
-    return 1 - smoothstep((p - T1A) / (T1B - T1A));
-  }
-  if (index === 1) {
-    if (p < T1A) return 0;
-    if (p < T1B) return smoothstep((p - T1A) / (T1B - T1A));
-    if (p < T2A) return 1;
-    if (p < T2B) return 1 - smoothstep((p - T2A) / (T2B - T2A));
-    return 0;
-  }
-  if (p < T2A) return 0;
-  if (p < T2B) return smoothstep((p - T2A) / (T2B - T2A));
-  if (p < 0.88) return 1;
-  // Tail fade hands off to the FuturePrompt. Must finish BEFORE the prompt starts
-  // (0.93) or both render at partial opacity and the text stacks unreadably.
-  return 1 - smoothstep(Math.min(1, (p - 0.88) / 0.05));
+  const w = WINDOWS[index];
+  if (p < w.in || p >= w.gone) return 0;
+  if (p < w.full) return smoothstep((p - w.in) / (w.full - w.in));
+  if (p < w.out) return 1;
+  return 1 - smoothstep((p - w.out) / (w.gone - w.out));
 }
 
 export function HudOverlay({ chapter, index, progress }) {
