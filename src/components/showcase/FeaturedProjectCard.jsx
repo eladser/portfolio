@@ -4,10 +4,12 @@
 import { m } from 'framer-motion';
 import { Github } from 'lucide-react';
 import { useGitHubStars } from '../../hooks/useGitHubStars';
+import { MtopReplay } from './MtopReplay';
 
 const ACCENTS = {
-  teal: { underline: 'bg-[#4ECDC4]',   chip: 'text-[#4ECDC4]', chipBg: 'bg-[#4ECDC4]/10', hoverName: 'hover:text-[#4ECDC4]' },
-  sky:  { underline: 'bg-sky-400',     chip: 'text-sky-300',   chipBg: 'bg-sky-500/10',   hoverName: 'hover:text-sky-300' },
+  teal:    { underline: 'bg-[#4ECDC4]',  chip: 'text-[#4ECDC4]', chipBg: 'bg-[#4ECDC4]/10', hoverName: 'hover:text-[#4ECDC4]' },
+  sky:     { underline: 'bg-sky-400',    chip: 'text-sky-300',   chipBg: 'bg-sky-500/10',   hoverName: 'hover:text-sky-300' },
+  emerald: { underline: 'bg-emerald-400', chip: 'text-emerald-300', chipBg: 'bg-emerald-500/10', hoverName: 'hover:text-emerald-300' },
 };
 
 function StarBadge({ count }) {
@@ -27,6 +29,7 @@ export function FeaturedProjectCard({ project }) {
   const mediaSrc = `${import.meta.env.BASE_URL}${project.media?.src || ''}`;
   const accent = ACCENTS[project.accent] || ACCENTS.teal;
   const mediaLink = project.links.live || project.links.source;
+  const isReplay = project.media?.type === 'replay';
 
   return (
     <m.section
@@ -36,8 +39,10 @@ export function FeaturedProjectCard({ project }) {
       transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
       className="relative pb-10 mb-10 border-b border-white/10"
     >
-      <div className="grid md:grid-cols-[1fr_1.3fr] gap-8 items-start">
-        <div>
+      {/* The mtop replay needs ~640px of monospace before it starts scrolling, which
+          the side-by-side track can't give it. Stack that one instead. */}
+      <div className={`grid gap-8 items-start ${isReplay ? '' : 'md:grid-cols-[1fr_1.3fr]'}`}>
+        <div className="min-w-0">
           <div className="flex items-baseline gap-3 flex-wrap mb-2">
             <h3 className={`text-3xl sm:text-4xl font-semibold text-white tracking-tight transition-colors ${accent.hoverName}`}>
               {project.name}
@@ -93,7 +98,16 @@ export function FeaturedProjectCard({ project }) {
           </div>
         </div>
 
-        {project.media && mediaLink && (
+        {isReplay && (
+          <div className="min-w-0">
+            <MtopReplay />
+            <p className="mt-2 text-[11px] font-mono text-zinc-500">
+              a session from my machine, replayed. not a video
+            </p>
+          </div>
+        )}
+
+        {!isReplay && project.media && mediaLink && (
           <a
             href={mediaLink}
             target="_blank"
