@@ -1,14 +1,19 @@
 // Project list — real repos, real URLs, real descriptions. Don't invent.
+//
+// Download/star counts below were pulled from the NuGet, npm and GitHub APIs.
+// Re-check them before quoting; they only go up, so a stale number understates.
+// Where a project has no public metric (browser apps, the hosted tracker) it says
+// nothing rather than reaching for a proxy.
 
 export const PROJECTS = [
   {
     id: 'seerlens',
     name: 'Seerlens',
     tagline: 'local devtools for AI calls',
-    status: { label: 'v1.0', tone: 'teal' },
+    status: { label: 'v1.4', tone: 'teal' },
     featured: true,
     description:
-      "Local devtools for AI calls. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. Compare models side by side, set cost budgets with alerts, watch agent and MCP step traces, and gate CI on an eval score. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard.",
+      "Local devtools for AI calls. Built it because a prompt tweak can quietly make answers worse and nothing in a stack trace will tell you. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. Compare models side by side, set cost budgets with alerts, watch agent and MCP step traces, and gate CI on an eval score. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard. About 2,200 downloads across its NuGet packages, plus 960 a year on npm.",
     tags: ['C#', '.NET', 'OpenTelemetry', 'evals', 'LLM observability'],
     links: {
       source: 'https://github.com/eladser/seerlens',
@@ -25,7 +30,7 @@ export const PROJECTS = [
     tagline: 'htop for your local AI',
     status: { label: 'On Homebrew', tone: 'emerald' },
     description:
-      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Loaded models and their VRAM, the GPU, and live requests with tok/s, all in one terminal window. It evicts models that won't unload on their own, and a small pass-through proxy reads the per-request numbers off the wire (also exposed as Prometheus /metrics). `mtop compare` benchmarks a prompt across models.",
+      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often `ollama ps` shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and `-idle-unload 15m` clears the stragglers. 205 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
     tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
     links: {
       source: 'https://github.com/eladser/mtop',
@@ -54,9 +59,9 @@ export const PROJECTS = [
     id: 'debug-dashboard',
     name: 'Debug Dashboard',
     tagline: 'Telescope-style debug panel for .NET',
-    status: { label: 'v2.0', tone: 'purple' },
+    status: { label: 'v2.2', tone: 'purple' },
     description:
-      "Started as a way to stop sprinkling Console.WriteLine everywhere. It's a Telescope-style panel for ASP.NET Core now: every request with the EF Core queries it ran, plus logs and exceptions, at /_debug. N+1 queries get flagged, there's copy-as-cURL and Ctrl+K search. Stores to a local LiteDB file and the whole UI ships as one offline page inside the package.",
+      "Started as a way to stop sprinkling Console.WriteLine everywhere. It's a Telescope-style panel for ASP.NET Core now: every request with the EF Core queries it ran, plus logs and exceptions, at /_debug. N+1 queries get flagged, there's copy-as-cURL and Ctrl+K search. Stores to a local LiteDB file and the whole UI ships as one offline page inside the package. 740 downloads on NuGet and my most-starred repo.",
     tags: ['C#', '.NET', 'EF Core', 'LiteDB'],
     links: {
       source: 'https://github.com/eladser/AspNetDebugDashboard',
@@ -72,7 +77,7 @@ export const PROJECTS = [
     tagline: 'diff configs by structure, not lines',
     status: { label: 'Live', tone: 'teal' },
     description:
-      "Diffs config files by structure instead of by line, so a reordered YAML key or \"true\" vs true doesn't show up as noise. Ten formats and cross-format diffs, runs in the browser, installs as a PWA, and there's a CLI for CI that exits non-zero when something changed. Nothing leaves your machine.",
+      "Diffs config files by structure instead of by line, so a reordered YAML key or \"true\" vs true doesn't show up as noise. Ten formats and cross-format diffs, runs in the browser, installs as a PWA, and there's a CLI for CI that exits non-zero when something changed. Nothing leaves your machine. 173 npm downloads over the past year.",
     tags: ['React 19', 'TypeScript', 'PWA', 'CLI'],
     links: {
       live: 'https://eladser.github.io/SimpleConfigDiff/',
@@ -88,7 +93,7 @@ export const PROJECTS = [
     tagline: '25 browser tools for .NET work',
     status: { label: 'Live', tone: 'emerald' },
     description:
-      "Twenty-five small browser tools for the stuff that comes up in .NET work — JSON to C# classes, GUID v4/v7, a cron builder, JWT decoder, connection strings, a .NET version reference, plus the usual encoders and hashes. All client-side, nothing you paste leaves the page. Started as things I kept rewriting; now it's the tab I leave open.",
+      "Twenty-five small browser tools for the stuff that comes up in .NET work — JSON to C# classes (with [JsonPropertyName], date and GUID detection), GUID v4/v7, a cron builder, JWT decoder, connection strings for six databases, a TFM reference table, plus the usual encoders and hashes. All client-side, nothing you paste leaves the page. Started as things I kept rewriting; now it's the tab I leave open.",
     tags: ['React 19', 'TypeScript', 'PWA'],
     links: {
       live: 'https://eladser.github.io/.net-tools/',
