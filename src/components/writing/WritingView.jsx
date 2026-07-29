@@ -42,18 +42,30 @@ export function WritingView({ onNext }) {
         <LiteDbIdPost />
 
         {/* AspNetFlags is a project inside the AspNetDebugDashboard repo, not a repo of
-            its own — this used to link to github.com/eladser/AspNetFlags, which 404s. */}
+            its own — this used to link to github.com/eladser/AspNetFlags, which 404s.
+            Links the project directory, not Flags.cs: the sentence promises "the whole
+            thing", the directory has the README, and a file path breaks silently if the
+            file is ever renamed or split. */}
         <p className="mt-10 pt-6 border-t border-white/10 text-sm text-zinc-500">
           The fixed version is running in{' '}
           <a
-            href="https://github.com/eladser/AspNetDebugDashboard/blob/main/src/AspNetFlags/Flags.cs"
+            href="https://github.com/eladser/AspNetDebugDashboard/tree/main/src/AspNetFlags"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#4ECDC4] hover:underline underline-offset-4"
           >
             AspNetFlags
           </a>
-          , one of the packages in my ASP.NET suite, if you want to read the whole thing.
+          , one of the packages in my ASP.NET suite. The model and queries above are in{' '}
+          <a
+            href="https://github.com/eladser/AspNetDebugDashboard/blob/main/src/AspNetFlags/Flags.cs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#4ECDC4] hover:underline underline-offset-4"
+          >
+            Flags.cs
+          </a>
+          .
         </p>
       </m.article>
 
