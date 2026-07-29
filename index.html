@@ -63,7 +63,9 @@
     <link rel="preload" as="font" type="font/woff2" href="./fonts/inter-400-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="./fonts/inter-700-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="./fonts/jetbrains-mono-400-latin.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="./fonts/jetbrains-mono-700-latin.woff2" crossorigin />
+    <!-- 600, not 700: JetBrains Mono ships here at 400/500/600 only, so no 700 face is
+         declared and font-bold resolves to 600. The 700 preload was a live 404. -->
+    <link rel="preload" as="font" type="font/woff2" href="./fonts/jetbrains-mono-600-latin.woff2" crossorigin />
 
     <!-- Structured Data - Person Schema -->
     <script type="application/ld+json">
