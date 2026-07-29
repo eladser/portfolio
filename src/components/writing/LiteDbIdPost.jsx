@@ -1,6 +1,6 @@
 // The LiteDB id post. Everything here is checked against the shipped source in
-// eladser/AspNetFlags (Flags.cs) — the entity, the unique index, and the predicate
-// queries are the code that's running, not a sketch of it.
+// AspNetDebugDashboard/src/AspNetFlags/Flags.cs — the entity, the unique index, and the
+// predicate queries are the code that's running, not a sketch of it.
 
 const Code = ({ children }) => (
   <pre className="my-6 overflow-x-auto rounded border border-white/10 bg-[#0d0d0d] p-4 font-mono text-[12px] leading-relaxed text-zinc-300">
