@@ -1,0 +1,32 @@
+# Elad Sertshuk
+
+> Backend / full-stack .NET engineer. Ten years across defense simulators (Elbit),
+> semiconductor fab tools (KLA), and now grid-scale energy as VP R&D at WEM.
+> Builds developer tools and LLM observability on the side.
+
+## What I work on
+
+Backend C# and .NET (ASP.NET Core, EF Core, SignalR), SQL Server and PostgreSQL,
+React/TypeScript on the front end, Docker/Terraform/AWS for infrastructure. Recent work
+is heavy on LLM integration: Claude, Gemini, MCP servers, agent orchestration.
+
+## Projects
+
+- **Seerlens** (https://github.com/eladser/seerlens): local devtools for AI calls. One line of setup, then a dashboard shows every LLM call an app makes — prompt, cost, tokens, latency, tool calls. Model comparison, cost budgets, agent/MCP step traces, CI eval gating. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard.
+- **mtop** (https://github.com/eladser/mtop): htop for local model servers (Ollama, llama.cpp, LM Studio, vLLM). Loaded models and VRAM, GPU, live requests with tok/s in one terminal window. A pass-through proxy reads per-request numbers off the wire; `-idle-unload` clears models that outlived their TTL. Go, on Homebrew/Scoop/winget.
+- **AspNetDebugDashboard** (https://github.com/eladser/AspNetDebugDashboard): Laravel-Telescope-style debug panel for ASP.NET Core. Every request with the EF Core queries it ran, plus logs and exceptions, at /_debug. N+1 detection, copy-as-cURL, Ctrl+K search. Stores to a local LiteDB file; UI ships inside the package.
+- **AeroLens** (https://aerolens.eladser.dev): real-time flight tracker with AI delay predictions. React 19 + ASP.NET Core 8 + SignalR.
+- **SimpleConfigDiff** (https://eladser.github.io/SimpleConfigDiff/): diffs config files by structure rather than by line, across ten formats. Browser-based, plus a CLI for CI.
+- **.NET Tools** (https://eladser.github.io/.net-tools/): 25 browser tools for .NET work — JSON to C# classes, GUID v4/v7, cron builder, JWT decoder, connection strings, TFM reference. All client-side.
+
+## Writing
+
+- [LiteDB will let you put [BsonId] on the wrong property](https://eladser.dev/writing/litedb-bsonid/): LiteDB does not warn when [BsonId] lands on a property that is not the id. It builds a phantom unique index instead, every document indexes as null, and the second insert dies on a key you never wrote. What is happening, why a corrected build kept failing anyway, and the pattern to use instead (ObjectId id + unique index on the natural key + predicate queries).
+
+## Contact
+
+- Site: https://eladser.dev
+- GitHub: https://github.com/eladser
+- LinkedIn: https://linkedin.com/in/eladser
+- Email: elad.ser@gmail.com
+- Location: Haifa, Israel

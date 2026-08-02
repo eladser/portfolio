@@ -15,8 +15,8 @@
 
     <item>
       <title>LiteDB will let you put [BsonId] on the wrong property</title>
-      <link>https://eladser.dev/#writing</link>
-      <guid isPermaLink="false">eladser.dev/writing/litedb-bsonid</guid>
+      <link>https://eladser.dev/writing/litedb-bsonid/</link>
+      <guid isPermaLink="true">https://eladser.dev/writing/litedb-bsonid/</guid>
       <pubDate>Mon, 27 Jul 2026 00:00:00 GMT</pubDate>
       <category>C#</category>
       <category>LiteDB</category>

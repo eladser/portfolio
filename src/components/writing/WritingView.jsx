@@ -1,9 +1,9 @@
-// One post. Deliberately not a blog engine — when there's a second one, this becomes a
-// list and the post moves behind a route. Until then a list of one is just a longer
-// path to the same words.
+// Index only. The posts themselves live at real prerendered URLs (/writing/<slug>/)
+// so they can be indexed and ranked on their own — rendering the full text here too
+// would just be the same content at a second URL.
 
 import { m } from 'framer-motion';
-import { LiteDbIdPost, POST } from './LiteDbIdPost';
+import { POSTS } from './posts';
 
 export function WritingView({ onNext }) {
   return (
@@ -13,61 +13,40 @@ export function WritingView({ onNext }) {
         <p className="text-base text-zinc-300">Occasional notes. Mostly things that cost me an evening.</p>
       </m.div>
 
-      <m.article
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 font-mono text-[11px] text-zinc-500">
-          <time dateTime={POST.date}>
-            {new Date(POST.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </time>
-          <span className="text-zinc-700" aria-hidden="true">·</span>
-          <span>{POST.readingTime}</span>
-          <span className="text-zinc-700" aria-hidden="true">·</span>
-          {POST.tags.map((t, i) => (
-            <span key={t} className="text-[#4ECDC4]">
-              {i > 0 && <span className="text-zinc-700 mr-3" aria-hidden="true">·</span>}
-              {t}
-            </span>
-          ))}
-        </div>
+      {POSTS.map((post, i) => (
+        <m.a
+          key={post.slug}
+          href={`/writing/${post.slug}/`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 + i * 0.05 }}
+          className="group block pb-8 mb-8 border-b border-white/10"
+        >
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3 font-mono text-[11px] text-zinc-500">
+            <time dateTime={post.date}>
+              {new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </time>
+            <span className="text-zinc-700" aria-hidden="true">·</span>
+            <span>{post.readingTime}</span>
+            <span className="text-zinc-700" aria-hidden="true">·</span>
+            {post.tags.map((t, n) => (
+              <span key={t} className="text-[#4ECDC4]">
+                {n > 0 && <span className="text-zinc-700 mr-3" aria-hidden="true">·</span>}
+                {t}
+              </span>
+            ))}
+          </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white leading-[1.15] mb-3">
-          {POST.title}
-        </h2>
-        <div className="h-px w-12 bg-[#4ECDC4] mb-5" aria-hidden="true" />
-        <p className="text-base text-zinc-400 leading-relaxed mb-8">{POST.dek}</p>
-
-        <LiteDbIdPost />
-
-        {/* AspNetFlags is a project inside the AspNetDebugDashboard repo, not a repo of
-            its own — this used to link to github.com/eladser/AspNetFlags, which 404s.
-            Links the project directory, not Flags.cs: the sentence promises "the whole
-            thing", the directory has the README, and a file path breaks silently if the
-            file is ever renamed or split. */}
-        <p className="mt-10 pt-6 border-t border-white/10 text-sm text-zinc-500">
-          The fixed version is running in{' '}
-          <a
-            href="https://github.com/eladser/AspNetDebugDashboard/tree/main/src/AspNetFlags"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#4ECDC4] hover:underline underline-offset-4"
-          >
-            AspNetFlags
-          </a>
-          , one of the packages in my ASP.NET suite. The model and queries above are in{' '}
-          <a
-            href="https://github.com/eladser/AspNetDebugDashboard/blob/main/src/AspNetFlags/Flags.cs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#4ECDC4] hover:underline underline-offset-4"
-          >
-            Flags.cs
-          </a>
-          .
-        </p>
-      </m.article>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white leading-[1.2] mb-2 transition-colors group-hover:text-[#4ECDC4]">
+            {post.title}
+          </h2>
+          <p className="text-sm text-zinc-400 leading-relaxed mb-3">{post.dek}</p>
+          <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 transition-colors group-hover:text-[#4ECDC4]">
+            read
+            <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+          </span>
+        </m.a>
+      ))}
 
       {onNext}
     </div>
