@@ -68,14 +68,14 @@ for (const post of POSTS) {
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
   </head>
   <body class="bg-[#0a0a0a]">
-    <div class="min-h-screen px-5 sm:px-8 py-12 sm:py-20">
+    <main class="min-h-screen px-5 sm:px-8 py-12 sm:py-20">
       <div class="max-w-2xl mx-auto">
-        <a href="/" class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500 hover:text-[#4ECDC4] transition-colors mb-12">
+        <a href="/" class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400 hover:text-[#4ECDC4] transition-colors mb-12">
           <span aria-hidden="true">←</span> Elad Sertshuk
         </a>
 
         <article>
-          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 font-mono text-[11px] text-zinc-500">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4 font-mono text-[11px] text-zinc-400">
             <time datetime="${meta.date}">${dateLabel}</time>
             <span class="text-zinc-700" aria-hidden="true">·</span>
             <span>${esc(meta.readingTime)}</span>
@@ -89,7 +89,7 @@ for (const post of POSTS) {
 
           ${body}
 
-          <p class="mt-10 pt-6 border-t border-white/10 text-sm text-zinc-500">
+          <p class="mt-10 pt-6 border-t border-white/10 text-sm text-zinc-400">
             The fixed version is running in
             <a href="https://github.com/eladser/AspNetDebugDashboard/tree/main/src/AspNetFlags" target="_blank" rel="noopener noreferrer" class="text-[#4ECDC4] hover:underline underline-offset-4">AspNetFlags</a>,
             one of the packages in my ASP.NET suite. The model and queries above are in
@@ -97,7 +97,7 @@ for (const post of POSTS) {
           </p>
         </article>
 
-        <footer class="mt-14 pt-6 border-t border-white/10 font-mono text-xs text-zinc-500">
+        <footer class="mt-14 pt-6 border-t border-white/10 font-mono text-xs text-zinc-400">
           <a href="/" class="hover:text-[#4ECDC4] transition-colors">eladser.dev</a>
           <span class="text-zinc-700 mx-2" aria-hidden="true">·</span>
           <a href="https://github.com/eladser" target="_blank" rel="noopener noreferrer" class="hover:text-[#4ECDC4] transition-colors">github</a>
@@ -105,7 +105,7 @@ for (const post of POSTS) {
           <a href="mailto:elad.ser@gmail.com" class="hover:text-[#4ECDC4] transition-colors">elad.ser@gmail.com</a>
         </footer>
       </div>
-    </div>
+    </main>
   </body>
 </html>
 `;

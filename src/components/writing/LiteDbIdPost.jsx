@@ -13,7 +13,7 @@ const P = ({ children }) => (
 );
 
 const H = ({ children }) => (
-  <h3 className="mt-10 mb-4 text-lg font-semibold tracking-tight text-white">{children}</h3>
+  <h2 className="mt-10 mb-4 text-lg font-semibold tracking-tight text-white">{children}</h2>
 );
 
 const T = ({ children }) => <span className="font-mono text-[13px] text-[#4ECDC4]">{children}</span>;
