@@ -65,6 +65,11 @@ for (const post of POSTS) {
     <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono-400-latin.woff2" crossorigin />
     <link rel="stylesheet" href="${cssHref}" />
+    <style>
+      /* the shared stylesheet locks document scroll for the SPA; an article page has no
+         inner scroll container, so it scrolls the document itself */
+      html, body { height: auto; overflow: visible; }
+    </style>
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
   </head>
   <body class="bg-[#0a0a0a]">
