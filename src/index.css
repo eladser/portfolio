@@ -30,6 +30,9 @@
   body {
     @apply antialiased bg-[#0a0a0a] text-white;
     font-family: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* the SPA scrolls inside per-view containers, so the document itself must not.
+       Prerendered article pages undo this in their own <style> — a rule here would be
+       purged, since Tailwind never scans the prerender script that uses the class. */
     overflow: hidden;
   }
 

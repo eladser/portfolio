@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-v6';
+const CACHE_NAME = 'portfolio-v7';
 const STATIC_ASSETS = [
   '/profile.jpg',
   '/favicon-16.png',
@@ -35,8 +35,17 @@ self.addEventListener('fetch', (e) => {
   // network so live data isn't frozen in the cache between deploys.
   if (url.origin !== self.location.origin) return;
 
-  // Network-first for HTML and JS (always get fresh versions)
-  if (url.pathname === '/' || url.pathname.endsWith('.html') || url.pathname.endsWith('.js')) {
+  // Network-first for anything carrying markup, code or styles. Navigations are matched
+  // by request mode rather than by extension: a clean URL like /writing/<slug>/ has no
+  // .html suffix, so it used to fall through to the cache-first branch below and pin
+  // whatever version a visitor loaded first.
+  if (
+    e.request.mode === 'navigate' ||
+    url.pathname === '/' ||
+    url.pathname.endsWith('.html') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css')
+  ) {
     e.respondWith(
       fetch(e.request)
         .then((response) => {
