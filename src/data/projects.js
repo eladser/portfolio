@@ -61,6 +61,22 @@ export const PROJECTS = [
     accent: 'sky',
   },
   {
+    id: 'y2k',
+    name: 'Halcyon Airways',
+    tagline: 'one homepage, eight eras of the web',
+    status: { label: 'Live', tone: 'emerald' },
+    description:
+      "A made-up airline's homepage, built eight times: 1996, 1999, 2001, 2004, 2007, 2012, 2020 and 2026, each with that year's tools inside that year's Windows and browser. The 1999 one makes you dial in first. 2001 is a full Flash site rebuilt without Flash, 2012 runs the real Bootstrap 2, and 2026 answers questions with Gemini Nano in your browser. Every version works, and an X-ray panel shows how each one was built, with the code from that year.",
+    tags: ['HTML', 'CSS', 'JavaScript', 'Web Audio'],
+    links: {
+      live: 'https://y2k.eladser.dev',
+      source: 'https://github.com/eladser/y2k',
+    },
+    githubRepo: 'eladser/y2k',
+    fallbackStars: 0,
+    accent: 'emerald',
+  },
+  {
     id: 'debug-dashboard',
     name: 'Debug Dashboard',
     tagline: 'Telescope-style debug panel for .NET',
