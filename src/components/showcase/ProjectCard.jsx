@@ -89,6 +89,9 @@ export function ProjectCard({ project, index = 0 }) {
         {project.links.live && (
           <a
             href={project.links.live}
+            data-umami-event="project link"
+            data-umami-event-project={project.id}
+            data-umami-event-link="live"
             target="_blank"
             rel="noopener noreferrer"
             className={`${accent.chip} hover:underline underline-offset-4`}
@@ -99,6 +102,9 @@ export function ProjectCard({ project, index = 0 }) {
         {project.links.source && (
           <a
             href={project.links.source}
+            data-umami-event="project link"
+            data-umami-event-project={project.id}
+            data-umami-event-link="source"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-white"
@@ -110,6 +116,9 @@ export function ProjectCard({ project, index = 0 }) {
         {project.links.nuget && (
           <a
             href={project.links.nuget}
+            data-umami-event="project link"
+            data-umami-event-project={project.id}
+            data-umami-event-link="nuget"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-white"
