@@ -72,6 +72,9 @@ export function FeaturedProjectCard({ project }) {
             {project.links.live && (
               <a
                 href={project.links.live}
+                data-umami-event="project link"
+                data-umami-event-project={project.id}
+                data-umami-event-link="live"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${accent.chip} hover:underline underline-offset-4`}
@@ -82,6 +85,9 @@ export function FeaturedProjectCard({ project }) {
             {project.links.source && (
               <a
                 href={project.links.source}
+                data-umami-event="project link"
+                data-umami-event-project={project.id}
+                data-umami-event-link="source"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-zinc-400 hover:text-white"
@@ -93,6 +99,9 @@ export function FeaturedProjectCard({ project }) {
             {project.links.nuget && (
               <a
                 href={project.links.nuget}
+                data-umami-event="project link"
+                data-umami-event-project={project.id}
+                data-umami-event-link="nuget"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-400 hover:text-white"
@@ -115,6 +124,9 @@ export function FeaturedProjectCard({ project }) {
         {!Replay && project.media && mediaLink && (
           <a
             href={mediaLink}
+            data-umami-event="project link"
+            data-umami-event-project={project.id}
+            data-umami-event-link="media"
             target="_blank"
             rel="noopener noreferrer"
             className="block rounded-md overflow-hidden ring-1 ring-white/5 hover:ring-white/15 transition"
