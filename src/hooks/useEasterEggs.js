@@ -12,24 +12,24 @@ import { useEffect, useState, useCallback } from 'react';
  * const { secretMode, konamiActivated, activateSecret } = useEasterEggs();
  */
 
+// Konami code sequence
+const konamiCode = [
+  'ArrowUp',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowLeft',
+  'ArrowRight',
+  'KeyB',
+  'KeyA',
+];
+
 const useEasterEggs = () => {
   const [konamiActivated, setKonamiActivated] = useState(false);
   const [secretMode, setSecretMode] = useState(false);
-  const [keySequence, setKeySequence] = useState([]);
-
-  // Konami code sequence
-  const konamiCode = [
-    'ArrowUp',
-    'ArrowUp',
-    'ArrowDown',
-    'ArrowDown',
-    'ArrowLeft',
-    'ArrowRight',
-    'ArrowLeft',
-    'ArrowRight',
-    'KeyB',
-    'KeyA',
-  ];
+  const [, setKeySequence] = useState([]);
 
   const activateSecret = useCallback((secret) => {
     switch (secret) {
@@ -37,7 +37,9 @@ const useEasterEggs = () => {
         setKonamiActivated(true);
         setSecretMode(true);
         // Show notification
+        // eslint-disable-next-line no-console
         console.log('[konami] activated');
+        // eslint-disable-next-line no-console
         console.log('Secret message: You found the easter egg! Keep exploring...');
         // Auto-dismiss notification after 3 seconds
         setTimeout(() => {
@@ -46,10 +48,12 @@ const useEasterEggs = () => {
         break;
       case 'matrix':
         // Trigger matrix rain effect
+        // eslint-disable-next-line no-console
         console.log('🔢 Matrix Mode Activated!');
         break;
       case 'retro':
         // Activate retro theme
+        // eslint-disable-next-line no-console
         console.log('👾 Retro Mode Activated!');
         break;
       default:

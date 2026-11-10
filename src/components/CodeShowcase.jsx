@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { m } from 'framer-motion';
 import { Check, Copy, Play } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';

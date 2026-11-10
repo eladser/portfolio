@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { Terminal, X, Github, Gamepad2 } from 'lucide-react';
+import { Terminal, X, Gamepad2 } from 'lucide-react';
 import { CareerHeroStatic } from './CareerHeroStatic';
 import { useEnable3D } from '../hooks/useEnable3D';
 const CareerHero3D = lazy(() => import('./CareerHero3D'));
@@ -321,7 +321,6 @@ const NextUp = ({ label, onGo }) => (
 
 const Portfolio = () => {
   const [view, setView] = useState(viewFromHash);
-  const [time, setTime] = useState(new Date());
   const [showConsole, setShowConsole] = useState(false);
   const homeScrollRef = useRef(null);
   const navShown = useHideOnScroll();
@@ -355,11 +354,6 @@ const Portfolio = () => {
       const secs = (elapsedMs / 1000).toFixed(1);
       setInjectedTerminalLine({ type: 'error', content: `WARN: you blinked through 10 years of work in ${secs} seconds` });
     }, []));
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     if (viewFromHash() !== view) {
