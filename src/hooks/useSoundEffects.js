@@ -77,7 +77,7 @@ const useSoundEffects = () => {
         oscillator.stop(ctx.currentTime + 0.03);
         break;
 
-      case 'success':
+      case 'success': {
         // Play two notes for success
         oscillator.frequency.value = 523.25; // C5
         oscillator.type = 'sine';
@@ -98,6 +98,7 @@ const useSoundEffects = () => {
         oscillator2.start(ctx.currentTime + 0.1);
         oscillator2.stop(ctx.currentTime + 0.2);
         break;
+      }
 
       case 'error':
         oscillator.frequency.value = 200;
