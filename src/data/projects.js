@@ -34,7 +34,7 @@ export const PROJECTS = [
     status: { label: 'On Homebrew', tone: 'emerald' },
     featured: true,
     description:
-      "htop for whatever local model server you're running — Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. 976 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
+      "htop for whatever local model server you're running: Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. 976 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
     tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
     links: {
       source: 'https://github.com/eladser/mtop',
@@ -98,7 +98,7 @@ export const PROJECTS = [
     tagline: 'diff configs by structure, not lines',
     status: { label: 'Live', tone: 'teal' },
     description:
-      "Diffs config files by structure instead of by line, so a reordered YAML key or \"true\" vs true doesn't show up as noise. Ten formats and cross-format diffs, runs in the browser, installs as a PWA, and there's a CLI for CI that exits non-zero when something changed. Nothing leaves your machine. 173 npm downloads over the past year.",
+      "Diffs config files by structure instead of by line, so a reordered YAML key or \"true\" vs true doesn't show up as noise. Ten formats and cross-format diffs, runs in the browser, installs as a PWA, and there's a CLI for CI that exits non-zero when something changed. Nothing leaves your machine. 214 npm downloads over the past year.",
     tags: ['React 19', 'TypeScript', 'PWA', 'CLI'],
     links: {
       live: 'https://eladser.github.io/SimpleConfigDiff/',
@@ -114,7 +114,7 @@ export const PROJECTS = [
     tagline: '25 browser tools for .NET work',
     status: { label: 'Live', tone: 'emerald' },
     description:
-      "Twenty-five small browser tools for the stuff that comes up in .NET work — JSON to C# classes (with [JsonPropertyName], date and GUID detection), GUID v4/v7, a cron builder, JWT decoder, connection strings for six databases, a TFM reference table, plus the usual encoders and hashes. All client-side, nothing you paste leaves the page. Started as things I kept rewriting; now it's the tab I leave open.",
+      "Twenty-five small browser tools for the stuff that comes up in .NET work: JSON to C# classes (with [JsonPropertyName], date and GUID detection), GUID v4/v7, a cron builder, JWT decoder, connection strings for six databases, a TFM reference table, plus the usual encoders and hashes. All client-side, nothing you paste leaves the page. Started as things I kept rewriting; now it's the tab I leave open.",
     tags: ['React 19', 'TypeScript', 'PWA'],
     links: {
       live: 'https://eladser.github.io/.net-tools/',
