@@ -3,7 +3,7 @@
 // from the real CV — not made up.
 
 import { useState, useMemo } from 'react';
-import { STACK_TIMELINE, STACK_YEARS, JOB_BOUNDARIES, CATEGORY_COLORS } from '../data/stack-timeline';
+import { STACK_TIMELINE, STACK_YEARS, CATEGORY_COLORS } from '../data/stack-timeline';
 
 const CATEGORIES = ['backend', 'frontend', 'database', 'cloud', 'devops', 'ai'];
 
