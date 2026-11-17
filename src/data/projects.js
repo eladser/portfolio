@@ -10,11 +10,11 @@ export const PROJECTS = [
     id: 'seerlens',
     name: 'Seerlens',
     tagline: 'local devtools for AI calls',
-    status: { label: 'v1.5', tone: 'teal' },
+    status: { label: 'v1.6', tone: 'teal' },
     featured: true,
     description:
-      "Local devtools for AI calls. Built it because a prompt tweak can quietly make answers worse and nothing in a stack trace will tell you. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. Compare models side by side, set cost budgets with alerts, watch agent and MCP step traces, and gate CI on an eval score. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard. About 3,200 downloads across its NuGet packages, plus 960 a year on npm.",
-    tags: ['C#', '.NET', 'OpenTelemetry', 'evals', 'LLM observability'],
+      "Diff your AI calls locally, see what they really cost, and fail CI when quality or cost regresses. Built it because a prompt tweak can quietly make answers worse and nothing in a stack trace will tell you. Pick two runs and the steps line up side by side, with what changed in the prompt, tool calls, model, tokens and cost. Cost counts cached and reasoning tokens, and seerlens eval fails the build on a score drop or a cost jump over the baseline. Takes OpenTelemetry spans from any language, with SDKs for Python, JS and .NET; the collector itself is ASP.NET Core and SQLite. About 3,200 downloads across its NuGet packages, plus 1,300 a year on npm.",
+    tags: ['OpenTelemetry', 'run diff', 'evals', 'LLM cost', 'ASP.NET Core'],
     links: {
       source: 'https://github.com/eladser/seerlens',
       nuget: 'https://www.nuget.org/packages/Seerlens',
@@ -34,7 +34,7 @@ export const PROJECTS = [
     status: { label: 'On Homebrew', tone: 'emerald' },
     featured: true,
     description:
-      "htop for whatever local model server you're running: Ollama, llama.cpp, LM Studio, vLLM, llama-swap, Lemonade, SGLang. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. 1,063 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
+      "htop for whatever local model server you're running: Ollama, llama.cpp, LM Studio, vLLM, llama-swap, Lemonade, SGLang. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. Since 1.6 it also says why a model is slow (spilled to CPU, context full, requests queueing), and mtop --demo runs it with no model server. 1,064 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
     tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
     links: {
       source: 'https://github.com/eladser/mtop',

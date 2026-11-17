@@ -6,7 +6,7 @@ LinkedIn: linkedin.com/in/eladser
 Location: Israel
 
 /* SITE */
-Last update: 2026/01/23
+Last update: 2026/11/17
 Standards: HTML5, CSS3, ECMAScript 2020
 Components: React, Vite, Tailwind CSS
 Fonts: Inter, JetBrains Mono, Clash Display
@@ -22,8 +22,10 @@ Tools: Docker, Git, DataGrip
 Cloud: Azure, AWS
 
 /* PROJECTS */
-Debug Dashboard - Real-time HTTP monitoring for .NET
-.NET Tools - Utility package on NuGet
+Seerlens - Diff, cost and CI checks for AI calls
+mtop - htop for your local AI
+Debug Dashboard - Request, SQL and HTTP capture for ASP.NET Core
+.NET Tools - Browser tools for .NET work
 
 /* THANKS */
 To everyone who builds open source tools that make development better.
