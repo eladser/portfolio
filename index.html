@@ -152,7 +152,7 @@
         "priceCurrency": "USD"
       },
       "operatingSystem": "Windows, Linux, macOS",
-      "description": "Laravel-Telescope-style debug panel for ASP.NET Core. Two lines of setup and /_debug shows every request with the EF Core queries it ran, plus logs and exceptions. Flags N+1 queries, copy-as-cURL, Ctrl+K search. Stores to a local LiteDB file; the UI ships inside the package as one offline page.",
+      "description": "Laravel-Telescope-style debug panel for ASP.NET Core. Two lines of setup and /_debug shows every request with the EF Core queries and outgoing HTTP calls it made, plus logs, exceptions and dumps. A per-request timeline puts them on one time axis with N+1 and slow queries highlighted, and Replay resends a captured request and compares it with the original. Stores to a local LiteDB file; the UI ships inside the package as one offline page. Runs on .NET 8 to 11.",
       "author": {
         "@type": "Person",
         "name": "Elad Sertshuk"
@@ -160,7 +160,7 @@
       "programmingLanguage": "C#",
       "url": "https://github.com/eladser/AspNetDebugDashboard",
       "codeRepository": "https://github.com/eladser/AspNetDebugDashboard",
-      "keywords": "debugging, .NET, EF Core, LiteDB, middleware, developer tools, N+1 detection"
+      "keywords": "debugging, .NET, EF Core, LiteDB, middleware, developer tools, N+1 detection, request timeline, request replay, MCP"
     }
     </script>
 
@@ -208,7 +208,7 @@
           "name": "What is the Debug Dashboard project?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "A Laravel-Telescope-style debug panel for ASP.NET Core. Two lines of setup and /_debug shows every request together with the EF Core queries it ran, plus logs and exceptions. It flags N+1 queries, offers copy-as-cURL and Ctrl+K search, and stores everything in a local LiteDB file so nothing leaves the machine."
+            "text": "A Laravel-Telescope-style debug panel for ASP.NET Core. Two lines of setup and /_debug shows every request together with the EF Core queries and outgoing HTTP calls it made, plus logs, exceptions and dumps. Each request has a timeline that puts all of that on one time axis and highlights N+1 and slow queries, and Replay resends a captured request and compares it with the original. Everything is stored in a local LiteDB file so nothing leaves the machine."
           }
         },
         {
