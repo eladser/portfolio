@@ -10,11 +10,11 @@ export const PROJECTS = [
     id: 'seerlens',
     name: 'Seerlens',
     tagline: 'local devtools for AI calls',
-    status: { label: 'v1.5', tone: 'teal' },
+    status: { label: 'v1.6', tone: 'teal' },
     featured: true,
     description:
-      "Local devtools for AI calls. Built it because a prompt tweak can quietly make answers worse and nothing in a stack trace will tell you. One line of setup and a dashboard shows every LLM call your app makes: prompt, cost, tokens, latency, tool calls. Compare models side by side, set cost budgets with alerts, watch agent and MCP step traces, and gate CI on an eval score. .NET-first but speaks OpenTelemetry, so Python and JS land in the same dashboard. About 3,200 downloads across its NuGet packages, plus 960 a year on npm.",
-    tags: ['C#', '.NET', 'OpenTelemetry', 'evals', 'LLM observability'],
+      "Diff your AI calls locally, see what they really cost, and fail CI when quality or cost regresses. Built it because a prompt tweak can quietly make answers worse and nothing in a stack trace will tell you. Pick two runs and the steps line up side by side, with what changed in the prompt, tool calls, model, tokens and cost. Cost counts cached and reasoning tokens, and seerlens eval fails the build on a score drop or a cost jump over the baseline. Takes OpenTelemetry spans from any language, with SDKs for Python, JS and .NET; the collector itself is ASP.NET Core and SQLite. About 3,200 downloads across its NuGet packages, plus 1,300 a year on npm.",
+    tags: ['OpenTelemetry', 'run diff', 'evals', 'LLM cost', 'ASP.NET Core'],
     links: {
       source: 'https://github.com/eladser/seerlens',
       nuget: 'https://www.nuget.org/packages/Seerlens',
@@ -34,7 +34,7 @@ export const PROJECTS = [
     status: { label: 'On Homebrew', tone: 'emerald' },
     featured: true,
     description:
-      "htop for whatever local model server you're running: Ollama, llama.cpp, LM Studio, vLLM. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. 976 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
+      "htop for whatever local model server you're running: Ollama, llama.cpp, LM Studio, vLLM, llama-swap, Lemonade, SGLang. Built it because Ollama is supposed to evict idle models and usually does, but every so often ollama ps shows something that expired ten minutes ago still parked on 8 GB. Shows loaded models and their VRAM, the GPU, and live requests with tok/s in one terminal window; a pass-through proxy reads the per-request numbers off the wire, and -idle-unload 15m clears the stragglers. Since 1.6 it also says why a model is slow (spilled to CPU, context full, requests queueing), and mtop --demo runs it with no model server. 1,064 binaries downloaded direct, plus Homebrew, Scoop and winget installs that GitHub doesn't count.",
     tags: ['Go', 'TUI', 'Ollama', 'local LLMs'],
     links: {
       source: 'https://github.com/eladser/mtop',
@@ -80,9 +80,9 @@ export const PROJECTS = [
     id: 'debug-dashboard',
     name: 'Debug Dashboard',
     tagline: 'Telescope-style debug panel for .NET',
-    status: { label: 'v2.2', tone: 'purple' },
+    status: { label: 'v2.5', tone: 'purple' },
     description:
-      "Started as a way to stop sprinkling Console.WriteLine everywhere. It's a Telescope-style panel for ASP.NET Core now: every request with the EF Core queries it ran, plus logs and exceptions, at /_debug. N+1 queries get flagged, there's copy-as-cURL and Ctrl+K search. Stores to a local LiteDB file and the whole UI ships as one offline page inside the package. Since 2.2 it's also the hub of a small suite: sibling packages catch outbound mail at /_mailbox, toggle feature flags at /_flags, inspect background jobs at /_jobs and show process vitals at /_vitals, with one sidebar to move between them. The MCP server reads those too, so an agent can see the flags, jobs, vitals and mail. 1,078 downloads on NuGet and my most-starred repo.",
+      "Started as a way to stop sprinkling Console.WriteLine everywhere. It's a Telescope-style panel for ASP.NET Core now: every request with the EF Core queries and outgoing HTTP calls it made, plus logs, exceptions and dumped objects, at /_debug. Since 2.5 each request opens on a timeline of its queries, calls and logs, with N+1 and slow queries highlighted, and Replay resends it, edited or not, and compares the two. Stores to a local LiteDB file and the whole UI ships as one offline page inside the package. It's also the hub of a small suite: sibling packages catch outbound mail at /_mailbox, toggle feature flags at /_flags, inspect background jobs at /_jobs and show process vitals at /_vitals, with one sidebar to move between them. The MCP server reads those too, so an agent can see the flags, jobs, vitals and mail. 1,089 downloads on NuGet and my most-starred repo.",
     tags: ['C#', '.NET', 'EF Core', 'LiteDB'],
     links: {
       source: 'https://github.com/eladser/AspNetDebugDashboard',

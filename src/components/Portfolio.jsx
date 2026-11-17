@@ -680,7 +680,7 @@ const Portfolio = () => {
                   <CodeShowcase
                     isDark={isDark}
                     title="Debug Dashboard Setup"
-                    description="Capture requests, EF Core queries, logs, and exceptions at /_debug"
+                    description="Capture requests, EF Core queries, outgoing HTTP calls, logs, and exceptions at /_debug"
                     files={[
                       {
                         name: 'Program.cs',
