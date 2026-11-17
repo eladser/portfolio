@@ -7,7 +7,6 @@ import { ChevronDown, ChevronUp, Github, GitCommit, GitFork, Star, AlertCircle }
  *
  * Features:
  * - Fetches real GitHub data via API (optional)
- * - Falls back to demo data if API fails
  * - Shows commits, repos, stars
  * - Collapsible to save space
  * - Professional loading and error states
@@ -15,44 +14,6 @@ import { ChevronDown, ChevronUp, Github, GitCommit, GitFork, Star, AlertCircle }
  * Usage:
  * <GitHubActivity isDark={true} username="eladser" />
  */
-
-// Demo data structure (used as fallback or when no API call is made)
-const demoActivity = {
-  publicRepos: 12,
-  totalStars: 40,
-  totalForks: 6,
-  repos: [
-    {
-      name: 'AspNetDebugDashboard',
-      description: 'Real-time HTTP traffic monitoring middleware for .NET',
-      language: 'C#',
-      stars: 23,
-      forks: 4,
-      updated: '2 days ago',
-    },
-    {
-      name: '.net-tools',
-      description: 'Collection of utility functions for .NET projects',
-      language: 'JavaScript',
-      stars: 12,
-      forks: 2,
-      updated: '1 week ago',
-    },
-    {
-      name: 'portfolio',
-      description: 'Personal portfolio built with React',
-      language: 'JavaScript',
-      stars: 5,
-      forks: 0,
-      updated: '3 hours ago',
-    },
-  ],
-  recentCommits: [
-    { message: 'Add SignalR connection retry logic', repo: 'AspNetDebugDashboard', time: '2h ago' },
-    { message: 'Update README with usage examples', repo: '.net-tools', time: '1d ago' },
-    { message: 'Improve timeline component accessibility', repo: 'portfolio', time: '3h ago' },
-  ],
-};
 
 // Language colors matching GitHub
 const languageColors = {
@@ -78,7 +39,7 @@ const getRelativeTime = (date) => {
 
 const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = false }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [data, setData] = useState(demoActivity);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -104,7 +65,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         const reposData = await reposResponse.json();
 
         // Fetch recent commits from top repos
-        let recentCommits = [];
+        const recentCommits = [];
         const topRepos = reposData.slice(0, 3);
 
         for (const repo of topRepos) {
@@ -125,11 +86,6 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
           } catch {
             // Skip this repo if commits fetch fails
           }
-        }
-
-        // Fallback to demo data if no commits found
-        if (recentCommits.length === 0) {
-          recentCommits = demoActivity.recentCommits;
         }
 
         // Transform to our format
@@ -155,7 +111,6 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
         });
       } catch (err) {
         setError(err.message);
-        setData(demoActivity); // Fallback to demo data
       } finally {
         setLoading(false);
       }
@@ -230,14 +185,14 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                   <AlertCircle className="text-amber-500 flex-shrink-0" size={18} aria-hidden="true" />
                   <div>
                     <p className={`text-sm ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>
-                      Couldn't load GitHub data. Showing demo data instead.
+                      Couldn't load GitHub data.
                     </p>
                     <p className={`text-xs mt-1 ${isDark ? 'text-amber-500/70' : 'text-amber-600'}`}>
                       {error}
                     </p>
                   </div>
                 </div>
-              ) : (
+              ) : data && (
                 <>
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-4 mb-6">
@@ -354,6 +309,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                   </div>
 
                   {/* Recent Commits */}
+                  {data.recentCommits.length > 0 && (
                   <div>
                     <h4 className={`text-sm font-medium mb-3 ${isDark ? 'text-gray-300' : 'text-zinc-600'}`}>
                       Recent Commits
@@ -384,6 +340,7 @@ const GitHubActivity = ({ isDark = true, username = 'eladser', useRealData = fal
                       ))}
                     </div>
                   </div>
+                  )}
                 </>
               )}
             </div>
